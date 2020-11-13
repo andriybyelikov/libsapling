@@ -91,7 +91,7 @@ trivial searches by their own nature.
 No standalone documentation is provided as of right now. For now I direct you
 to check out ```graph.h``` and the test examples.
 
-## Tests and graph visualziation
+## Tests and graph visualization
 
 To check that the tests are passed run the following command and make sure that
 no failed assertion message pops up.
