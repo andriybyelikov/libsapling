@@ -1,0 +1,21 @@
+0.2.0 [Unreleased]
+-----
+- Added Changelog
+- Implemented string escaping/unescaping text utilities
+- Implemented regular expression automata
+- Updated library implementation dependency chart
+- Added REAB (Regular Expression Automata Builder) implementation dependency
+  chart
+- Moved dependency charts to docs folder
+
+
+0.1.1
+-----
+- Fixed typo in README
+
+
+0.1.0
+-----
+- Implemented the following graph based collections: path, stack, queue,
+  AVL tree and trie
+- Implemented tests with graph visualization

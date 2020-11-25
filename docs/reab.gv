@@ -1,0 +1,17 @@
+digraph
+{
+    label="Regular Expression Automata Builder\nDependency Chart";
+
+    subgraph cluster_lexeme
+    {
+        label="Builders";
+        literal,class,anything;
+    }
+
+    subgraph cluster_automata {
+        label="Operators";
+        kleene_star,union,concatenation,kleene_plus;
+        concatenation,kleene_star->union;
+        kleene_plus->concatenation,kleene_star;
+    }
+}

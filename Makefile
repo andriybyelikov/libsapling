@@ -1,10 +1,11 @@
 LIBDIR  := lib
 OBJDIR  := obj
+INCDIR  := include
 SRCDIR  := src
 TESTDIR	:= test
 
 CC      := gcc
-CFLAGS  := -std=c11 -pedantic -I$(SRCDIR) -g
+CFLAGS  := -std=c11 -pedantic -I$(INCDIR) -g
 LDFLAGS := -L$(LIBDIR) -lsapling
 
 SOURCES := $(wildcard $(SRCDIR)/*.c)
