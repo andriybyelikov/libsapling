@@ -1,9 +1,0 @@
-// dependency chart
-digraph
-{
-    _graph[label="graph"];
-    path -> _graph;
-    stack, queue -> path;
-    avl -> _graph, stack;
-    trie -> avl, stack;
-}

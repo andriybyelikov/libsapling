@@ -1,0 +1,35 @@
+digraph
+{
+    label="libsapling\nDependency Chart";
+    rankdir=LR;
+
+    subgraph cluster_gbc
+    {
+        label="Graph Based Collections";
+
+        _graph[label="graph"];
+        all[shape=none;label="*"];
+        all->_graph;
+
+        subgraph cluster_pbc {
+            label="Path Based";
+            path[label="path*"];
+            stack->path;
+            queue->path;
+        }
+
+        subgraph cluster_tbc {
+            label="Tree Based";
+            avl[label="avl*"];
+            avl->stack;
+            trie[label="trie*"];
+            trie->avl,stack;
+        }
+
+        rea[label="rea*"];
+        rea->path,queue,avl;
+    }
+
+    text;
+    rea->text;
+}
