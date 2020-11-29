@@ -27,7 +27,7 @@ digraph
         }
 
         rea[label="rea*"];
-        rea->stack,avl;
+        rea->path,queue,avl;
     }
 
     text;

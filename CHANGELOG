@@ -1,12 +1,14 @@
-0.2.0 [Unreleased]
+0.2.0
 -----
-- Added Changelog
+- Added CHANGELOG
 - Implemented string escaping/unescaping text utilities
 - Implemented regular expression automata
+- Implemented regular expression automata tests with graph visualization
 - Updated library implementation dependency chart
 - Added REAB (Regular Expression Automata Builder) implementation dependency
   chart
 - Moved dependency charts to docs folder
+- Updated README
 
 
 0.1.1

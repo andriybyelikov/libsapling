@@ -1,16 +1,27 @@
 # libsapling
 
-Library for the sapling compiler and editor suite.
+Library for the sapling compiler and editor suite, mostly graph based generic collection implementations.
 
-Currently it's mostly """generic""" graph based collection implementations.
+**Disclaimer: the library is still in its initial development and the
+code is ridden with memory leaks, I'm going for functionality first.**
 
-## Available collection implementations
+## Implementations
+
+### Generic collections
 
 - Path
 - Stack
 - Queue
 - AVL Tree
 - Trie
+
+### Specialized collections
+
+- Regular Expression Automata
+
+### Other
+
+- C-style string escaping/unescaping
 
 ## General Usage
 
@@ -38,8 +49,8 @@ Operations that can mutate the structure of the collection:
 - delete: *iᵢ* ∈ *S* ⇒ *iᵢ* ∉ *S*
 
 Operations that can select items in the collection:
-- delete: *S'* = { *iᵢ* | *iᵢ* ∈ *S* ∧ m(*i*) }, ∀*i* ∈ *S'* ⇒ ∀*i* ∉ *S'*
-- access: *S'* = { *iᵢ* | *iᵢ* ∈ *S* ∧ m(*i*) }, ∀*i* ∈ *S'* ⇒ a(*i*)
+- delete: *S'* = { *iᵢ* | *iᵢ* ∈ *S* ∧ m(*i*) }, ∀*i* ∈ *S'* ⇒ ∀*iᵢ* ∉ *S'*
+- access: *S'* = { *iᵢ* | *iᵢ* ∈ *S* ∧ m(*i*) }, ∀*i* ∈ *S'* ⇒ a(*iᵢ*)
 
 Many operations take helper decision functions as parameters and a
 ```void *info``` pointer to external user defined information that can be used
@@ -74,12 +85,18 @@ stack|∃|∃|∀*∃
 queue|∃|∃|∀*∃
 avl|∃|∃|∀**∃
 trie|∃|∀∃|∀**∃
+rea|***|***|***
 
 \* For complete deallocation of a path based collection you can invoke path
 deletion targeting all nodes.
 
 \** Tree based collection traversal here is done in no useful order, just
 traversing all to get a Graphviz Dot dump.
+
+\*** Regular Expression Automata graphs are constructed using specialized
+builder functions and operators. Deletion isn't currently provided and access
+is also specialized. Traversal is used to print the graph and search to match
+an accepting state given a byte buffer.
 
 As can be seen here, all insertion implementations are done as a search of the
 edge where the node must be placed. I do not know if there is any useful
@@ -106,6 +123,9 @@ this (requires Graphviz Dot installed).
 This will create a ```vis``` folder with the state images chronologically
 enumerated.
 
+In the Regular Expression Automata test specify ```-v -c``` flags to create and
+visualize deep copies of the automata, testing ```rea__copy```.
+
 ## Implementation
 
 The collections are implemented in the C11 revision of the C programming
@@ -123,4 +143,4 @@ Offset|Data
 
 I'm accepting refactored code with either less lines of code or less
 information used or more modular code or new useful functionality. Check the
-GitHub project Tasks.
+Tasks GitHub project of this repository.

@@ -10,15 +10,27 @@ void rea__access(int qt, void **ref, void *info,
 
 void rea__dump_dot(FILE *fd, void **ref, void (*fpd)(FILE *, void **));
 
-void *rea__copy(void *a);
+// builders
+void rea__literal(void **dst, const char *lexeme);
+void rea__class(void **dst, const char *lexeme);
+void rea__anything(void **dst);
+void rea__copy(void **dst, void **src);
 
-void *rea__literal(const char *lexeme);
-void *rea__class(const char *lexeme);
-void *rea__anything(void);
+// operators
+void rea__union(void **dst, void **src);
+void rea__concatenation(void **dst, void **src);
+void rea__kleene_star(void **dst);
+void rea__kleene_plus(void **dst);
 
-void *rea__union(void *a0, void *a1);
-void *rea__concatenation(void *a0, void *a1);
-void *rea__kleene_star(void *a);
-void *rea__kleene_plus(void *a);
+
+// usage
+void rea__set_accepting_states_data(void **ref, void *data);
+
+struct rea__buffer {
+    int cursor;
+    int overread;
+    char *mem;
+    void **data_ref;
+};
 
 #endif

@@ -1,7 +1,10 @@
 #include <string.h>
 #include "graph.h"
 #include "path.h"
+#include "queue.h"
 #include "avl.h"
+#include "text.h"
+#include "rea.h"
 
 // implementation to be lifted
 // -----------------------------------------------------------------------------
@@ -182,7 +185,7 @@ void ae__get_node_ref(void **ref, void *info)
 {
     struct attributed_edge *data = avl__node__data(ref);
     struct attributed_edge_node_ref *user = get_user_info(info);
-    user->ref = &data->node;
+    user->ref = &data->node; // node is first field
 }
 
 static
@@ -200,6 +203,14 @@ struct attributed_edge *ae__get_edge(void **ref, char byte)
     struct attributed_edge_node_ref info = { byte, NULL };
     ae__access(E_QT, ref, &info, ae__access_match, ae__get_node_ref);
     return *info.ref;
+}
+
+static
+struct attributed_edge *ae__get_edge2(void **ref, char byte)
+{
+    struct attributed_edge_node_ref info = { byte, NULL };
+    ae__access(E_QT, ref, &info, ae__access_match, ae__get_node_ref);
+    return (struct attributed_edge *)info.ref;
 }
 
 // END attributed_edges management
@@ -351,13 +362,13 @@ void nrs__log(void **ref)
 // BEGIN rea__access
 // -----------------------------------------------------------------------------
 
-struct info_impl {
+struct info_impl_u {
     void *unvisited;
     void *visited;
 };
 
 static
-void add_to_unvisited(struct info_impl *impl, void **node_ref)
+void add_to_unvisited(struct info_impl_u *impl, void **node_ref)
 {
     if (*node_ref != NULL
     && !nrs__in(&impl->visited, node_ref)
@@ -369,7 +380,7 @@ static
 void add_ae_to_unvisited(void **ref, void *info)
 {
     if (*ref != NULL) {
-        struct info_impl *user = get_user_info(info);
+        struct info_impl_u *user = get_user_info(info);
         struct attributed_edge *ae = node__data(*ref, avl__edge_storage());
 
         // add attributed edge children to unvisited
@@ -380,7 +391,7 @@ void add_ae_to_unvisited(void **ref, void *info)
 static
 void next_u(void ***ref, void *info)
 {
-    struct info_impl *impl = get_impl_info(info);
+    struct info_impl_u *impl = get_impl_info(info);
 
     void **node_ref = *ref;
     struct edge_storage *node = *node_ref;
@@ -403,17 +414,54 @@ void next_u(void ***ref, void *info)
 }
 
 
+static
+void next_e(void ***ref, void *info)
+{
+    struct rea__buffer *user = get_user_info(info);
+    struct info_impl_e *impl = get_impl_info(info);
+
+    void **node_ref = *ref;
+    struct edge_storage *node = *node_ref;
+
+
+    if (node->accepting) {
+        user->data_ref = node__data(node, sizeof(struct edge_storage));
+        user->overread = 0;
+    }
+
+    struct attributed_edge *ae = NULL;
+    if (node->attributed_edges != NULL)
+        ae = ae__get_edge2(&node->attributed_edges, user->mem[user->cursor]);
+    user->cursor++;
+    user->overread++;
+    if (ae == NULL)
+        *ref = (void **)&node->anything_edge;
+    else
+        *ref = &ae->node;
+
+    if (**ref == NULL) { // cannot continue
+        user->cursor -= user->overread;
+    }
+}
+
+
 void rea__access(int qt, void **ref, void *info,
     match_fn match, apply_fn apply)
 {
-    struct info_impl impl = { NULL, NULL };
-    struct infostack is = { info, &impl };
     switch (qt) {
     case U_QT:
+    {
+        struct info_impl_u impl = { NULL, NULL };
+        struct infostack is = { info, &impl };
         graph__uloop(ref, &is, match, next_u, apply);
-        break;
+    }
+    break;
     case E_QT:
-        break;
+    {
+        struct infostack is = { info, NULL };
+        graph__eloop(ref, &is, match, next_e, apply);
+    }
+    break;
     }
 }
 
@@ -441,11 +489,20 @@ void dot_edge(void **ref, void *info)
         void *parent = idde->parent;
         void *node = *ref;
         struct attributed_edge *e = node__data(node, avl__edge_storage());
+
+        // escape non-printable characters
+        char x[2];
+        x[0] = e->byte;
+        x[1] = 0;
+        char y[10];
+        text__escape(y, x);
+        char z[10];
+        text__escape(z, y);
+
         if (parent == e->node)
-            fprintf(fd, "n%p:e->n%p:w[label=\"%c\"];", parent, e->node,
-                e->byte);
+            fprintf(fd, "n%p:e->n%p:w[label=\"%s\"];", parent, e->node, z);
         else
-            fprintf(fd, "n%p->n%p[label=\"%c\"];", parent, e->node, e->byte);
+            fprintf(fd, "n%p->n%p[label=\"%s\"];", parent, e->node, z);
     }
 }
 
@@ -602,6 +659,10 @@ void em_acc_x(void **ref, struct edge_storage *node, int accepting)
     node->attributed_edges = NULL;
     node->anything_edge = NULL;
     node->accepting = accepting;
+
+    void **data_ptr = node__data(node, sizeof(struct edge_storage));
+    *data_ptr = NULL;
+
     *ref = node;
 }
 
@@ -617,13 +678,14 @@ void em_acc_1(void **ref, struct edge_storage *node, void *info)
     em_acc_x(ref, node, 1);
 }
 
-struct insert_no_data { // temporary during initial development
+struct insert_data_ptr { // temporary during initial development
     size_t size;
+    void *data;
 };
 
 void insert_state(void **ref, int accepting)
 {
-    struct insert_no_data info = { 0 };
+    struct insert_data_ptr info = { sizeof(void *), NULL };
     struct infostack is = { &info, NULL };
     graph__insert(ref, &is, sizeof(struct edge_storage),
         accepting ? em_acc_1 : em_acc_0);
@@ -633,6 +695,111 @@ void insert_state(void **ref, int accepting)
 // -----------------------------------------------------------------------------
 
 
+
+
+// BEGIN BUILDERS
+// =============================================================================
+
+// BEGIN rea__literal
+// -----------------------------------------------------------------------------
+
+void rea__literal(void **dst, const char *lexeme)
+{
+    for (int i = 1; i < strlen(lexeme) - 1; i++) { // trim quotation marks
+        insert_state(dst, 0);
+        struct edge_storage *node = *dst;
+        dst = ae__reserve(&node->attributed_edges, lexeme[i]);
+    }
+    insert_state(dst, 1);
+}
+
+// END rea__literal
+// -----------------------------------------------------------------------------
+
+
+// BEGIN rea__class
+// -----------------------------------------------------------------------------
+
+static
+void rea__class__insert_character(void *is, void *as, char c)
+{
+    struct edge_storage *node = is;
+    *ae__reserve(&node->attributed_edges, c) = as;
+}
+
+static
+void rea__class__insert_range(void *is, void *as, char a, char b)
+{
+    if (a > b) {
+        char temp = a;
+        a = b;
+        b = temp;
+    }
+    for (char c = a; c <= b; c++)
+        rea__class__insert_character(is, as, c);
+}
+
+// a small parser is needed in this case for ranges
+void rea__class(void **dst, const char *lexeme)
+{
+    insert_state(dst, 0);
+    void *is = *dst; // initial state
+    void *as = NULL; // accepting state
+    insert_state(&as, 1);
+
+    int s = 0;
+    char buf;
+    for (int i = 1; i < strlen(lexeme) - 1; i++) { // trim brackets
+        char c = lexeme[i];
+        switch (s) {
+        case 0:
+            buf = c;
+            s = 1;
+            break;
+        case 1:
+            switch (c) {
+            case '-':
+                s = 2;
+                break;
+            default:
+                rea__class__insert_character(is, as, buf);
+                buf = c;
+                s = 1;
+                break;
+            }
+            break;
+        case 2:
+            rea__class__insert_range(is, as, buf, c);
+            s = 0;
+            break;
+        }
+    }
+    switch (s) {
+    case 2:
+        rea__class__insert_character(is, as, '-');
+        // fallthrough
+    case 1:
+        rea__class__insert_character(is, as, buf);
+        break;
+    }
+}
+
+// END rea__class
+// -----------------------------------------------------------------------------
+
+
+// BEGIN rea__anything
+// -----------------------------------------------------------------------------
+
+void rea__anything(void **dst)
+{
+    insert_state(dst, 0);
+    struct edge_storage *node = *dst;
+    insert_state((void **)&node->anything_edge, 1);
+}
+
+// END rea__anything
+// -----------------------------------------------------------------------------
 
 
 // BEGIN rea__copy
@@ -687,140 +854,29 @@ void allocate_and_map_copies(void **ref, void *info)
     struct edge_storage *copy = NULL;
     insert_state((void **)&copy, original->accepting);
 
+    void **odata = node__data(original, sizeof(struct edge_storage));
+    void **cdata = node__data(copy, sizeof(struct edge_storage));
+    *cdata = *odata;
+
     struct node_node_map *user = get_user_info(info);
     nnm__insert(&user->map, original, copy);
 }
 
-void *rea__copy(void *a)
+void rea__copy(void **dst, void **src)
 {
     struct node_node_map info = { NULL };
 
     // allocate and map all copy nodes
-    rea__access(U_QT, &a, &info, match_1, allocate_and_map_copies);
+    rea__access(U_QT, src, &info, match_1, allocate_and_map_copies);
 
     // copy over edges replacing original references with copy references
     nnm__access(U_QT, &info.map, &info, match_1, copy_edges);
 
     // get copy initial state
-    return nnm__get_value(&info.map, a);
+    *dst = nnm__get_value(&info.map, *src);
 }
 
 // END rea__copy
-// -----------------------------------------------------------------------------
-
-
-
-
-// BEGIN BUILDERS
-// =============================================================================
-
-// BEGIN rea__literal
-// -----------------------------------------------------------------------------
-
-void *rea__literal(const char *lexeme)
-{
-    void *initial_state = NULL;
-    void **ref = &initial_state;
-    for (int i = 1; i < strlen(lexeme) - 1; i++) { // trim quotation marks
-        insert_state(ref, 0);
-        struct edge_storage *node = *ref;
-        ref = ae__reserve(&node->attributed_edges, lexeme[i]);
-    }
-    insert_state(ref, 1);
-    return initial_state;
-}
-
-// END rea__literal
-// -----------------------------------------------------------------------------
-
-
-// BEGIN rea__class
-// -----------------------------------------------------------------------------
-
-static
-void rea__class__insert_character(void *is, void *as, char c)
-{
-    struct edge_storage *node = is;
-    *ae__reserve(&node->attributed_edges, c) = as;
-}
-
-static
-void rea__class__insert_range(void *is, void *as, char a, char b)
-{
-    if (a > b) {
-        char temp = a;
-        a = b;
-        b = temp;
-    }
-    for (char c = a; c <= b; c++)
-        rea__class__insert_character(is, as, c);
-}
-
-// a small parser is needed in this case for ranges
-void *rea__class(const char *lexeme)
-{
-    void *is = NULL;
-    void *as = NULL;
-    insert_state(&is, 0);
-    insert_state(&as, 1);
-
-    int s = 0;
-    char buf;
-    for (int i = 1; i < strlen(lexeme) - 1; i++) { // trim brackets
-        char c = lexeme[i];
-        switch (s) {
-        case 0:
-            buf = c;
-            s = 1;
-            break;
-        case 1:
-            switch (c) {
-            case '-':
-                s = 2;
-                break;
-            default:
-                rea__class__insert_character(is, as, buf);
-                buf = c;
-                s = 1;
-                break;
-            }
-            break;
-        case 2:
-            rea__class__insert_range(is, as, buf, c);
-            s = 0;
-            break;
-        }
-    }
-    switch (s) {
-    case 2:
-        rea__class__insert_character(is, as, '-');
-        // fallthrough
-    case 1:
-        rea__class__insert_character(is, as, buf);
-        break;
-    }
-
-    return is;
-}
-
-// END rea__class
-// -----------------------------------------------------------------------------
-
-
-// BEGIN rea__anything
-// -----------------------------------------------------------------------------
-
-void *rea__anything(void)
-{
-    void *initial_state = NULL;
-    void **ref = &initial_state;
-    insert_state(ref, 0);
-    struct edge_storage *node = *ref;
-    insert_state((void **)&node->anything_edge, 1);
-    return initial_state;
-}
-
-// END rea__anything
 // -----------------------------------------------------------------------------
 
 // END BUILDERS
@@ -927,12 +983,12 @@ void get_accepting_states_refs_apply(void **ref, void *info)
 }
 
 static
-void *get_accepting_states_refs(void *a)
+void *get_accepting_states_refs(void **a)
 {
     void *result_set = NULL;
 
-    void *accepting_states = get_accepting_states(&a);
-    struct refs_to_state info = { &result_set, a };
+    void *accepting_states = get_accepting_states(a);
+    struct refs_to_state info = { &result_set, *a };
     path__access(U_QT, &accepting_states, &info, match_1,
         get_accepting_states_refs_apply);
 
@@ -1004,8 +1060,10 @@ int ec__in_match(void **ref, void *info)
 static
 void ec__in_1(void **ref, void *info)
 {
-    struct ec_in *user = get_user_info(info);
-    user->in = 1;
+    if (*ref != NULL) {
+        struct ec_in *user = get_user_info(info);
+        user->in = 1;
+    }
 }
 
 static
@@ -1022,59 +1080,314 @@ int ec__in(void **ref, void *state)
 
 
 
+// BEGIN equivalence_class_queue
+// -----------------------------------------------------------------------------
+
+struct ecq_item {
+    void *ec;
+};
+
+struct insert_ecq_item {
+    size_t size;
+    struct ecq_item data;
+};
+
+static
+void ecq__insert(void **ref, void *ec)
+{
+    struct insert_ecq_item info = {
+        sizeof(struct ecq_item),
+        { ec }
+    };
+    queue__insert(ref, &info);
+}
+
+static
+void ecq__delete(void **ref)
+{
+    queue__delete(ref);
+}
+
+static
+void **ecq__access(void **ref)
+{
+    return queue__access(ref);
+}
+
+// END equivalence_class_queue
+// -----------------------------------------------------------------------------
+
+
+
+
+//
+struct ec_repr_and_ecq {
+    void *state;
+    void **ecq;
+};
+static
+void repl_uni_ae(void **ref, void *info)
+{
+    struct attributed_edge *data = avl__node__data(ref);
+    struct ecq_item *user = get_user_info(info);
+
+    struct edge_storage *representative = ec__get_representative(&user->ec);
+
+    if (ec__in(&user->ec, data->node)) {
+        data->node = representative;
+    }
+}
+
+static
+void repl_apply(void **ref, void *info)
+{
+    struct edge_storage *node = *ref;
+    struct ecq_item *user = get_user_info(info);
+
+    ae__access(U_QT, &node->attributed_edges, user, match_1, repl_uni_ae);
+
+     struct edge_storage *representative = ec__get_representative(&user->ec);
+    if (node->anything_edge != NULL && ec__in(&user->ec, node->anything_edge)) {
+        node->anything_edge = representative;
+    }
+}
+static
+void replace_ec_states_with_repr2(void **ref, void *info)
+{
+    struct ecq_item *user = get_user_info(info);
+    struct ec_item *data = path__node__data(ref);
+    rea__access(U_QT, &data->state, user, match_1, repl_apply);
+}
+
+static
+int is_not_repr(void **ref, void *info)
+{
+    struct ec_item *data = path__node__data(ref);
+    struct ec_repr_and_ecq *user = get_user_info(info);
+    return data->state != user->state;
+}
+// BEGIN optimize
+// -----------------------------------------------------------------------------
+
+struct cmp_ae {
+    void *s1;
+    int all_eq;
+};
+
+static
+void cmp_ae_nall_eq(void **ref, void *info)
+{
+    if (*ref != NULL) {
+        struct cmp_ae *user = get_user_info(info);
+        user->all_eq = 0;
+    }
+}
+
+static
+int cmp_ae_match_neq(void **ref, void *info)
+{
+    struct cmp_ae *user = get_user_info(info);
+    struct edge_storage *node = user->s1;
+    struct attributed_edge *ae0 = avl__node__data(ref);
+    struct attributed_edge *ae1 = NULL;
+    if (ae__in(&node->attributed_edges, ae0->byte))
+        ae1 = ae__get_edge2(&node->attributed_edges, ae0->byte);
+
+    if (ae1 == NULL || ae0->node != ae1->node)
+        return 1;
+}
+
+static
+int states_equal(void *p0, void *p1)
+{
+    struct edge_storage *s0 = p0;
+    struct edge_storage *s1 = p1;
+
+    // comparisons ordered by cost
+
+    if (s0->accepting != s1->accepting)
+        return 0;
+
+    if (s0->anything_edge != s1->anything_edge)
+        return 0;
+
+    // compare data pointer
+    void **d0 = node__data(s0, sizeof(struct edge_storage));
+    void **d1 = node__data(s1, sizeof(struct edge_storage));
+    if (*d0 != *d1)
+        return 0;
+
+    // compare attributed edges
+
+    // compare NULL case
+    if (s0->attributed_edges == NULL || s1->attributed_edges == NULL)
+        if (s0->attributed_edges != s1->attributed_edges)
+            return 0;
+
+    struct cmp_ae info = { s1, 1 };
+    ae__access(E_QT, &s0->attributed_edges, &info,
+        cmp_ae_match_neq, cmp_ae_nall_eq);
+    return info.all_eq;
+}
+
+
+struct states_queue {
+    void **ref;
+};
+
+struct sq_item {
+    void *state;
+};
+
+struct insert_sq_item {
+    size_t size;
+    struct sq_item data;
+};
+
+static
+void opt_append_states(void **ref, void *info)
+{
+    void *state = *ref;
+    struct states_queue *user = get_user_info(info);
+
+    struct insert_sq_item isi = {
+        sizeof(struct sq_item),
+        { state }
+    };
+    queue__insert(user->ref, &isi);
+}
+
+struct opt_bld_ec {
+    void *repr;
+    void **ec;
+};
+
+static
+int opt_match_eq_state(void **ref, void *info)
+{
+    struct sq_item *data = path__node__data(ref);
+    struct opt_bld_ec *user = get_user_info(info);
+    return states_equal(user->repr, data->state);
+}
+
+static
+void opt_bld_ec(void **ref, void *info)
+{
+    struct sq_item *data = path__node__data(ref);
+    struct opt_bld_ec *user = get_user_info(info);
+    if (*user->ec == NULL)
+        ec__add_state(user->ec, user->repr);
+    ec__add_state(user->ec, data->state);
+}
+
+static
+int opt_match_in_ec(void **ref, void *info)
+{
+    struct sq_item *data = path__node__data(ref);
+    struct ecq_item *user = get_user_info(info);
+    return ec__in(&user->ec, data->state);
+}
+
+static
+void optimize(void **ref)
+{
+    void *states_static = NULL;
+    void *states = NULL;
+
+    struct states_queue sq = { &states };
+    rea__access(U_QT, ref, &sq, match_1, opt_append_states);
+    sq.ref = &states_static;
+    rea__access(U_QT, ref, &sq, match_1, opt_append_states);
+
+    void *ec = NULL;
+    int changes = 0;
+    do {
+        // get first states of the queue
+        void *state = *(void **)queue__access(&states);
+        queue__delete(&states);
+
+        // build equivalence class with equal states
+        struct opt_bld_ec obe = { state, &ec };
+        path__access(U_QT, &states, &obe, opt_match_eq_state, opt_bld_ec);
+
+        if (ec != NULL) {
+            // in whole graph replace class nodes with representative
+            struct ecq_item ei = { ec };
+            path__access(U_QT, &states_static, &ei, is_not_repr, replace_ec_states_with_repr2);
+
+            // update outer reference if necessary
+            if (ec__in(&ec, *ref))
+                *ref = ec__get_representative(&ec);
+
+            // free non-representative nodes
+            // TO DO
+
+            // remove all nodes of class from queue
+            struct ecq_item ei2 = { ec };
+            path__delete(U_QT, &states, &ei2, opt_match_in_ec);
+
+            // put representative to the queue
+            struct insert_sq_item isi = {
+                sizeof(struct sq_item),
+                { ec__get_representative(&ec) }
+            };
+            if (states != NULL)
+                queue__insert(&states, &isi);
+
+            // empty equivalence class
+            ec = NULL; // temporary
+            changes = 1 && states != NULL;
+        } else {
+            changes = states != NULL;
+        }
+    } while (changes);
+    // until no changes happened == no class built == no equivalent nodes
+}
+
+// END optimize
+// -----------------------------------------------------------------------------
+
+
+
+
 // BEGIN OPERATORS
 // =============================================================================
 
 // BEGIN rea__union
 // -----------------------------------------------------------------------------
-// pseudocode:
-// create equivalence class with both initial states
-// choose first state as representantive
-// for each state in the equivalence class that is not the representative
-//   for each edge
-//     if edge is not in representatives' edges
-//        add edge to representative alongside its target (subautomaton)
-//        delete edge
-//     else
-//       create equivalence class with
-//         representative's edge target and this edge's target, choose first as
-//         representative
-//   delete state
 
-struct ec_representative {
-    void *state;
-};
 
-void *rea__union(void *a0, void *a1);
 
 static
 void rea__union_foreach_edge(void **ref, void *info)
 {
     struct attributed_edge *data = avl__node__data(ref);
-    struct ec_representative *user = get_user_info(info);
+    struct ec_repr_and_ecq *user = get_user_info(info);
 
     struct edge_storage *representative = user->state;
 
     if (!ae__in(&representative->attributed_edges, data->byte)) {
-        ae__insert(&representative->attributed_edges, /**/data->node, data->byte);
+        ae__insert(&representative->attributed_edges, data->node, data->byte);
         // delete edge
     } else {
-        rea__union(ae__get_edge(&representative->attributed_edges, data->byte),
-            data->node);
+        void *new_ec = NULL;
+        ec__add_state(&new_ec, ae__get_edge(&representative->attributed_edges,
+            data->byte));
+        ec__add_state(&new_ec, data->node);
+        ecq__insert(user->ecq, new_ec);
     }
 }
 
 static
-void rea__union_foreach_state(void **ref, void *info)
+void move_edges_to_repr(void **ref, void *info)
 {
     struct ec_item *data = path__node__data(ref);
-    struct ec_representative *user = get_user_info(info);
+    struct ec_repr_and_ecq *user = get_user_info(info);
 
     if (data->state != NULL) { // APAÑO
         struct edge_storage *node = data->state;
 
         // attributed edges
-        if (node->attributed_edges != NULL)
         ae__access(U_QT, &node->attributed_edges, user, match_1,
             rea__union_foreach_edge);
 
@@ -1083,84 +1396,92 @@ void rea__union_foreach_state(void **ref, void *info)
         if (repr->anything_edge == NULL) {
             repr->anything_edge = node->anything_edge;
         } else {
-            rea__union(repr->anything_edge, node->anything_edge);
+            void *new_ec = NULL;
+            ec__add_state(&new_ec, repr->anything_edge);
+            ec__add_state(&new_ec, node->anything_edge);
+            ecq__insert(user->ecq, new_ec);
         }
+
+        // union of accepted
+        repr->accepting = repr->accepting || node->accepting;
     }
 }
 
 static
-int is_not_representative(void **ref, void *info)
+void replace_ec_states_with_repr(void **dst, void **ec)
 {
-    struct ec_item *data = path__node__data(ref);
-    struct ec_representative *user = get_user_info(info);
-    return data->state != user->state;
+    void *repr = ec__get_representative(ec);
+
+    // treat outermost reference
+    if (ec__in(ec, *dst)) {
+        *dst = repr;
+    }
+
+    struct ecq_item info = { *ec };
+    rea__access(U_QT, &repr, &info, match_1, repl_apply);
 }
 
-void *rea__union(void *a0, void *a1)
-{
-    void *ec = NULL;
-    ec__add_state(&ec, a0);
-    ec__add_state(&ec, a1);
 
-    struct ec_representative info = { ec__get_representative(&ec) };
-    path__access(U_QT, &ec, &info, is_not_representative,
-        rea__union_foreach_state);
-    return a0;
+
+void rea__union(void **dst, void **src)
+{
+    void *init_ec = NULL;
+    ec__add_state(&init_ec, *dst);
+    ec__add_state(&init_ec, *src);
+
+    void *ecq = NULL;
+    ecq__insert(&ecq, init_ec);
+
+    while (ecq != NULL) {
+        void **ec = ecq__access(&ecq);
+
+        // copy non-representative node's edges to representative
+        struct ec_repr_and_ecq info = { ec__get_representative(ec), &ecq };
+        path__access(U_QT, ec, &info, is_not_repr, move_edges_to_repr);
+
+        // starting from each state in the equivalence class replace
+        // non-representatives' adresses with representative's address
+        replace_ec_states_with_repr(dst, ec);
+        struct ecq_item ei = { *ec };
+        path__access(U_QT, ec, &ei, is_not_repr, replace_ec_states_with_repr2);
+
+        ecq__delete(&ecq);
+    }
+    optimize(dst);
 }
 
 // END rea__union
 // -----------------------------------------------------------------------------
 
 
+struct pass_src {
+    void **src;
+};
+
 // BEGIN rea__concatenation
 // -----------------------------------------------------------------------------
 
-struct initial_state {
-    void *state;
-    void *global; // global initial state
-};
-
 static
-void rea__concatenation_apply(void **ref, void *info)
+void aux_cat_union(void **ref, void *info)
 {
     struct node_edge_ref *data = path__node__data(ref);
-    struct initial_state *user = get_user_info(info);
-    rea__union(user->state, *data->ref);
-    int global_state_changes = user->global == *data->ref;
-    *data->ref = user->state;
-    if (global_state_changes)
-        user->global = *data->ref;
+    struct pass_src *user = get_user_info(info);
+
+    // leftmost is representative
+    rea__union(data->ref, user->src);
+
+    struct edge_storage *node = *data->ref;
+    struct edge_storage *nsrc = *user->src;
+    node->accepting = nsrc->accepting;
 }
 
-struct apan0 {
-    void **ec;
-};
-
-static
-int apano0(void **ref, void *info)
+void rea__concatenation(void **dst, void **src)
 {
-    struct node_ref *data = path__node__data(ref);
-    struct apan0 *user = get_user_info(info);
-    return ec__in(user->ec, *data->ref);
-}
-
-void *rea__concatenation(void *a0, void *a1)
-{
-    // NOTES
-    // union of a0's accepting states with a1's initial state
-    // save union in a1's initial state and free a0's accepting states
-    // unless a0's initial state is one of a1's accepting states? kleene star?
-    // point the edges previously pointing to a1's accepting states to a0's
-    // initial state
-
-    void *accepting_states = get_accepting_states_refs(a0);
-    void *initial_state = a1;
-
-    struct initial_state info = { initial_state, a0 };
-    path__access(U_QT, &accepting_states, &info, match_1,
-        rea__concatenation_apply);
-
-    return info.global;
+    // union of dst accepting states and src initial state
+    void *as = get_accepting_states_refs(dst);
+    struct pass_src info = { src };
+    path__access(U_QT, &as, &info, match_1, aux_cat_union);
+    optimize(dst);
 }
 
 // END rea__concatenation
@@ -1170,20 +1491,25 @@ void *rea__concatenation(void *a0, void *a1)
 // BEGIN rea__kleene_star
 // -----------------------------------------------------------------------------
 
-void *rea__kleene_star(void *a)
+static
+void aux_ks_union(void **ref, void *info)
 {
-    // union of a's initial state with a's accepting states
-    void *accepting_states = get_accepting_states_refs(a);
-    void *initial_state = a;
+    struct node_edge_ref *data = path__node__data(ref);
+    struct pass_src *user = get_user_info(info);
 
-    struct initial_state info = { initial_state };
-    path__access(U_QT, &accepting_states, &info, match_1,
-        rea__concatenation_apply);
+    rea__union(user->src, data->ref);
 
-    struct edge_storage *node = a;
+    struct edge_storage *node = *data->ref;
     node->accepting = 1;
+}
 
-    return a;
+void rea__kleene_star(void **dst)
+{
+    // union of dst accepting states and dst initial state
+    void *as = get_accepting_states_refs(dst);
+    struct pass_src info = { dst };
+    path__access(U_QT, &as, &info, match_1, aux_ks_union);
+    optimize(dst);
 }
 
 // END rea__kleene_star
@@ -1193,9 +1519,13 @@ void *rea__kleene_star(void *a)
 // BEGIN rea__kleene_plus
 // -----------------------------------------------------------------------------
 
-void *rea__kleene_plus(void *a)
+void rea__kleene_plus(void **dst)
 {
-    return rea__concatenation(a, rea__kleene_star(rea__copy(a)));
+    void *copy = NULL;
+    rea__copy(&copy, dst);
+    rea__kleene_star(&copy);
+    rea__concatenation(dst, &copy);
+    optimize(dst);
 }
 
 // END rea__kleene_plus
@@ -1203,3 +1533,34 @@ void *rea__kleene_plus(void *a)
 
 // END OPERATORS
 // =============================================================================
+
+
+
+
+// BEGIN rea__set_accepting_states_data
+// -----------------------------------------------------------------------------
+
+struct pass_data {
+    void *ptr;
+};
+
+static
+void set_data_ptr(void **ref, void *info)
+{
+    struct node_edge_ref *data = path__node__data(ref);
+    struct edge_storage *node = *data->ref;
+    struct pass_data *user = get_user_info(info);
+    void **dptr = node__data(node, sizeof(struct edge_storage));
+    *dptr = user->ptr;
+}
+
+void rea__set_accepting_states_data(void **ref, void *data)
+{
+    void *as = get_accepting_states(ref);
+
+    struct pass_data info = { data };
+    path__access(U_QT, &as, &info, match_1, set_data_ptr);
+}
+
+// END rea__set_accepting_states_data
+// -----------------------------------------------------------------------------
