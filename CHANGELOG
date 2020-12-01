@@ -1,3 +1,14 @@
+0.3.0 [Unreleased]
+-----
+- Changed REAB (Regular Expression Automata Builder) term in previous CHANGELOG
+  version to simply "regular expression automata" and also rename reab.gv to
+  rea.gv in docs
+- Moved headers in include folder to libsapling subfolder for installation
+  purposes
+- Added Linux/Unix installation recipe in Makefile
+- Updated README
+
+
 0.2.0
 -----
 - Added CHANGELOG
@@ -5,8 +16,7 @@
 - Implemented regular expression automata
 - Implemented regular expression automata tests with graph visualization
 - Updated library implementation dependency chart
-- Added REAB (Regular Expression Automata Builder) implementation dependency
-  chart
+- Added regular expression automata implementation dependency chart
 - Moved dependency charts to docs folder
 - Updated README
 

@@ -1,9 +1,26 @@
 # libsapling
 
-Library for the sapling compiler and editor suite, mostly graph based generic collection implementations.
+Library for the sapling compiler and editor suite, mostly graph based generic
+collection implementations.
 
 **Disclaimer: the library is still in its initial development and the
-code is ridden with memory leaks, I'm going for functionality first.**
+code is ridden with memory leaks, I'm going for functionality first. Also I'm
+developing on Linux, so the Makefile and other scripts weren't written with
+developing on Windows in mind, but nowadays there are a lot of ways to set up
+a Linux environment on Windows.**
+
+## Installation
+
+Compile the library with ```make``` then run ```sudo make install``` on your
+Linux/Unix system, this will copy the ```libsapling``` headers to your system
+headers and the static library to your system libraries. You can then use them
+in your code like this.
+
+```
+#include <libsapling/stack.h>
+```
+
+Also remember to add ```-lsapling``` to your linker flags.
 
 ## Implementations
 
