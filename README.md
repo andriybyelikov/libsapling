@@ -107,8 +107,7 @@ rea|***|***|***
 \* For complete deallocation of a path based collection you can invoke path
 deletion targeting all nodes.
 
-\** Tree based collection traversal here is done in no useful order, just
-traversing all to get a Graphviz Dot dump.
+\** Tree based collection traversal here is done in inorder.
 
 \*** Regular Expression Automata graphs are constructed using specialized
 builder functions and operators. Deletion isn't currently provided and access

@@ -44,27 +44,32 @@ void next_e(void ***ref, void *info)
     *ref = choice ? &node->right : &node->left;
 }
 
+
+static
+void expand_leftmost_children(void **ref, void **stack)
+{
+    while (*ref != NULL) {
+        struct info_insert_ref iir = { sizeof(struct info_ref_choice), ref };
+        stack__insert(stack, &iir);
+        struct edge_storage *node = *ref;
+        ref = &node->left;
+    }
+}
+
 static
 void next_u(void ***ref, void *info)
 {
     struct infostack *is = info;
     struct info_impl *impl = is->impl;
     struct edge_storage *node = **ref;
-    struct info_insert_ref iir = { sizeof(struct info_ref_choice) };
 
-    if (node->left != NULL) {
-        iir.rc.ref = &node->left;
-        stack__insert(&impl->stack, &iir);
-    }
-    if (node->right != NULL) {
-        iir.rc.ref = &node->right;
-        stack__insert(&impl->stack, &iir);
-    }
-    if (impl->stack == NULL)
-        *ref = &node->left; // needs reference to NULL
-    else
+    expand_leftmost_children(&node->right, &impl->stack);
+    if (impl->stack == NULL) {
+        *ref = &impl->stack; // needs reference to NULL
+    } else {
         *ref = *(void **)stack__access(&impl->stack);
-    stack__delete(&impl->stack);
+        stack__delete(&impl->stack);
+    }
 }
 
 
@@ -309,6 +314,15 @@ void avl__access(int qt, void **ref, void *info,
     struct infostack is = { info, &impl };
     switch (qt) {
     case U_QT:
+        // init stack
+        expand_leftmost_children(ref, &impl.stack);
+        if (impl.stack == NULL) {
+            ref = &impl.stack; // needs reference to NULL
+        } else {
+            ref = *(void **)stack__access(&impl.stack);
+            stack__delete(&impl.stack);
+        }
+
         graph__uloop(ref, &is, match, next_u, apply);
         break;
     case E_QT:

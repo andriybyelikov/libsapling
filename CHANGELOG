@@ -6,6 +6,7 @@
 - Moved headers in include folder to libsapling subfolder for installation
   purposes
 - Added Linux/Unix installation recipe in Makefile
+- Modified AVL tree implementation so that traversal is done in inorder
 - Updated README
 
 

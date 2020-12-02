@@ -1,4 +1,5 @@
 #include <assert.h>
+#include <limits.h>
 #include <stdlib.h>
 #include <string.h>
 #include <time.h>
@@ -57,6 +58,20 @@ void check_exists(void **ref, void *info)
     }
 }
 
+struct info_ensure_inorder {
+    int last;
+};
+
+static
+void ensure_inorder(void **ref, void *info)
+{
+    struct infostack *is = info;
+    struct info_ensure_inorder *i = is->user;
+    int val = *(int *)node__data(*ref, avl__edge_storage());
+    assert(i->last <= val);
+    i->last = val;
+}
+
 int main(int argc, char *argv[])
 {
     int dump_dot = argc > 1 && !strcmp(argv[1], "-v");
@@ -96,6 +111,10 @@ int main(int argc, char *argv[])
         avl__access(E_QT, &avl, &ii, choose, match, check_exists);
         assert(ii.data == record[indexes[i]]);
     }
+
+    // ensure order in inorder traversal
+    struct info_ensure_inorder ieo = { INT_MIN };
+    avl__access(U_QT, &avl, &ieo, choose, match_1, ensure_inorder);
 
     // randomly delete values
     for (int i = 0; i < n; i++) {
