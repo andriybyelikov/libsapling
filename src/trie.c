@@ -18,6 +18,11 @@ size_t trie__edge_storage(void)
     return sizeof(struct edge_storage);
 }
 
+void *trie__node__data(void **ref)
+{
+    return node__data(*ref, trie__edge_storage());
+}
+
 
 struct info_impl {
     void *stack;
@@ -34,8 +39,7 @@ struct info_insert_mapping {
 static
 int match_e(void **ref, void *info)
 {
-    struct infostack *is = info;
-    struct info_impl *impl = is->impl;
+    struct info_impl *impl = get_impl_info(info);
     return strlen(impl->key) == impl->ki;
 }
 
@@ -45,10 +49,9 @@ int match_e(void **ref, void *info)
 static
 int mapping_choose(void **ref, void *info)
 {
-    struct infostack *is = info;
-    struct info_insert_mapping *i = is->user;
+    struct info_insert_mapping *i = get_user_info(info);
     void *node = *ref;
-    struct mapping *m = node__data(node, avl__edge_storage());
+    struct mapping *m = avl__node__data(ref);
     char a = i->mapping.byte;
     char b = m->byte;
     return a < b ? 0 : 1;
@@ -57,10 +60,9 @@ int mapping_choose(void **ref, void *info)
 static
 int mapping_match(void **ref, void *info)
 {
-    struct infostack *is = info;
-    struct info_insert_mapping *i = is->user;
+    struct info_insert_mapping *i = get_user_info(info);
     void *node = *ref;
-    struct mapping *m = node__data(node, avl__edge_storage());
+    struct mapping *m = avl__node__data(ref);
     char a = i->mapping.byte;
     char b = m->byte;
     return a == b;
@@ -70,10 +72,9 @@ static
 void mapping_getref(void **ref, void *info)
 {
     if (*ref != NULL) {
-        struct infostack *is = info;
-        struct info_insert_mapping *i = is->user;
+        struct info_insert_mapping *i = get_user_info(info);
         void *node = *ref;
-        struct mapping *m = node__data(node, avl__edge_storage());
+        struct mapping *m = avl__node__data(ref);
         i->mapping.node = &m->node;
     }
 }
@@ -92,8 +93,7 @@ void insert_edge_management_not_in(void **ref, struct edge_storage *node,
 static
 void next_insert(void ***ref, void *info)
 {
-    struct infostack *is = info;
-    struct info_impl *impl = is->impl;
+    struct info_impl *impl = get_impl_info(info);
     struct edge_storage *node = **ref;
     struct info_insert_mapping iim = {
         sizeof(struct info_insert_mapping),
@@ -130,8 +130,7 @@ struct info_insert_ref {
 static
 void next_delete(void ***ref, void *info)
 {
-    struct infostack *is = info;
-    struct info_impl *impl = is->impl;
+    struct info_impl *impl = get_impl_info(info);
     struct edge_storage *node = **ref;
 
     struct info_insert_ref iir = {
@@ -156,10 +155,9 @@ void expand_children(void **ref, void *info)
 {
     if (*ref != NULL) {
         void *node = *ref;
-        struct mapping *m = node__data(node, avl__edge_storage());
+        struct mapping *m = avl__node__data(ref);
         struct info_insert_ref iir = { sizeof(struct info_ref), { &m->node } };
-        struct infostack *is = info;
-        struct info_impl *impl = is->user;
+        struct info_impl *impl = get_user_info(info);
         stack__insert(&impl->stack, &iir);
     }
 }
@@ -167,8 +165,7 @@ void expand_children(void **ref, void *info)
 static
 void next_u(void ***ref, void *info)
 {
-    struct infostack *is = info;
-    struct info_impl *impl = is->impl;
+    struct info_impl *impl = get_impl_info(info);
     struct edge_storage *node = **ref;
 
     avl__access(U_QT, &node->edge_map, impl, NULL, match_1, expand_children);
@@ -183,8 +180,7 @@ void next_u(void ***ref, void *info)
 static
 void next_e(void ***ref, void *info)
 {
-    struct infostack *is = info;
-    struct info_impl *impl = is->impl;
+    struct info_impl *impl = get_impl_info(info);
     struct edge_storage *node = **ref;
     struct info_insert_mapping iim = {
         sizeof(struct info_insert_mapping),
@@ -218,8 +214,7 @@ void delete_edge_management(void **ref, struct edge_storage *node, void *info)
 {
     *ref = NULL;
 
-    struct infostack *is = info;
-    struct info_impl *impl = is->impl;
+    struct info_impl *impl = get_impl_info(info);
 
     
     while (impl->stack != NULL) {
@@ -298,12 +293,11 @@ static
 void dot_edge(void **ref, void *info)
 {
     if (*ref != NULL) {
-        struct infostack *is = info;
-        struct info_dump_dot_ext *idde = is->user;
+        struct info_dump_dot_ext *idde = get_user_info(info);
         FILE *fd = idde->idd->fd;
         void *parent = idde->parent;
         void *node = *ref;
-        struct mapping *m = node__data(node, avl__edge_storage());
+        struct mapping *m = avl__node__data(ref);
         fprintf(fd, "n%p->n%p[label=\"%c\"];", parent, m->node, m->byte);
     }
 }
@@ -312,8 +306,7 @@ static
 void apply_dump_dot(void **ref, void *info)
 {
     struct edge_storage *node = *ref;
-    struct infostack *is = info;
-    struct info_dump_dot *i = is->user;
+    struct info_dump_dot *i = get_user_info(info);
     FILE *fd = i->fd;
     void (*fpd)(FILE *, void **) = i->fpd;
     fprintf(fd, "n%p", node);

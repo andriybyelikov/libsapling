@@ -1,9 +1,26 @@
 # libsapling
 
-Library for the sapling compiler and editor suite, mostly graph based generic collection implementations.
+Library for the sapling compiler and editor suite, mostly graph based generic
+collection implementations.
 
 **Disclaimer: the library is still in its initial development and the
-code is ridden with memory leaks, I'm going for functionality first.**
+code is ridden with memory leaks, I'm going for functionality first. Also I'm
+developing on Linux, so the Makefile and other scripts weren't written with
+developing on Windows in mind, but nowadays there are a lot of ways to set up
+a Linux environment on Windows.**
+
+## Installation
+
+Compile the library with ```make``` then run ```sudo make install``` on your
+Linux/Unix system, this will copy the ```libsapling``` headers to your system
+headers and the static library to your system libraries. You can then use them
+in your code like this.
+
+```
+#include <libsapling/stack.h>
+```
+
+Also remember to add ```-lsapling``` to your linker flags.
 
 ## Implementations
 
@@ -90,8 +107,7 @@ rea|***|***|***
 \* For complete deallocation of a path based collection you can invoke path
 deletion targeting all nodes.
 
-\** Tree based collection traversal here is done in no useful order, just
-traversing all to get a Graphviz Dot dump.
+\** Tree based collection traversal here is done in inorder.
 
 \*** Regular Expression Automata graphs are constructed using specialized
 builder functions and operators. Deletion isn't currently provided and access
@@ -118,7 +134,7 @@ no failed assertion message pops up.
 To visualize the graph structure changes of a particular test do something like
 this (requires Graphviz Dot installed).
 
-```./test/avl_test.out -v | sh to_dot.sh```
+```./test/avl_test.out -v | sh vis.sh```
 
 This will create a ```vis``` folder with the state images chronologically
 enumerated.

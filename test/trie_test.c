@@ -11,7 +11,7 @@ struct info_insert {
 static
 void fpd_int(FILE *fd, void **ref)
 {
-    int val = *(int *)node__data(*ref, trie__edge_storage());
+    int val = *(int *)trie__node__data(ref);
     fprintf(fd, "%d", val);
 }
 
@@ -23,10 +23,9 @@ static
 void get_idx(void **ref, void *info)
 {
     if (*ref != NULL) {
-        struct infostack *is = info;
-        struct index *i = is->user;
+        struct index *i = get_user_info(info);
         void *node = *ref;
-        i->index = *(int *)node__data(node, trie__edge_storage());
+        i->index = *(int *)trie__node__data(ref);
     }
 }
 

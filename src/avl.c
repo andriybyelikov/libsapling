@@ -12,6 +12,11 @@ size_t avl__edge_storage(void)
     return sizeof(struct edge_storage);
 }
 
+void *avl__node__data(void **ref)
+{
+    return node__data(*ref, avl__edge_storage());
+}
+
 
 struct info_impl {
     void *stack;
@@ -32,8 +37,7 @@ struct info_insert_ref {
 static
 void next_e(void ***ref, void *info)
 {
-    struct infostack *is = info;
-    struct info_impl *impl = is->impl;
+    struct info_impl *impl = get_impl_info(info);
     struct edge_storage *node = **ref;
     int choice = impl->choose(*ref, info);
     struct info_insert_ref iir = {
@@ -44,27 +48,31 @@ void next_e(void ***ref, void *info)
     *ref = choice ? &node->right : &node->left;
 }
 
+
+static
+void expand_leftmost_children(void **ref, void **stack)
+{
+    while (*ref != NULL) {
+        struct info_insert_ref iir = { sizeof(struct info_ref_choice), ref };
+        stack__insert(stack, &iir);
+        struct edge_storage *node = *ref;
+        ref = &node->left;
+    }
+}
+
 static
 void next_u(void ***ref, void *info)
 {
-    struct infostack *is = info;
-    struct info_impl *impl = is->impl;
+    struct info_impl *impl = get_impl_info(info);
     struct edge_storage *node = **ref;
-    struct info_insert_ref iir = { sizeof(struct info_ref_choice) };
 
-    if (node->left != NULL) {
-        iir.rc.ref = &node->left;
-        stack__insert(&impl->stack, &iir);
-    }
-    if (node->right != NULL) {
-        iir.rc.ref = &node->right;
-        stack__insert(&impl->stack, &iir);
-    }
-    if (impl->stack == NULL)
-        *ref = &node->left; // needs reference to NULL
-    else
+    expand_leftmost_children(&node->right, &impl->stack);
+    if (impl->stack == NULL) {
+        *ref = &impl->stack; // needs reference to NULL
+    } else {
         *ref = *(void **)stack__access(&impl->stack);
-    stack__delete(&impl->stack);
+        stack__delete(&impl->stack);
+    }
 }
 
 
@@ -218,8 +226,7 @@ void insert_edge_management(void **ref, struct edge_storage *node, void *info)
     *ref = node;
 
     int h = 1;
-    struct infostack *is = info;
-    struct info_impl *impl = is->impl;
+    struct info_impl *impl = get_impl_info(info);
 
     while (impl->stack != NULL && h) {
         struct info_ref_choice *rc = stack__access(&impl->stack);
@@ -266,8 +273,7 @@ void delete_edge_management(void **ref, struct edge_storage *node, void *info)
             balance_left(ref, &h, DELETE_MODE);
     }
 
-    struct infostack *is = info;
-    struct info_impl *impl = is->impl;
+    struct info_impl *impl = get_impl_info(info);
 
     while (impl->stack != NULL && h) {
         struct info_ref_choice *rc = stack__access(&impl->stack);
@@ -309,6 +315,15 @@ void avl__access(int qt, void **ref, void *info,
     struct infostack is = { info, &impl };
     switch (qt) {
     case U_QT:
+        // init stack
+        expand_leftmost_children(ref, &impl.stack);
+        if (impl.stack == NULL) {
+            ref = &impl.stack; // needs reference to NULL
+        } else {
+            ref = *(void **)stack__access(&impl.stack);
+            stack__delete(&impl.stack);
+        }
+
         graph__uloop(ref, &is, match, next_u, apply);
         break;
     case E_QT:
@@ -324,8 +339,7 @@ static
 void apply_dump_dot(void **ref, void *info)
 {
     struct edge_storage *node = *ref;
-    struct infostack *is = info;
-    struct info_dump_dot *i = is->user;
+    struct info_dump_dot *i = get_user_info(info);
     FILE *fd = i->fd;
     void (*fpd)(FILE *, void **) = i->fpd;
     fprintf(fd, "n%p[label=\"", node);

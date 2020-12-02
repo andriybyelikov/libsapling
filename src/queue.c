@@ -7,6 +7,11 @@ size_t queue__edge_storage(void)
     return path__edge_storage();
 }
 
+void *queue__node__data(void **ref)
+{
+    return path__node__data(ref);
+}
+
 
 void queue__insert(void **ref, void *info)
 {
@@ -22,7 +27,7 @@ static
 void get_data(void **ref, void *info)
 {
     if (*ref != NULL)
-        **(void ***)info = node__data(*ref, queue__edge_storage());
+        **(void ***)info = queue__node__data(ref);
 }
 
 void *queue__access(void **ref)

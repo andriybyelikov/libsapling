@@ -4,6 +4,7 @@
 #include "graph.h"
 
 size_t avl__edge_storage(void);
+void *avl__node__data(void **ref);
 
 typedef int (*choose_fn)(void **ref, void *info);
 

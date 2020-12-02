@@ -1,6 +1,6 @@
 LIBDIR  := lib
 OBJDIR  := obj
-INCDIR  := include
+INCDIR  := include/libsapling
 SRCDIR  := src
 TESTDIR	:= test
 
@@ -13,7 +13,7 @@ OBJECTS := $(addprefix $(OBJDIR)/, $(notdir $(SOURCES:.c=.o)))
 LIBRARY := $(LIBDIR)/libsapling.a
 TESTS   := $(patsubst %.c, %.out, $(wildcard $(TESTDIR)/*.c))
 
-.PHONY: all library tests clean run_tests
+.PHONY: all library tests clean run_tests install
 
 all: library tests
 
@@ -38,3 +38,7 @@ clean:
 
 run_tests: tests
 	sh run_tests.sh
+
+install:
+	cp -a $(INCDIR) /usr/local/include
+	cp $(LIBRARY) /usr/local/lib

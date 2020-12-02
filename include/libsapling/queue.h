@@ -5,6 +5,7 @@
 #include <stdio.h>
 
 size_t queue__edge_storage(void);
+void *queue__node__data(void **ref);
 
 void queue__insert(void **ref, void *info);
 void queue__delete(void **ref);

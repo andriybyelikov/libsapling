@@ -18,7 +18,7 @@ void dump_dot(void **ref, int dump_copies, void (*fpd)(FILE *, void **))
 static
 void fpd_int(FILE *fd, void **ref)
 {
-    void **data_ref = node__data(*ref, rea__edge_storage());
+    void **data_ref = rea__node__data(ref);
     void *data_ptr = *data_ref;
     int val = *(int *)data_ptr;
     fprintf(fd, "%d", val);

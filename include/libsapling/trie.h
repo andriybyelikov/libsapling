@@ -4,6 +4,7 @@
 #include "graph.h"
 
 size_t trie__edge_storage(void);
+void *trie__node__data(void **ref);
 
 void trie__insert(void **ref, const char *key, void *info);
 void trie__delete(void **ref, const char *key);

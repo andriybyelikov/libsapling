@@ -1,3 +1,21 @@
+0.3.0
+-----
+- Changed REAB (Regular Expression Automata Builder) term in previous CHANGELOG
+  version to simply "regular expression automata" and also rename reab.gv to
+  rea.gv in docs
+- Moved headers in include folder to libsapling subfolder for installation
+  purposes
+- Added Linux/Unix installation recipe in Makefile
+- Modified AVL tree implementation so that traversal is done in inorder
+- Renamed to_dot.sh to vis.sh
+- Lifted general implementation from rea.c
+- Implemented get_user_info and get_impl_info functions and replaced where
+  expressions were used
+- Implemented node__data functions for all collections and replaced where
+  expressions were used
+- Updated README
+
+
 0.2.0
 -----
 - Added CHANGELOG
@@ -5,8 +23,7 @@
 - Implemented regular expression automata
 - Implemented regular expression automata tests with graph visualization
 - Updated library implementation dependency chart
-- Added REAB (Regular Expression Automata Builder) implementation dependency
-  chart
+- Added regular expression automata implementation dependency chart
 - Moved dependency charts to docs folder
 - Updated README
 

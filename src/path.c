@@ -9,6 +9,11 @@ size_t path__edge_storage(void)
     return sizeof(struct edge_storage);
 }
 
+void *path__node__data(void **ref)
+{
+    return node__data(*ref, path__edge_storage());
+}
+
 
 struct info_impl {
     int deletion_happened;
@@ -17,8 +22,7 @@ struct info_impl {
 static
 void next(void ***ref, void *info)
 {
-    struct infostack *is = info;
-    struct info_impl *i = is->impl;
+    struct info_impl *i = get_impl_info(info);
     if (i->deletion_happened) {
         i->deletion_happened = 0;
     } else {
@@ -47,8 +51,7 @@ static
 void delete_edge_management(void **ref, struct edge_storage *node, void *info)
 {
     *ref = node->next;
-    struct infostack *is = info;
-    struct info_impl *i = is->impl;
+    struct info_impl *i = get_impl_info(info);
     i->deletion_happened = 1;
 }
 
@@ -104,8 +107,7 @@ static
 void apply_dump_dot(void **ref, void *info)
 {
     struct edge_storage *node = *ref;
-    struct infostack *is = info;
-    struct info_dump_dot *i = is->user;
+    struct info_dump_dot *i = get_user_info(info);
     FILE *fd = i->fd;
     void (*fpd)(FILE *, void **) = i->fpd;
     fprintf(fd, "n%p[label=\"", node);

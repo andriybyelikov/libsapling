@@ -62,12 +62,15 @@ void *node__data(void *ref, size_t edge_storage);
 // Returns a pointer to where the node's data should be.
 
 
-// common info structs
+// info utils
 
 struct infostack {
     void *user;
     void *impl;
 };
+
+void *get_user_info(void *info);
+void *get_impl_info(void *info);
 
 struct info_dump_dot {
     FILE *fd;

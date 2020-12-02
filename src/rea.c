@@ -6,35 +6,6 @@
 #include "text.h"
 #include "rea.h"
 
-// implementation to be lifted
-// -----------------------------------------------------------------------------
-static
-void *get_user_info(void *info)
-{
-    struct infostack *is = info;
-    return is->user;
-}
-
-static
-void *get_impl_info(void *info)
-{
-    struct infostack *is = info;
-    return is->impl;
-}
-
-static
-void *path__node__data(void **ref)
-{
-    return node__data(*ref, path__edge_storage());
-}
-
-static
-void *avl__node__data(void **ref)
-{
-    return node__data(*ref, avl__edge_storage());
-}
-// -----------------------------------------------------------------------------
-
 struct edge_storage {
     void *attributed_edges;
     struct edge_storage *anything_edge;
@@ -44,6 +15,11 @@ struct edge_storage {
 size_t rea__edge_storage(void)
 {
     return sizeof(struct edge_storage);
+}
+
+void *rea__node__data(void **ref)
+{
+    return node__data(*ref, rea__edge_storage());
 }
 
 
@@ -381,7 +357,7 @@ void add_ae_to_unvisited(void **ref, void *info)
 {
     if (*ref != NULL) {
         struct info_impl_u *user = get_user_info(info);
-        struct attributed_edge *ae = node__data(*ref, avl__edge_storage());
+        struct attributed_edge *ae = avl__node__data(ref);
 
         // add attributed edge children to unvisited
         add_to_unvisited(user, (void **)&ae->node);
@@ -483,12 +459,11 @@ static
 void dot_edge(void **ref, void *info)
 {
     if (*ref != NULL) {
-        struct infostack *is = info;
-        struct info_dump_dot_ext *idde = is->user;
+        struct info_dump_dot_ext *idde = get_user_info(info);
         FILE *fd = idde->idd->fd;
         void *parent = idde->parent;
         void *node = *ref;
-        struct attributed_edge *e = node__data(node, avl__edge_storage());
+        struct attributed_edge *e = avl__node__data(ref);
 
         // escape non-printable characters
         char x[2];
@@ -510,8 +485,7 @@ static
 void apply_dump_dot(void **ref, void *info)
 {
     struct edge_storage *node = *ref;
-    struct infostack *is = info;
-    struct info_dump_dot *i = is->user;
+    struct info_dump_dot *i = get_user_info(info);
     FILE *fd = i->fd;
     void (*fpd)(FILE *, void **) = i->fpd;
     fprintf(fd, "n%p", node);
