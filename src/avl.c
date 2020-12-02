@@ -12,6 +12,11 @@ size_t avl__edge_storage(void)
     return sizeof(struct edge_storage);
 }
 
+void *avl__node__data(void **ref)
+{
+    return node__data(*ref, avl__edge_storage());
+}
+
 
 struct info_impl {
     void *stack;
@@ -32,8 +37,7 @@ struct info_insert_ref {
 static
 void next_e(void ***ref, void *info)
 {
-    struct infostack *is = info;
-    struct info_impl *impl = is->impl;
+    struct info_impl *impl = get_impl_info(info);
     struct edge_storage *node = **ref;
     int choice = impl->choose(*ref, info);
     struct info_insert_ref iir = {
@@ -59,8 +63,7 @@ void expand_leftmost_children(void **ref, void **stack)
 static
 void next_u(void ***ref, void *info)
 {
-    struct infostack *is = info;
-    struct info_impl *impl = is->impl;
+    struct info_impl *impl = get_impl_info(info);
     struct edge_storage *node = **ref;
 
     expand_leftmost_children(&node->right, &impl->stack);
@@ -223,8 +226,7 @@ void insert_edge_management(void **ref, struct edge_storage *node, void *info)
     *ref = node;
 
     int h = 1;
-    struct infostack *is = info;
-    struct info_impl *impl = is->impl;
+    struct info_impl *impl = get_impl_info(info);
 
     while (impl->stack != NULL && h) {
         struct info_ref_choice *rc = stack__access(&impl->stack);
@@ -271,8 +273,7 @@ void delete_edge_management(void **ref, struct edge_storage *node, void *info)
             balance_left(ref, &h, DELETE_MODE);
     }
 
-    struct infostack *is = info;
-    struct info_impl *impl = is->impl;
+    struct info_impl *impl = get_impl_info(info);
 
     while (impl->stack != NULL && h) {
         struct info_ref_choice *rc = stack__access(&impl->stack);
@@ -338,8 +339,7 @@ static
 void apply_dump_dot(void **ref, void *info)
 {
     struct edge_storage *node = *ref;
-    struct infostack *is = info;
-    struct info_dump_dot *i = is->user;
+    struct info_dump_dot *i = get_user_info(info);
     FILE *fd = i->fd;
     void (*fpd)(FILE *, void **) = i->fpd;
     fprintf(fd, "n%p[label=\"", node);

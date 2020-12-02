@@ -65,8 +65,7 @@ void *node__allocate(size_t edge_storage, size_t data_storage)
 void graph__insert(void **ref, void *info, size_t edge_storage,
     edge_management_fn edge_management)
 {
-    struct infostack *is = info;
-    void *user = is->user;
+    void *user = get_user_info(info);
     const size_t data_storage = *(size_t *)user;
     const void *data = (char *)user + sizeof(size_t);
     struct edge_storage *node = node__allocate(edge_storage, data_storage);
@@ -96,4 +95,17 @@ void graph__delete(void **ref, void *info,
 void *node__data(void *ref, size_t edge_storage)
 {
     return (char *)ref + edge_storage;
+}
+
+
+void *get_user_info(void *info)
+{
+    struct infostack *is = info;
+    return is->user;
+}
+
+void *get_impl_info(void *info)
+{
+    struct infostack *is = info;
+    return is->impl;
 }

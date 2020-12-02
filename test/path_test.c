@@ -41,11 +41,10 @@ struct info_insert {
 static
 int insert_xending(void **ref, void *info)
 {
-    struct infostack *is = info;
-    struct info_insert *i = is->user;
+    struct info_insert *i = get_user_info(info);
     void *node = *ref;
     int a = i->data;
-    int b = *(int *)node__data(node, path__edge_storage());
+    int b = *(int *)path__node__data(ref);
     return i->x(a, b);
 }
 
@@ -62,10 +61,9 @@ struct info_match_parity {
 static
 int match_parity(void **ref, void *info)
 {
-    struct infostack *is = info;
-    struct info_match_parity *i = is->user;
+    struct info_match_parity *i = get_user_info(info);
     void *node = *ref;
-    int a = *(int *)node__data(node, path__edge_storage());
+    int a = *(int *)path__node__data(ref);
     return i->x(a);
 }
 
@@ -79,11 +77,10 @@ struct info_check_xending {
 static
 int check_xending(void **ref, void *info)
 {
-    struct infostack *is = info;
-    struct info_check_xending *i = is->user;
+    struct info_check_xending *i = get_user_info(info);
     void *node = *ref;
     int a = i->prev;
-    int b = *(int *)node__data(node, path__edge_storage());
+    int b = *(int *)path__node__data(ref);
     i->prev = b;
     return !(i->satisf = i->x(a, b));
 }
@@ -97,10 +94,9 @@ struct info_check_parity {
 static
 int check_parity(void **ref, void *info)
 {
-    struct infostack *is = info;
-    struct info_check_parity *i = is->user;
+    struct info_check_parity *i = get_user_info(info);
     void *node = *ref;
-    int a = *(int *)node__data(node, path__edge_storage());
+    int a = *(int *)path__node__data(ref);
     return !(i->satisf = i->x(a));
 }
 
@@ -108,7 +104,7 @@ int check_parity(void **ref, void *info)
 static
 void fpd_int(FILE *fd, void **ref)
 {
-    int val = *(int *)node__data(*ref, path__edge_storage());
+    int val = *(int *)path__node__data(ref);
     fprintf(fd, "%d", val);
 }
 

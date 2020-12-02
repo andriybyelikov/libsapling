@@ -134,7 +134,7 @@ no failed assertion message pops up.
 To visualize the graph structure changes of a particular test do something like
 this (requires Graphviz Dot installed).
 
-```./test/avl_test.out -v | sh to_dot.sh```
+```./test/avl_test.out -v | sh vis.sh```
 
 This will create a ```vis``` folder with the state images chronologically
 enumerated.

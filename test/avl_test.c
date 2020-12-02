@@ -20,29 +20,27 @@ struct info_insert {
 static
 int choose(void **ref, void *info)
 {
-    struct infostack *is = info;
-    struct info_insert *i = is->user;
+    struct info_insert *i = get_user_info(info);
     void *node = *ref;
     int a = i->data;
-    int b = *(int *)node__data(node, avl__edge_storage());
+    int b = *(int *)avl__node__data(ref);
     return a < b ? 0 : 1;
 }
 
 static
 int match(void **ref, void *info)
 {
-    struct infostack *is = info;
-    struct info_insert *i = is->user;
+    struct info_insert *i = get_user_info(info);
     void *node = *ref;
     int a = i->data;
-    int b = *(int *)node__data(node, avl__edge_storage());
+    int b = *(int *)avl__node__data(ref);
     return a == b;
 }
 
 static
 void fpd_int(FILE *fd, void **ref)
 {
-    int val = *(int *)node__data(*ref, avl__edge_storage());
+    int val = *(int *)avl__node__data(ref);
     fprintf(fd, "%d", val);
 }
 
@@ -50,10 +48,9 @@ static
 void check_exists(void **ref, void *info)
 {
     if (*ref != NULL) {
-        struct infostack *is = info;
-        struct info_insert *i = is->user;
+        struct info_insert *i = get_user_info(info);
         void *node = *ref;
-        int a = *(int *)node__data(node, avl__edge_storage());
+        int a = *(int *)avl__node__data(ref);
         i->data = a;
     }
 }
@@ -65,9 +62,8 @@ struct info_ensure_inorder {
 static
 void ensure_inorder(void **ref, void *info)
 {
-    struct infostack *is = info;
-    struct info_ensure_inorder *i = is->user;
-    int val = *(int *)node__data(*ref, avl__edge_storage());
+    struct info_ensure_inorder *i = get_user_info(info);
+    int val = *(int *)avl__node__data(ref);
     assert(i->last <= val);
     i->last = val;
 }

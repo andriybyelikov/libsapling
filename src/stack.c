@@ -7,6 +7,11 @@ size_t stack__edge_storage(void)
     return path__edge_storage();
 }
 
+void *stack__node__data(void **ref)
+{
+    return path__node__data(ref);
+}
+
 
 void stack__insert(void **ref, void *info)
 {
@@ -23,7 +28,7 @@ static
 void get_data(void **ref, void *info)
 {
     if (*ref != NULL)
-        **(void ***)info = node__data(*ref, stack__edge_storage());
+        **(void ***)info = stack__node__data(ref);
 }
 
 void *stack__access(void **ref)

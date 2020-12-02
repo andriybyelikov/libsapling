@@ -11,7 +11,7 @@ struct info_insert {
 static
 void fpd_int(FILE *fd, void **ref)
 {
-    int val = *(int *)node__data(*ref, stack__edge_storage());
+    int val = *(int *)stack__node__data(ref);
     fprintf(fd, "%d", val);
 }
 

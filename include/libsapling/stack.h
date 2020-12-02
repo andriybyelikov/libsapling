@@ -5,6 +5,7 @@
 #include <stdio.h>
 
 size_t stack__edge_storage(void);
+void *stack__node__data(void **ref);
 
 void stack__insert(void **ref, void *info);
 void stack__delete(void **ref);

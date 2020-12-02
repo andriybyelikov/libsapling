@@ -1,4 +1,4 @@
-0.3.0 [Unreleased]
+0.3.0
 -----
 - Changed REAB (Regular Expression Automata Builder) term in previous CHANGELOG
   version to simply "regular expression automata" and also rename reab.gv to
@@ -7,6 +7,12 @@
   purposes
 - Added Linux/Unix installation recipe in Makefile
 - Modified AVL tree implementation so that traversal is done in inorder
+- Renamed to_dot.sh to vis.sh
+- Lifted general implementation from rea.c
+- Implemented get_user_info and get_impl_info functions and replaced where
+  expressions were used
+- Implemented node__data functions for all collections and replaced where
+  expressions were used
 - Updated README
 
 

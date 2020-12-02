@@ -4,6 +4,7 @@
 #include "graph.h"
 
 size_t rea__edge_storage(void);
+void *rea__node__data(void **ref);
 
 void rea__access(int qt, void **ref, void *info,
     match_fn match, apply_fn apply);

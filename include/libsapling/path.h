@@ -4,6 +4,7 @@
 #include "graph.h"
 
 size_t path__edge_storage(void);
+void *path__node__data(void **ref);
 
 void path__insert(void **ref, void *info, match_fn match);
 void path__delete(int qt, void **ref, void *info, match_fn match);
