@@ -125,3 +125,27 @@ void path__dump_dot(FILE *fd, void **ref, void (*fpd)(FILE *fd, void **ref))
     path__access(U_QT, ref, &info, match_1, apply_dump_dot);
     fprintf(fd, "}\n");
 }
+
+
+struct path_print {
+    FILE *fd;
+    void (*fpd)(FILE *fd, void **ref);
+    const char *separator;
+};
+
+static
+void path__print_apply(void **ref, void *info)
+{
+    struct path_print *user = get_user_info(info);
+    user->fpd(user->fd, ref);
+    fprintf(user->fd, user->separator);
+}
+
+void path__print(FILE *fd, void **ref, void (*fpd)(FILE *fd, void **ref),
+    const char *begin, const char *separator, const char *end)
+{
+    fprintf(fd, begin);
+    struct path_print info = { fd, fpd, separator };
+    path__access(U_QT, ref, &info, match_1, path__print_apply);
+    fprintf(fd, end);
+}

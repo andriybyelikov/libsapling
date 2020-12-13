@@ -1,7 +1,7 @@
 # libsapling
 
-Library for the sapling compiler and editor suite, mostly graph based generic
-collection implementations.
+Library for the ```sapling``` [compiler](https://github.com/andriybyelikov/sapling)
+and [editor](https://github.com/andriybyelikov/sapling-gui) suite
 
 **Disclaimer: the library is still in its initial development and the
 code is ridden with memory leaks, I'm going for functionality first. Also I'm
@@ -24,7 +24,7 @@ Also remember to add ```-lsapling``` to your linker flags.
 
 ## Implementations
 
-### Generic collections
+### General graph based collections
 
 - Path
 - Stack
@@ -32,13 +32,17 @@ Also remember to add ```-lsapling``` to your linker flags.
 - AVL Tree
 - Trie
 
-### Specialized collections
+### Compiler implementation
 
 - Regular Expression Automata
+- Terminal
+- Parse Tree
 
 ### Other
 
 - C-style string escaping/unescaping
+- Typed general collections (experimental, currently only for
+```stack```)
 
 ## General Usage
 
