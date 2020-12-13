@@ -5,7 +5,7 @@ digraph
 
     subgraph cluster_gbc
     {
-        label="Graph Based Collections";
+        label="General Graph Based Collections";
 
         _graph[label="graph"];
         all[shape=none;label="*"];
@@ -25,11 +25,18 @@ digraph
             trie[label="trie*"];
             trie->avl,stack;
         }
+    }
 
+    subgraph cluster_compiler {
+        label="Compiler Implementation";
         rea[label="rea*"];
         rea->path,queue,avl;
+        terminal;
+        parse_tree[label="parse_tree*"];
+        parse_tree->path,queue;
     }
 
     text;
     rea->text;
+    typed_stack->stack;
 }

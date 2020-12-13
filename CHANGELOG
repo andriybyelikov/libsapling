@@ -1,3 +1,13 @@
+0.4.0
+-----
+- Implemented parse tree building and navigation
+- Implemented parse tree tests with graph visualization
+- Moved terminal implementation from sapling compiler
+- Implemented path printing
+- Defined macro for defining file scope typed stack operations
+- Updated library implementation dependency chart
+- Updated README
+
 0.3.0
 -----
 - Changed REAB (Regular Expression Automata Builder) term in previous CHANGELOG

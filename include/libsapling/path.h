@@ -12,5 +12,7 @@ void path__access(int qt, void **ref, void *info, match_fn match,
     apply_fn apply);
 
 void path__dump_dot(FILE *fd, void **ref, void (*fpd)(FILE *fd, void **ref));
+void path__print(FILE *fd, void **ref, void (*fpd)(FILE *fd, void **ref),
+    const char *begin, const char *separator, const char *end);
 
 #endif
