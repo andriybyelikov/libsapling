@@ -1,0 +1,5 @@
+<map id="/media/data/repositories/libsapling/include/libsapling/dm/typed/common_impl_typed_stack_queue.h" name="/media/data/repositories/libsapling/include/libsapling/dm/typed/common_impl_typed_stack_queue.h">
+<area shape="rect" id="node1" title="Implementation of the stack and queue typed interfaces as a parametrized macro." alt="" coords="97,5,301,76"/>
+<area shape="rect" id="node2" href="$typed__queue_8h.html" title="Typed queue interface implementation." alt="" coords="5,124,188,180"/>
+<area shape="rect" id="node3" href="$typed__stack_8h.html" title="Typed stack interface implementation." alt="" coords="212,124,395,180"/>
+</map>

@@ -1,0 +1,8 @@
+digraph
+{
+    _graph[label="graph"];
+    path,avl->_graph;
+    stack,queue->path;
+    equivalence_class->queue;
+    trie->avl;
+}

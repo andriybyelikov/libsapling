@@ -1,0 +1,10 @@
+<map id="/media/data/repositories/libsapling/include/libsapling/dm/typed/typed_equivalence_class.h" name="/media/data/repositories/libsapling/include/libsapling/dm/typed/typed_equivalence_class.h">
+<area shape="rect" id="node1" title="Typed equivalence class interface implementation." alt="" coords="63,5,305,61"/>
+<area shape="rect" id="node2" href="$equivalence__class_8h.html" title="Equivalence class implementation." alt="" coords="5,109,168,136"/>
+<area shape="rect" id="node8" href="$typed__adapters_8h.html" title="Implementation of typed adapters for predicate and apply functions." alt="" coords="193,109,373,136"/>
+<area shape="rect" id="node3" href="$graph_8h.html" title="Graph implementation." alt="" coords="151,184,217,211"/>
+<area shape="rect" id="node4" title=" " alt="" coords="17,259,87,285"/>
+<area shape="rect" id="node5" title=" " alt="" coords="111,259,172,285"/>
+<area shape="rect" id="node6" href="$idiom_8h.html" title=" " alt="" coords="196,259,260,285"/>
+<area shape="rect" id="node7" href="$logic_8h.html" title="Logic related definitions." alt="" coords="284,259,367,285"/>
+</map>

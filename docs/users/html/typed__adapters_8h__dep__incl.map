@@ -1,0 +1,6 @@
+<map id="/media/data/repositories/libsapling/include/libsapling/dm/typed/typed_adapters.h" name="/media/data/repositories/libsapling/include/libsapling/dm/typed/typed_adapters.h">
+<area shape="rect" id="node1" title="Implementation of typed adapters for predicate and apply functions." alt="" coords="241,5,425,61"/>
+<area shape="rect" id="node2" href="$typed__avl_8h.html" title="Typed AVL interface implementation." alt="" coords="5,109,188,165"/>
+<area shape="rect" id="node3" href="$typed__equivalence__class_8h.html" title="Typed equivalence class interface implementation." alt="" coords="212,109,453,165"/>
+<area shape="rect" id="node4" href="$typed__path_8h.html" title="Typed path interface implementation." alt="" coords="477,109,660,165"/>
+</map>

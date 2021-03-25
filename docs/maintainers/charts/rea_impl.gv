@@ -1,0 +1,57 @@
+digraph
+{
+    compound=true;
+    node[shape=note];
+
+
+    rea__edge_storage;
+    asterisk[shape=none;label="*"];
+    asterisk->rea__edge_storage;
+
+    rea__attributed_edge;
+    rea__attributed_edges;
+    rea__attributed_edges->rea__attributed_edge;
+    hash[shape=none;label="#"];
+    hash->rea__attributed_edges;
+
+    rea[label="rea*#"];
+
+    rea__insert_state[label="rea__insert_state*"];
+    subgraph cluster_builders {
+        label="Builders";
+        rea__literal[label="rea__literal*#"];
+        rea__class[label="rea__class*#"];
+        rea__anything[label="rea__anything*"];
+        rea__copy[label="rea__copy*#"];
+    }
+    rea__literal->rea__insert_state[ltail=cluster_builders];
+    rea__copy->rea;
+
+    subgraph cluster_operators {
+    }
+    
+    
+    
+
+    // A
+    rea__minimize[label="rea__minimize*#"];
+    rea__minimize->rea,rea__replace_node_refs;
+
+    rea__replace_node_refs[label="rea__replace_node_refs*#"];
+    rea__replace_node_refs->rea;
+    // operators
+    subgraph cluster_operators {
+        label="operators";
+        rea__union[label="rea__union*#"];
+        rea__concatenation,rea__kleene_plus,rea__kleene_star;
+    }
+    rea__node_ec_defs;
+    rea__union,rea__replace_node_refs->rea__node_ec_defs;
+    rea__union->rea__replace_node_refs,rea;
+    rea__concatenation->rea__union;
+    rea__kleene_star->rea__union;
+    rea__kleene_plus->rea__copy,rea__kleene_star,rea__concatenation;
+
+    rea__accepting_states[label="rea__accepting_states*#"];
+    rea__accepting_states->rea;
+}
