@@ -1,3 +1,18 @@
+0.5.0 [Unreleased]
+-----
+- Removed `.*__edge_storage` functions
+- Renamed `match` functions to `predicate`
+- Prefixed header guards with `LIBSAPLING_`
+- Transformed macro symbols to uppercase
+- Implemented typed interfaces
+- Distilled common implementations as parametrized macros:
+  - Stack and queue
+  - Typed stack and queue interface
+- Added `UNUSED` function parameter decorator in idiom.h
+- Added Doxygen documentation, for users, documenting the API, and for
+  maintainers, documenting implementation details
+- Switched to using GNU Autotools for building, testing and installing
+
 0.4.0
 -----
 - Implemented parse tree building and navigation
