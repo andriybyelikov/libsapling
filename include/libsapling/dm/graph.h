@@ -217,7 +217,7 @@ void graph__print_data(FILE *stream, node_t *ref,
  */
 void graph__dump_dot(FILE *stream, node_t *ref,
     all_access_adapter_fn access_adapter, fpfnode_fn fpfnode,
-    fpfdata_fn fpfdata);
+    fpfdata_fn fpfdata, const char *graph_attributes);
 
 /**
  * @brief Returns the number of items contained in the set.

@@ -134,9 +134,10 @@ void graph__dump_dot_aux0(node_t *ref, const struct info_stack *info)
 
 void graph__dump_dot(FILE *stream, node_t *ref,
     all_access_adapter_fn access_adapter, fpfnode_fn fpfnode,
-    fpfdata_fn fpfdata)
+    fpfdata_fn fpfdata, const char *graph_attributes)
 {
-    fprintf(stream, "digraph{ref[label=\"&\";shape=square];");
+    fprintf(stream, "digraph{%sref[label=\"&\";shape=square];",
+        graph_attributes);
     if (*ref != NULL)
         fprintf(stream, "ref->n%p;", *ref);
     struct info_print info = { stream, fpfnode, fpfdata };

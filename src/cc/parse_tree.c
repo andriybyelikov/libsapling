@@ -169,5 +169,6 @@ void fpfdata_str(FILE *stream, const void *data)
 
 void parse_tree__dump_dot(FILE *stream, node_t *ref)
 {
-    graph__dump_dot(stream, ref, all_access_adapter, dump_dot_aux0, fpfdata_str);
+    graph__dump_dot(stream, ref, all_access_adapter, dump_dot_aux0,
+        fpfdata_str, "");
 }

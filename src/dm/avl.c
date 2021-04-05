@@ -335,11 +335,18 @@ void dump_dot_aux0(FILE *stream, const node_t node, fpfdata_fn fpfdata)
 
     if (node->left != NULL)
         fprintf(stream, "n%p->n%p;", node, node->left);
+    else
+        fprintf(stream, "n%p->n%p[style=invis];n%p[shape=none;label=\"\"];",
+            node, node + 1, node + 1);
+
     if (node->right != NULL)
         fprintf(stream, "n%p->n%p;", node, node->right);
+    else
+        fprintf(stream, "n%p->n%p[style=invis];n%p[shape=none;label=\"\"];",
+            node, node + 1, node + 1);
 }
 
 void avl__dump_dot(FILE *stream, node_t *ref, fpfdata_fn fpfdata)
 {
-    graph__dump_dot(stream, ref, all_access_adapter, dump_dot_aux0, fpfdata);
+    graph__dump_dot(stream, ref, all_access_adapter, dump_dot_aux0, fpfdata, "");
 }

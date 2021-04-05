@@ -1,6 +1,6 @@
 #include <stdlib.h>
 #include "libsapling/idiom.h"
-#include "libsapling/dm/typed/typed_path.h"
+#include "libsapling/dm/path.h"
 #include "libsapling/cc/production.h"
 
 IMPLEMENT_TYPED_PATH(body, int, NULL)

@@ -119,7 +119,7 @@ void dump_dot_aux0(FILE *stream, const node_t node, fpfdata_fn fpfdata)
 
 void path__dump_dot(FILE *stream, node_t *ref, fpfdata_fn fpfdata)
 {
-    graph__dump_dot(stream, ref, all_access_adapter, dump_dot_aux0, fpfdata);
+    graph__dump_dot(stream, ref, all_access_adapter, dump_dot_aux0, fpfdata, "");
 }
 
 int path__length(node_t *ref)
@@ -144,7 +144,6 @@ int pos_predicate(UNUSED const node_t *ref, const struct info_stack *info)
 static
 void pos_apply(node_t *ref, const struct info_stack *info)
 {
-    node_t node = *ref;
     struct position *user = info->user;
 
     user->ref = ref;

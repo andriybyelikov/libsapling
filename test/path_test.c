@@ -3,7 +3,7 @@
 #include <stdlib.h>
 #include <time.h>
 #include "test/test_utils.h"
-#include "libsapling/dm/typed/typed_path.h"
+#include "libsapling/dm/path.h"
 #include "libsapling/idiom.h"
 
 static

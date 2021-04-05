@@ -1,0 +1,15 @@
+#!/bin/sh
+
+mkdir -p viz
+
+read line
+dir=viz/$(echo "$line" | sed 's/test\///')
+rm -rf $dir
+mkdir -p $dir
+
+while IFS= read line
+do
+    sym=$line
+    read -r line
+    echo -E "$line" | dot -Tsvg -o $dir/$sym\_0.svg
+done

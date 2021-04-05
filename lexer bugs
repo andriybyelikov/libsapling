@@ -1,0 +1,9 @@
+// can't make union on NULL graph
+node_t a = NULL;
+lexer__literal(&a, "\"a\"");
+node_t t = NULL;
+lexer__union(&t, &a); -> segv
+-- no general fix (empty set union graph is base case) -> assert dst not NULL
+-- or create new node and copy everything but that is the same as lexer__copy
+
+i tried using avl with existential quantifier like it was a path (see state__equ ae__access in lexer)

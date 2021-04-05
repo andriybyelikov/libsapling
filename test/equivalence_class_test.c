@@ -8,42 +8,14 @@ void fpf_int(FILE *stream, const void *data)
     fprintf(stream, "%d", *(int *)data);
 }
 
-IMPLEMENT_TYPED_EQUIVALENCE_CLASS(equivalent_states, int, fpf_int)
-
-
-struct i_in {
-    int object;
-    int in;
-};
-
 static
-int p_in(const int *data, void *info)
+int equi(const void *a, const void *b)
 {
-    struct info_insert *i = info;
-    struct i_in *i2 = i->info;
-    return *data == i2->object;
+    return *(int *)a == *(int *)b;
 }
 
-static
-void a_in(UNUSED int *data, void *info)
-{
-    struct info_insert *i = info;
-    struct i_in *i2 = i->info;
+IMPLEMENT_TYPED_EQUIVALENCE_CLASS(equivalent_states, int, fpf_int, equi)
 
-    i2->in = 1;
-}
-
-static
-int equivalent_states__in(node_t *ref, int state)
-{
-    if (state == equivalent_states__access_representative(ref))
-        return 1;
-    else {
-        struct i_in info = { state, 0 };
-        equivalent_states__access_non_representatives(E_QT, ref, &info, p_in, a_in);
-        return info.in;
-    }
-}
 
 struct i_invalidate_optimized_states {
     int *optimized_states;

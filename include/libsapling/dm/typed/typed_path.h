@@ -6,7 +6,6 @@
  * @brief Typed path interface implementation
  */
 
-#include "libsapling/dm/path.h"
 #include "libsapling/dm/typed/typed_adapters.h"
 
 #define IMPLEMENT_TYPED_PATH(SYM, TYPE, FPF)                                  \
@@ -51,7 +50,7 @@ void SYM##__dump_dot(FILE *stream, node_t *ref)                         \
 static                                                                        \
 int SYM##__length(const node_t *ref)                                          \
 {                                                                             \
-    path__length(ref);                                                        \
+    return path__length(ref);                                                 \
 }                                                                             \
                                                                               \
 static                                                                        \
@@ -60,6 +59,7 @@ TYPE *SYM##__position(node_t *ref, int pos)                                   \
     node_t *subpath = path__position(ref, pos);                               \
     if (subpath != NULL && *subpath != NULL)                                  \
         return (TYPE *)path__data(*subpath);                                  \
+    return NULL;                                                              \
 }
 
 #endif

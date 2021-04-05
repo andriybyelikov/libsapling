@@ -18,7 +18,6 @@ enum qt {
 
 /**
  * @brief Generic comparator function prototype.
- * @returns Should return the difference between the two values.
  */
 typedef int (*cmp_t)(const void *a, const void *b);
 

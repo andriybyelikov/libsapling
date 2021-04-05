@@ -58,6 +58,16 @@ Doxygen documentation can be built.
 
 ## For mantainers
 
+Build without optimization and run the tests like this.
+
+```
+$ mkdir build
+$ cd build
+$ ../configure CFLAGS='-O0 -g'
+$ make check
+```
+
+
 ### Implementation documentation
 
 I have in mind writing special documentation for mantainers.
@@ -76,12 +86,19 @@ this (requires Graphviz Dot installed).
 
 ```$ test/avl_test -g | sh vis.sh```
 
-This will create a ```vis``` folder with the state images chronologically
+This will create a ```viz``` folder with the state images chronologically
 enumerated.
 
-In the Regular Expression Automata test specify ```-v -c``` flags to create and
-visualize deep copies of the automata, testing ```rea__copy```.
+TODO: from the build folder
 
+```
+make check
+test/lexer_test -g | sh ../tools/viz
+sh ../tools/gen_lexer_test_html > lexer_test.html
+```
+
+to generate an HTML file with all the generated automata from the lexer test
+rendered
 
 
 ### Functional design flaws
@@ -89,6 +106,8 @@ visualize deep copies of the automata, testing ```rea__copy```.
 predicateoverexposure solved
 
 existentialnullcheck solved
+
+struct info_insert indirect access to user information unsolved
 
 ### Contributing
 

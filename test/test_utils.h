@@ -6,6 +6,7 @@
 
 
 #define PARSE_OPTIONS()                                                       \
+printf("%s\n", argv[0]);                                                      \
 for (int i = 1; i < argc; i++)                                                \
     if (*argv[i] == '-')                                                      \
         switch (*(argv[i] + 1)) {                                             \
