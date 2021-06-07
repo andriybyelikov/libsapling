@@ -184,7 +184,7 @@ void dot_edge(attributed_edge *data, void *info)
 }
 
 static
-void dump_dot_aux0(FILE *stream, const node_t node, fpfdata_fn fpfdata)
+void dump_dot_aux0(FILE *stream, const node_t node, fpfdata_fn fpfdata, void *info)
 {
     fprintf(stream, "n%p", node);
     if (node->is_accepting_state) {
@@ -232,4 +232,10 @@ void *lexer__next_terminal(node_t *ref, struct lexer_state *sta)
 {
     lexer__access(E_QT, ref, sta, predicate_0, do_nothing);
     return *sta->ref_to_data;
+}
+
+void *lexer__next_terminal2(node_t *ref, struct lexer_state *sta)
+{
+    lexer__access(E_QT, ref, sta, predicate_0, do_nothing);
+    return sta->ref_to_data;
 }

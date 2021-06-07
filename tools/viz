@@ -7,9 +7,30 @@ dir=viz/$(echo "$line" | sed 's/test\///')
 rm -rf $dir
 mkdir -p $dir
 
+symtab=()
+symfreq=()
+
 while IFS= read line
 do
     sym=$line
+    if [ ! ${symtab[$sym]} ]
+    then
+        symtab+=($sym)
+        symfreq+=(0)
+    else
+        for i in "${!symtab[@]}"
+        do
+            if [[ "${symtab[$i]}" = "${sym}" ]]
+            then
+                index="${i}";
+            fi
+        done
+    fi
+
     read -r line
-    echo -E "$line" | dot -Tsvg -o $dir/$sym\_0.svg
+    echo -E "$line" | dot -Tpng -o $dir/$sym\_${symfreq[$index]}.png
+
+    f="${symfreq[$index]}"
+    ((f=f+1))
+    eval symfreq[index]=$f
 done

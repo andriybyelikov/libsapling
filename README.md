@@ -1,31 +1,41 @@
 # libsapling
 
-C library written for the *sapling*
-[compiler](https://github.com/andriybyelikov/sapling) and
-[editor](https://github.com/andriybyelikov/sapling-gui) suite.
-
-**Disclaimer: the library is still in its initial development and the
-code is ridden with memory leaks, I'm going for functionality first.**
+C library written for the sapling [compiler](https://github.com/andriybyelikov/sapling)
+and [editor](https://github.com/andriybyelikov/sapling-gui) suite.
 
 ---
 
-## Implementations (by domain)
 
-**```DATA MANAGEMENT [DM]```**
+**DISCLAIMER**
 
-```
-Path                Stack      Queue
-Equivalence class   AVL tree   Trie
-```
-
-**```COMPILER CONSTRUCTION [CC]```**
-
-```
-Text         Terminal   Production
-Parse Tree   Lexer      LR(0) Parser
-```
+This library is in early development and is NOT non-functionally fit for
+production. In particular, deallocation of dynamically allocated memory is not
+implemented.
 
 ---
+
+
+## Set of implementations by domain
+
+### Data Management (DM)
+
+Path ·
+Stack ·
+Queue ·
+Equivalence class ·
+AVL tree ·
+Trie
+
+### Compiler Construction (CC)
+
+Text ·
+Terminal ·
+Production ·
+Parse Tree ·
+Lexer
+
+---
+
 
 ## For users
 
@@ -45,7 +55,7 @@ $ sudo make install
 You can then use them in your code like this.
 
 ```
-#include <libsapling/data_management/stack.h>
+#include <libsapling/dm/stack.h>
 ```
 
 Also remember to add ```-lsapling``` to your linker flags.
@@ -56,7 +66,8 @@ Doxygen documentation can be built.
 
 ---
 
-## For mantainers
+
+## For maintainers
 
 Build without optimization and run the tests like this.
 
@@ -111,9 +122,14 @@ struct info_insert indirect access to user information unsolved
 
 ### Contributing
 
-Fork it and send me a PR. If I like parts of your code I will merge them.
-Otherwise just keep them to yourself.
+Before contributing please consider that for the future of this project I plan
+to write and use a custom LGPL-like license that is significantly stricter than
+the current zlib/libpng license I am currently using, with the necessary
+restrictions and exceptions to both protect the future of the project, by
+ensuring that improvements are shared back, and proprietary code that links
+with it from having to be shared.
 
-I'm accepting refactored code with either less lines of code or less
-information used or more modular code or new useful functionality. Check the
-Tasks GitHub project of this repository.
+I am mainly thinking in the context of commercial video games, which may
+benefit from porting but hiding content logic
+
+if not i will have to throw out your code

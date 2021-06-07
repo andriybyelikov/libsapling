@@ -24,10 +24,13 @@ static int flag_dump_dot = 0;                                                 \
 static                                                                        \
 void SYM##__output_state(node_t *ref)                                         \
 {                                                                             \
-    if (flag_print_data)                                                      \
+    if (flag_print_data) {                                                    \
         SYM##__print_data(stdout, ref);                                       \
-    else if (flag_dump_dot)                                                   \
+        printf("\n");                                                         \
+    } else if (flag_dump_dot) {                                               \
+        printf(#SYM "\n");                                                    \
         SYM##__dump_dot(stdout, ref);                                         \
+    } \
 }
 
 #endif

@@ -1,17 +1,29 @@
 0.5.0 [Unreleased]
 -----
-- Removed `.*__edge_storage` functions
-- Renamed `match` functions to `predicate`
+- Removed all ".*__edge_storage" functions
+- Renamed all "match" functions to "predicate"
+
 - Prefixed header guards with `LIBSAPLING_`
 - Transformed macro symbols to uppercase
 - Implemented typed interfaces
 - Distilled common implementations as parametrized macros:
-  - Stack and queue
-  - Typed stack and queue interface
+  - Stack and queue (first out buffer)
+  - Typed stack and queue interface (typed first out buffer)
 - Added `UNUSED` function parameter decorator in idiom.h
 - Added Doxygen documentation, for users, documenting the API, and for
   maintainers, documenting implementation details
-- Switched to using GNU Autotools for building, testing and installing
+- Scrapped manual Makefile in favor of GNU Autotools for building, testing and
+  installing
+- lexer:
+  - Fixed state comparison (comparison of attributed edges was being performed
+    with existential quantification on an AVL (search) instead of universal
+    quantification (traversal), also only one node's attributed edges were
+    compared with the other, if all that node's attributed edges were in the
+    second node, the states would be considered equal even if the second state
+    had all of the first node's attributed edges and more, e.g. only
+    `ae(s0) ⊆ ae(s1)` was being evaluated instead of
+    `ae(s0) ⊆ ae(s1) ∧ ae(s1) ⊆ ae(s0)`)
+  - Removed forced minimization after applying an operator
 
 0.4.0
 -----

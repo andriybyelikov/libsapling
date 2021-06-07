@@ -130,7 +130,7 @@ typedef void (*fpfdata_fn)(FILE *stream, const void *data);
  * @brief File print format node function prototype.
  */
 typedef void (*fpfnode_fn)(FILE *stream, const node_t node,
-    fpfdata_fn fpfdata);
+    fpfdata_fn fpfdata, void *impl);
 
 /**
  * @brief Generic access all nodes adapter function prototype.

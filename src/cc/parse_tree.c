@@ -150,7 +150,7 @@ void dump_dot_aux1(node_t *ref, const struct info_stack *info)
 }
 
 static
-void dump_dot_aux0(FILE *stream, const node_t node, fpfdata_fn fpfdata)
+void dump_dot_aux0(FILE *stream, const node_t node, fpfdata_fn fpfdata, void *impl)
 {
     fprintf(stream, "n%p[label=\"", node);
     if (fpfdata != NULL)

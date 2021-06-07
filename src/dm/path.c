@@ -94,7 +94,7 @@ void all_access_adapter(node_t *ref, void *info, apply_fn apply)
 
 
 static
-void print_data_aux0(FILE *stream, const node_t node, fpfdata_fn fpfdata)
+void print_data_aux0(FILE *stream, const node_t node, fpfdata_fn fpfdata, void *impl)
 {
     fpfdata(stream, path__data(node));
 }
@@ -106,7 +106,7 @@ void path__print_data(FILE *stream, node_t *ref, fpfdata_fn fpfdata)
 
 
 static
-void dump_dot_aux0(FILE *stream, const node_t node, fpfdata_fn fpfdata)
+void dump_dot_aux0(FILE *stream, const node_t node, fpfdata_fn fpfdata, void *impl)
 {
     fprintf(stream, "n%p[label=\"", node);
     if (fpfdata != NULL)

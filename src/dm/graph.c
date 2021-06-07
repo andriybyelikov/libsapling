@@ -105,7 +105,7 @@ void graph__print_data_aux0(node_t *ref, const struct info_stack *info)
         fprintf(user->stream, ", ");
     else
         user->first = 0;
-    user->fpfnode(user->stream, node, user->fpfdata);
+    user->fpfnode(user->stream, node, user->fpfdata, info->impl);
 }
 
 void graph__print_data(FILE *stream, node_t *ref,
@@ -113,14 +113,14 @@ void graph__print_data(FILE *stream, node_t *ref,
     fpfdata_fn fpfdata)
 {
     if (*ref == NULL) {
-        fprintf(stream, "{}\n");
+        fprintf(stream, "{}");
         return;
     }
 
     fprintf(stream, "{ ");
     struct info_print info = { stream, fpfnode, fpfdata, 1 };
     access_adapter(ref, &info, graph__print_data_aux0);
-    fprintf(stream, " }\n");
+    fprintf(stream, " }");
 }
 
 
@@ -129,7 +129,7 @@ void graph__dump_dot_aux0(node_t *ref, const struct info_stack *info)
 {
     const node_t node = *ref;
     struct info_print *user = info->user;
-    user->fpfnode(user->stream, node, user->fpfdata);
+    user->fpfnode(user->stream, node, user->fpfdata, info->impl);
 }
 
 void graph__dump_dot(FILE *stream, node_t *ref,
