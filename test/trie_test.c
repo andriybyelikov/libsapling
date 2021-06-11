@@ -1,62 +1,68 @@
 #include <assert.h>
-#include <string.h>
-#include "graph.h"
-#include "trie.h"
+#include "libsapling/dm/trie.h"
+#include "test_utils.h"
 
-struct info_insert {
-    size_t size;
+static
+void print_integer(FILE *stream, const void *data)
+{
+    fprintf(stream, "%d", **(int **)data);
+}
+
+IMPLEMENT_TYPED_TRIE(it, int, print_integer)
+
+
+struct index_key {
     int index;
+    int found;
 };
 
 static
-void fpd_int(FILE *fd, void **ref)
+int find_key_by_index(const int *data, void *info)
 {
-    int val = *(int *)trie__node__data(ref);
-    fprintf(fd, "%d", val);
-}
+    struct info_insert *ii = info;
+    struct index_key *user = ii->info;
 
-struct index {
-    int index;
-};
+    return **(int **)data == user->index;
+}
 
 static
-void get_idx(void **ref, void *info)
+void found_key(UNUSED int *data, void *info)
 {
-    if (*ref != NULL) {
-        struct index *i = get_user_info(info);
-        void *node = *ref;
-        i->index = *(int *)trie__node__data(ref);
-    }
+    struct info_insert *ii = info;
+    struct index_key *user = ii->info;
+
+    user->found = 1;
 }
+
+
+DEFINE_OUTPUT_STATE_FUNC(it)
 
 int main(int argc, char *argv[])
 {
-    int dump_dot = argc > 1 && !strcmp(argv[1], "-v");
+    PARSE_OPTIONS()
 
-    void *trie = NULL;
+    const char *keys[] = { "wealth", "beyond", "measure", "outlander", "dio",
+        "diocles", "diocletianus", "flavius", "flavian", "florianus" };
+    const int num_keys = sizeof(keys) / sizeof(const char *);
 
-    const char *words[] = {
-        "lorem", "ipsum", "dolor", "sit", "amet", "consectetur", "adipiscing",
-        "elit", "sed", "mollis", "wealth", "beyond", "measure", "outlander"
-    };
-    const size_t num_words = sizeof(words) / sizeof(const char *);
+    node_t trie = NULL;
 
-    struct info_insert ii = { .size = sizeof(int) };
-    for (int i = 0; i < num_words; i++) {
-        ii.index = i;
-        trie__insert(&trie, words[i], &ii);
-        if (dump_dot)
-            trie__dump_dot(stdout, &trie, fpd_int);
+    it__output_state(&trie);
+    for (int i = 0; i < num_keys; i++) {
+        it__insert(&trie, keys[i], i);
+        it__output_state(&trie);
     }
-    for (int i = 0; i < num_words; i++) {
-        struct index idx;
-        trie__access(E_QT, &trie, words[i], &idx, get_idx);
-        assert(i == idx.index);
+
+    for (int i = 0; i < num_keys; i++) {
+        struct index_key info = { i, 0 };
+        it__access(E_QT, &trie, keys[i], &info, find_key_by_index, found_key);
+        assert(info.found);
     }
-    for (int i = 0; i < num_words; i++) {
-        trie__delete(&trie, words[i]);
-        if (dump_dot)
-            trie__dump_dot(stdout, &trie, fpd_int);
+
+    for (int i = 0; i < num_keys; i++) {
+        it__delete(&trie, keys[i]);
+        it__output_state(&trie);
     }
+
     assert(trie == NULL);
 }

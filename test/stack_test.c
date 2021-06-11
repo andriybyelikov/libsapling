@@ -1,41 +1,33 @@
 #include <assert.h>
 #include <string.h>
-#include "graph.h"
-#include "stack.h"
+#include "libsapling/dm/stack.h"
+#include "libsapling/dm/typed/typed_fpfdata_common.h"
+#include "test/test_utils.h"
 
-struct info_insert {
-    size_t size;
-    int data;
-};
+IMPLEMENT_TYPED_STACK(integer_stack, int, fpfdata_int)
+DEFINE_OUTPUT_STATE_FUNC(integer_stack)
 
-static
-void fpd_int(FILE *fd, void **ref)
-{
-    int val = *(int *)stack__node__data(ref);
-    fprintf(fd, "%d", val);
-}
 
 int main(int argc, char *argv[])
 {
-    int dump_dot = argc > 1 && !strcmp(argv[1], "-v");
+    PARSE_OPTIONS()
 
-    void *stack = NULL;
+    // Output empty stack state
+    node_t stack = NULL;
+    integer_stack__output_state(&stack);
 
-    struct info_insert info = { sizeof(int) };
-    // push 1..10 and ensure pop in reverse order
+    // Push from 1 to 10 to the stack
     for (int i = 1; i <= 10; i++) {
-        info.data = i;
-        stack__insert(&stack, &info);
-        if (dump_dot)
-            stack__dump_dot(stdout, &stack, fpd_int);
+        integer_stack__insert(&stack, i);
+        integer_stack__output_state(&stack);
     }
+
+    // Pop from 10 to 1 from the stack
     for (int i = 10; i >= 1; i--) {
-        int val = *(int *)stack__access(&stack);
-        assert(val == i);
-        stack__delete(&stack);
-        if (dump_dot)
-            stack__dump_dot(stdout, &stack, fpd_int);
+        assert(integer_stack__delete(&stack) == i);
+        integer_stack__output_state(&stack);
     }
-    // assert all deleted
+
+    // Stack should now be empty
     assert(stack == NULL);
 }

@@ -1,0 +1,6 @@
+digraph
+{
+    stack,queue->first_out_buffer;
+    typed_stack->stack;
+    typed_queue->queue;
+}
