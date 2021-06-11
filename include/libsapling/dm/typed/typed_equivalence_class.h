@@ -28,7 +28,7 @@ IMPLEMENT_TYPED_ADAPTERS(SYM, TYPE, equivalence_class)                        \
                                                                               \
 static                                                                        \
 void SYM##__access_non_representatives(enum qt qt, node_t *ref, void *info,   \
-    SYM##__predicate_fn predicate, SYM##__apply_fn apply)                     \
+    SYM##__predicate_t predicate, SYM##__apply_t apply)                     \
 {                                                                             \
     TYPE *dat = info;   \
     struct SYM##__adapt a = { sizeof(TYPE), dat, info, predicate, apply };                              \

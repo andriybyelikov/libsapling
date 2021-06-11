@@ -141,18 +141,18 @@ int next_e(node_t **ref, const struct info_stack *info)
 }
 
 
-void lexer__access(enum qt qt, node_t *ref, void *info, predicate_fn predicate,
-    apply_fn apply)
+void lexer__access(enum qt qt, node_t *ref, void *info, predicate_t predicate,
+    apply_t apply)
 {
     struct info_impl_u impl = { NULL, NULL };
     struct info_stack is = { info, &impl };
-    next_fn next = qt == U_QT ? next_u : next_e;
+    next_t next = qt == U_QT ? next_u : next_e;
     graph__access(qt, ref, &is, predicate, apply, next);
 }
 
 
 static
-void all_access_adapter(node_t *ref, void *info, apply_fn apply)
+void all_access_adapter(node_t *ref, void *info, apply_t apply)
 {
     lexer__access(U_QT, ref, info, predicate_1, apply);
 }

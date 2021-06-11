@@ -1,5 +1,5 @@
-#ifndef LIBSAPLING_IDIOM
-#define LIBSAPLING_IDIOM
+#ifndef _LIBSAPLING_IDIOM_H_
+#define _LIBSAPLING_IDIOM_H_
 
 /**
  * @file idiom.h

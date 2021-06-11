@@ -11,10 +11,10 @@
 #include "libsapling/dm/typed/typed_path.h"
 
 void *path__data(const node_t node);
-void path__access(enum qt qt, node_t *ref, void *info, predicate_fn predicate,
-    apply_fn apply);
-void path__insert(node_t *ref, void *info, predicate_fn predicate);
-void path__delete(enum qt qt, node_t *ref, void *info, predicate_fn predicate);
+void path__access(enum qt qt, node_t *ref, void *info, predicate_t predicate,
+    apply_t apply);
+void path__insert(node_t *ref, void *info, predicate_t predicate);
+void path__delete(enum qt qt, node_t *ref, void *info, predicate_t predicate);
 void path__print_data(FILE *stream, node_t *ref, fpfdata_fn fpfdata);
 void path__dump_dot(FILE *stream, node_t *ref, fpfdata_fn fpfdata);
 int path__length(const node_t *ref);

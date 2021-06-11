@@ -12,7 +12,7 @@
 
 void *trie__data(const node_t node);
 void trie__access(enum qt qt, node_t *ref, const char *key, void *info,
-    predicate_fn predicate, apply_fn apply);
+    predicate_t predicate, apply_t apply);
 void trie__insert(node_t *ref, const char *key, void *info);
 void trie__delete(node_t *ref, const char *key);
 void trie__print_data(FILE *stream, node_t *ref, fpfdata_fn fpfdata);

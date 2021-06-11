@@ -14,7 +14,7 @@ IMPLEMENT_TYPED_ADAPTERS(SYM, TYPE, avl)                                        
                                                                               \
 static                                                                        \
 void SYM##__access(enum qt qt, node_t *ref, void *info,                          \
-    SYM##__predicate_fn predicate, SYM##__apply_fn apply)                     \
+    SYM##__predicate_t predicate, SYM##__apply_t apply)                     \
 {                                                                             \
     TYPE *dat = info;   \
     struct SYM##__adapt a = { sizeof(TYPE), dat, info, predicate, apply };                              \
@@ -59,14 +59,14 @@ int SYM##__in(node_t *ref, TYPE val)                                          \
 }                                                                             \
                                                                               \
 static                                                                        \
-void SYM##__insert(node_t *ref, TYPE val, SYM##__predicate_fn predicate)      \
+void SYM##__insert(node_t *ref, TYPE val, SYM##__predicate_t predicate)      \
 {                                                                             \
     struct info_insert info = { sizeof(TYPE), &val, NULL, predicate, NULL };  \
     avl__insert(ref, &info, SYM##__predicate_adapter, CMP);                   \
 }                                                                             \
                                                                               \
 static                                                                        \
-void SYM##__delete(node_t *ref, TYPE val, SYM##__predicate_fn predicate)      \
+void SYM##__delete(node_t *ref, TYPE val, SYM##__predicate_t predicate)      \
 {                                                                             \
     struct SYM##__adapt a = { sizeof(TYPE), &val, NULL, predicate, NULL };    \
     avl__delete(ref, &a, SYM##__predicate_adapter, CMP);                      \

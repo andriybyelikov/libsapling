@@ -1,5 +1,5 @@
-#ifndef LIBSAPLING_LOGIC
-#define LIBSAPLING_LOGIC
+#ifndef _LIBSAPLING_LOGIC_H_
+#define _LIBSAPLING_LOGIC_H_
 
 /**
  * @file logic.h

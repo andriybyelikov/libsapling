@@ -24,8 +24,9 @@ f2()
 
 f0 Makefile.am libsapling_a_SOURCES "$(f1 src *.c)" | sh
 f0 Makefile.am pkginclude_HEADERS "$(f1 include/libsapling *.h 1)" | sh
-f0 Makefile.am data_management_HEADERS "$(f1 include/libsapling/dm *.h)" | sh
-f0 Makefile.am compiler_HEADERS "$(f1 include/libsapling/cc *.h)" | sh
+f0 Makefile.am dm_HEADERS "$(f1 include/libsapling/dm *.h 1)" | sh
+f0 Makefile.am dm_typed_HEADERS "$(f1 include/libsapling/dm/typed *.h 1)" | sh
+f0 Makefile.am cc_HEADERS "$(f1 include/libsapling/cc *.h)" | sh
 f0 Makefile.am noinst_HEADERS "$(f1 src *.h)" | sh
 
 f2 Makefile.am

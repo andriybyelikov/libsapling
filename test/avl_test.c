@@ -3,13 +3,8 @@
 #include <stdlib.h>
 #include <time.h>
 #include "libsapling/dm/avl.h"
+#include "libsapling/dm/typed/typed_fpfdata_common.h"
 #include "test/test_utils.h"
-
-static
-void print_integer(FILE *stream, const void *data)
-{
-    fprintf(stream, "%d", *(int *)data);
-}
 
 static
 int cmpi(const void *a, const void *b)
@@ -23,7 +18,7 @@ int equi(const void *a, const void *b)
     return *(int *)a == *(int *)b;
 }
 
-IMPLEMENT_TYPED_AVL(integer_avl, int, cmpi, equi, print_integer)
+IMPLEMENT_TYPED_AVL(integer_avl, int, cmpi, equi, fpfdata_int)
 DEFINE_OUTPUT_STATE_FUNC(integer_avl)
 
 static

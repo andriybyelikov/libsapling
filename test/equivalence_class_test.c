@@ -1,12 +1,7 @@
 #include <assert.h>
 #include "libsapling/dm/equivalence_class.h"
 #include "libsapling/idiom.h"
-
-static
-void fpf_int(FILE *stream, const void *data)
-{
-    fprintf(stream, "%d", *(int *)data);
-}
+#include "libsapling/dm/typed/typed_fpfdata_common.h"
 
 static
 int equi(const void *a, const void *b)
@@ -14,7 +9,7 @@ int equi(const void *a, const void *b)
     return *(int *)a == *(int *)b;
 }
 
-IMPLEMENT_TYPED_EQUIVALENCE_CLASS(equivalent_states, int, fpf_int, equi)
+IMPLEMENT_TYPED_EQUIVALENCE_CLASS(equivalent_states, int, fpfdata_int, equi)
 
 
 struct i_invalidate_optimized_states {

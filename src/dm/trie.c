@@ -188,7 +188,7 @@ node_t *search_key(node_t *ref, const struct info_stack *info)
 
 
 void trie__access(enum qt qt, node_t *ref, const char *key, void *info,
-    predicate_fn predicate, apply_fn apply)
+    predicate_t predicate, apply_t apply)
 {
     if (qt == U_QT) {
         struct info_impl_u impl = { NULL };
@@ -289,7 +289,7 @@ void trie__delete(node_t *ref, const char *key)
 }
 
 static
-void all_access_adapter(node_t *ref, void *info, apply_fn apply)
+void all_access_adapter(node_t *ref, void *info, apply_t apply)
 {
     trie__access(U_QT, ref, NULL, info, predicate_1, apply);
 }

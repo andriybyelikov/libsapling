@@ -17,7 +17,7 @@ void *equivalence_class__access_representative(node_t *ref)
 }
 
 void equivalence_class__access_non_representatives(enum qt qt, node_t *ref,
-    void *info, predicate_fn predicate, apply_fn apply)
+    void *info, predicate_t predicate, apply_t apply)
 {
     path__access(qt, path__position(ref, 1), info, predicate, apply);
 }

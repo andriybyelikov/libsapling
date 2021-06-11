@@ -37,8 +37,8 @@ int next(node_t **ref, const struct info_stack *info)
     return 1;
 }
 
-void path__access(enum qt qt, node_t *ref, void *info, predicate_fn predicate,
-    apply_fn apply)
+void path__access(enum qt qt, node_t *ref, void *info, predicate_t predicate,
+    apply_t apply)
 {
     struct info_impl impl = { 0 };
     struct info_stack is = { info, &impl };
@@ -59,7 +59,7 @@ void insert(node_t *ref, const struct info_stack *info)
     graph__insert(ref, info, ins_em, sizeof(struct edge_storage));
 }
 
-void path__insert(node_t *ref, void *info, predicate_fn predicate)
+void path__insert(node_t *ref, void *info, predicate_t predicate)
 {
     path__access(E_QT, ref, info, predicate, insert);
 }
@@ -80,14 +80,14 @@ void delete(node_t *ref, const struct info_stack *info)
     graph__delete(ref, info, del_em);
 }
 
-void path__delete(enum qt qt, node_t *ref, void *info, predicate_fn predicate)
+void path__delete(enum qt qt, node_t *ref, void *info, predicate_t predicate)
 {
     path__access(qt, ref, info, predicate, delete);
 }
 
 
 static
-void all_access_adapter(node_t *ref, void *info, apply_fn apply)
+void all_access_adapter(node_t *ref, void *info, apply_t apply)
 {
     path__access(U_QT, ref, info, predicate_1, apply);
 }

@@ -1,16 +1,10 @@
 #include <assert.h>
 #include <string.h>
 #include "libsapling/dm/stack.h"
+#include "libsapling/dm/typed/typed_fpfdata_common.h"
 #include "test/test_utils.h"
 
-
-static
-void fpf_int(FILE *stream, const void *data)
-{
-    fprintf(stream, "%d", *(int *)data);
-}
-
-IMPLEMENT_TYPED_STACK(integer_stack, int, fpf_int)
+IMPLEMENT_TYPED_STACK(integer_stack, int, fpfdata_int)
 DEFINE_OUTPUT_STATE_FUNC(integer_stack)
 
 

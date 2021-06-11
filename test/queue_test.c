@@ -1,15 +1,10 @@
 #include <assert.h>
 #include <string.h>
 #include "test/test_utils.h"
+#include "libsapling/dm/typed/typed_fpfdata_common.h"
 #include "libsapling/dm/queue.h"
 
-static
-void fpf_int(FILE *stream, const void *data)
-{
-    fprintf(stream, "%d", *(int *)data);
-}
-
-IMPLEMENT_TYPED_QUEUE(integer_queue, int, fpf_int)
+IMPLEMENT_TYPED_QUEUE(integer_queue, int, fpfdata_int)
 DEFINE_OUTPUT_STATE_FUNC(integer_queue)
 
 

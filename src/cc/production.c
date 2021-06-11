@@ -24,10 +24,11 @@ void path_length(UNUSED const int *data, void *info)
 }
 
 
-void *production(int sid, int nsym, node_t *body)
+production_t new_production(int id, node_t *body)
 {
-    int *p = malloc((2 + nsym) * sizeof(int));
-    p[0] = sid;
+    production_t p = malloc(sizeof(struct production));
+    p->id = id;
+    p->body = *body;
     return p;
 }
 

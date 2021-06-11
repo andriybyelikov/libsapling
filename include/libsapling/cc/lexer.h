@@ -9,8 +9,8 @@
 #include "libsapling/dm/graph.h"
 
 void *lexer__data(const node_t node);
-void lexer__access(enum qt qt, node_t *ref, void *info, predicate_fn predicate,
-    apply_fn apply);
+void lexer__access(enum qt qt, node_t *ref, void *info, predicate_t predicate,
+    apply_t apply);
 void lexer__dump_dot(FILE *stream, node_t *ref, fpfdata_fn fpfdata);
 
 void lexer__literal(node_t *dst, const char *expr);

@@ -15,7 +15,7 @@ IMPLEMENT_TYPED_ADAPTERS(SYM, TYPE, trie)                                     \
                                                                               \
 static                                                                        \
 void SYM##__access(enum qt qt, node_t *ref, const char *key, void *info,      \
-    SYM##__predicate_fn predicate, SYM##__apply_fn apply)                     \
+    SYM##__predicate_t predicate, SYM##__apply_t apply)                     \
 {                                                                             \
     struct SYM##__adapt a = { 0, NULL, info, predicate, apply };              \
     trie__access(qt, ref, key, &a, SYM##__predicate_adapter,                  \

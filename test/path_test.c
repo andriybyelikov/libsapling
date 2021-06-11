@@ -5,14 +5,9 @@
 #include "test/test_utils.h"
 #include "libsapling/dm/path.h"
 #include "libsapling/idiom.h"
+#include "libsapling/dm/typed/typed_fpfdata_common.h"
 
-static
-void print_integer(FILE *stream, const void *data)
-{
-    fprintf(stream, "%d", *(int *)data);
-}
-
-IMPLEMENT_TYPED_PATH(integer_path, int, print_integer)
+IMPLEMENT_TYPED_PATH(integer_path, int, fpfdata_int)
 DEFINE_OUTPUT_STATE_FUNC(integer_path)
 
 static

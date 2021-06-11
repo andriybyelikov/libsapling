@@ -10,8 +10,8 @@
 
 #define IMPLEMENT_TYPED_ADAPTERS(SYM, TYPE, IMPL)                             \
                                                                               \
-typedef int (*SYM##__predicate_fn)(const TYPE *data, void *info);             \
-typedef void (*SYM##__apply_fn)(TYPE *data, void *info);                \
+typedef int (*SYM##__predicate_t)(const TYPE *data, void *info);             \
+typedef void (*SYM##__apply_t)(TYPE *data, void *info);                \
                                                                               \
 static                                                                        \
 int SYM##__predicate_0(UNUSED const TYPE *data, UNUSED void *info)            \
@@ -29,8 +29,8 @@ struct SYM##__adapt {                                                         \
     size_t size;                                                              \
     void *data;                                                               \
     void *info;                                                               \
-    SYM##__predicate_fn predicate;                                            \
-    SYM##__apply_fn apply;                                                    \
+    SYM##__predicate_t predicate;                                            \
+    SYM##__apply_t apply;                                                    \
 };                                                                            \
                                                                               \
 static                                                                        \

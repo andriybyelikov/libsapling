@@ -14,14 +14,14 @@ IMPLEMENT_TYPED_ADAPTERS(SYM, TYPE, path)                                     \
                                                                               \
 static                                                                        \
 void SYM##__access(enum qt qt, node_t *ref, void *info,                       \
-    SYM##__predicate_fn predicate, SYM##__apply_fn apply)                     \
+    SYM##__predicate_t predicate, SYM##__apply_t apply)                     \
 {                                                                             \
     struct SYM##__adapt a = { 0, NULL, info, predicate, apply };              \
     path__access(qt, ref, &a, SYM##__predicate_adapter, SYM##__apply_adapter);\
 }                                                                             \
                                                                               \
 static                                                                        \
-void SYM##__insert(node_t *ref, TYPE val, SYM##__predicate_fn predicate)      \
+void SYM##__insert(node_t *ref, TYPE val, SYM##__predicate_t predicate)      \
 {                                                                             \
     struct info_insert info = { sizeof(TYPE), &val, NULL, predicate };        \
     path__insert(ref, &info, SYM##__predicate_adapter);                       \
@@ -29,7 +29,7 @@ void SYM##__insert(node_t *ref, TYPE val, SYM##__predicate_fn predicate)      \
                                                                               \
 static                                                                        \
 void SYM##__delete(enum qt qt, node_t *ref, void *info,                       \
-    SYM##__predicate_fn predicate)                                            \
+    SYM##__predicate_t predicate)                                            \
 {                                                                             \
     struct info_insert a = { 0, NULL, info, predicate, NULL };               \
     path__delete(qt, ref, &a, SYM##__predicate_adapter);                      \

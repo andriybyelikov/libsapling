@@ -1,5 +1,5 @@
-#ifndef LIBSAPLING_GRAPH
-#define LIBSAPLING_GRAPH
+#ifndef _LIBSAPLING_GRAPH_H_
+#define _LIBSAPLING_GRAPH_H_
 
 /**
  * @file graph.h
@@ -10,14 +10,15 @@
  * represent a set using a graph, taking advantage of the graph's structure to
  * speed up operations, like all data structures aim to do. The hope is that
  * someday it will be possible to automatically determine and implement an
- * optimal graph structure for a set only by analyzing its actual usage in a
- * program and using this implementation as the basis. For now it serves as an
- * abstraction to implement them manually. Implementation for binary set
- * operations is currently neither provided nor the focus, instead the focus of
- * this implementation lies in providing first-order logic data manipulation.
- * For this purpose it provides three elemental operations: insertion, deletion
- * and access, the two latter accepting first-order logic quantifiers, since
- * they manipulate what is already in the set. Insertion is regarded as being
+ * optimal graph structure for a set by only analyzing the properties of the
+ * data fields of the set's elements and its actual usage in a program, using
+ * this implementation as the basis. For now it serves as an abstraction to
+ * implement them manually. Implementation for binary set operations is
+ * currently neither provided nor the focus, instead the focus of this
+ * implementation lies in providing first-order logic data manipulation. For
+ * this purpose it provides three elemental operations: insertion, deletion and
+ * access, the two latter accepting first-order logic quantifiers, since they
+ * manipulate what is already in the set. Insertion is regarded as being
  * existentially quantified, since it searches for the most appropiate location
  * in the graph's structure where a new node must be appended to the overall
  * graph, perhaps according to some attribute of the data to be inserted in the
@@ -84,19 +85,22 @@ struct info_stack {
  * 
  * When modified with existential quantification if the predicate is satisfied
  * then the apply function is run on the current node and the traversal ends.
+ * 
+ * @returns A boolean value that indicates whether the predicate was satisfied.
  */
-typedef int (*predicate_fn)
-    (const node_t *ref, const struct info_stack *info);
+typedef int (*predicate_t)(const node_t *ref, const struct info_stack *info);
 
 /**
  * @brief Performs a user-defined operation on the node.
  */
-typedef void (*apply_fn)(node_t *ref, const struct info_stack *info);
+typedef void (*apply_t)(node_t *ref, const struct info_stack *info);
 
 /**
  * @brief Chooses the next node to visit.
+ * 
+ * @returns A boolean value that indicates whether traversal should continue.
  */
-typedef int (*next_fn)(node_t **ref, const struct info_stack *info);
+typedef int (*next_t)(node_t **ref, const struct info_stack *info);
 
 /**
  * @brief Called upon the insertion and deletion protocols.
@@ -139,7 +143,7 @@ typedef void (*fpfnode_fn)(FILE *stream, const node_t node,
  * which invokes the particular DDS' implementation's access function without
  * having to know the implementation of the next function.
  */
-typedef void (*all_access_adapter_fn)(node_t *ref, void *info, apply_fn apply);
+typedef void (*all_access_adapter_fn)(node_t *ref, void *info, apply_t apply);
 
 /**
  * @brief Trivial predicate function that always returns 0.
@@ -172,7 +176,7 @@ void *graph__data(const node_t node, size_t edge_storage);
  * Equivalent to search and associated with the existential quantifier.
  */
 void graph__access(enum qt qt, node_t *ref, const struct info_stack *info,
-    predicate_fn predicate, apply_fn apply, next_fn next);
+    predicate_t predicate, apply_t apply, next_t next);
 
 struct info_insert {
     size_t size;

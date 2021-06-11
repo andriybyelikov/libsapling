@@ -40,7 +40,7 @@ void graph__delete(node_t *ref, const struct info_stack *info,
 
 
 static
-int u_cond(node_t **ref, const struct info_stack *info, next_fn next)
+int u_cond(node_t **ref, const struct info_stack *info, next_t next)
 {
     if (**ref == NULL)
         return 0;
@@ -49,8 +49,8 @@ int u_cond(node_t **ref, const struct info_stack *info, next_fn next)
 }
 
 static
-void u_loop(node_t *ref, const struct info_stack *info, predicate_fn predicate,
-    apply_fn apply, next_fn next)
+void u_loop(node_t *ref, const struct info_stack *info, predicate_t predicate,
+    apply_t apply, next_t next)
 {
     do {
         if (*ref != NULL && predicate(ref, info))
@@ -60,8 +60,8 @@ void u_loop(node_t *ref, const struct info_stack *info, predicate_fn predicate,
 
 
 static
-int e_cond(node_t **ref, const struct info_stack *info, next_fn next,
-    predicate_fn predicate)
+int e_cond(node_t **ref, const struct info_stack *info, next_t next,
+    predicate_t predicate)
 {
     if (**ref == NULL || predicate(*ref, info))
         return 0;
@@ -70,8 +70,8 @@ int e_cond(node_t **ref, const struct info_stack *info, next_fn next,
 }
 
 static
-void e_loop(node_t *ref, const struct info_stack *info, predicate_fn predicate,
-    apply_fn apply, next_fn next)
+void e_loop(node_t *ref, const struct info_stack *info, predicate_t predicate,
+    apply_t apply, next_t next)
 {
     while (e_cond(&ref, info, next, predicate))
         ;
@@ -80,7 +80,7 @@ void e_loop(node_t *ref, const struct info_stack *info, predicate_fn predicate,
 
 
 void graph__access(enum qt qt, node_t *ref, const struct info_stack *info,
-    predicate_fn predicate, apply_fn apply, next_fn next)
+    predicate_t predicate, apply_t apply, next_t next)
 {
     if (qt == U_QT)
         u_loop(ref, info, predicate, apply, next);

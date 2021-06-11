@@ -67,12 +67,12 @@ int next_e(node_t **ref, const struct info_stack *info)
     return 1;
 }
 
-void avl__access(enum qt qt, node_t *ref, void *info, predicate_fn predicate,
-    apply_fn apply, cmp_t comparator)
+void avl__access(enum qt qt, node_t *ref, void *info, predicate_t predicate,
+    apply_t apply, cmp_t comparator)
 {
     struct info_impl impl = { comparator, NULL };
     struct info_stack is = { info, &impl };
-    next_fn next;
+    next_t next;
     if (qt == U_QT)
         next = next_u, ref = inorder_first(ref, &impl.stack);
     else // qt == E_QT
@@ -250,7 +250,7 @@ void insert(node_t *ref, const struct info_stack *info)
     graph__insert(ref, info, ins_em, sizeof(struct edge_storage));
 }
 
-void avl__insert(node_t *ref, void *info, predicate_fn predicate,
+void avl__insert(node_t *ref, void *info, predicate_t predicate,
     cmp_t comparator)
 {
     avl__access(E_QT, ref, info, predicate, insert, comparator);
@@ -299,7 +299,7 @@ void delete(node_t *ref, const struct info_stack *info)
     graph__delete(ref, info, del_em);
 }
 
-void avl__delete(node_t *ref, void *info, predicate_fn predicate,
+void avl__delete(node_t *ref, void *info, predicate_t predicate,
     cmp_t comparator)
 {
     avl__access(E_QT, ref, info, predicate, delete, comparator);
@@ -307,7 +307,7 @@ void avl__delete(node_t *ref, void *info, predicate_fn predicate,
 
 
 static
-void all_access_adapter(node_t *ref, void *info, apply_fn apply)
+void all_access_adapter(node_t *ref, void *info, apply_t apply)
 {
     avl__access(U_QT, ref, info, predicate_1, apply, NULL);
 }

@@ -118,7 +118,7 @@ int next_u(node_t **ref, const struct info_stack *info)
 }
 
 static
-void parse_tree__access(node_t *ref, void *info, apply_fn apply)
+void parse_tree__access(node_t *ref, void *info, apply_t apply)
 {
     struct info_impl impl = { NULL };
     struct info_stack is = { info, &impl };
@@ -126,7 +126,7 @@ void parse_tree__access(node_t *ref, void *info, apply_fn apply)
 }
 
 static
-void all_access_adapter(node_t *ref, void *info, apply_fn apply)
+void all_access_adapter(node_t *ref, void *info, apply_t apply)
 {
     parse_tree__access(ref, info, apply);
 }
