@@ -3,7 +3,7 @@
 #include <stdlib.h>
 #include <time.h>
 #include "libsapling/dm/avl.h"
-#include "libsapling/dm/typed/typed_fpfdata_common.h"
+#include "libsapling/dm/typed/typed_common.h"
 #include "test/test_utils.h"
 
 static
@@ -35,8 +35,7 @@ struct check_ascending_order {
 static
 int check_ascending(const int *data, void *info)
 {
-    struct info_insert *ii = info;
-    struct check_ascending_order *user = ii->info;
+    CAST_USER_INFO(struct check_ascending_order *, user, info);
 
     int a = user->prev;
     int b = *data;
@@ -48,20 +47,20 @@ int check_ascending(const int *data, void *info)
 static
 void set_not_satisf(int *data, void *info)
 {
-    struct info_insert *ii = info;
-    struct check_ascending_order *user = ii->info;
+    CAST_USER_INFO(struct check_ascending_order *, user, info);
 
     user->satisf = 0;
 }
 
 int main(int argc, char *argv[])
 {
-    PARSE_OPTIONS()
+    TEST_PARSE_OPTIONS()
 
     srand(time(NULL));
 
+    // output empty AVL state
     node_t set = NULL;
-    integer_avl__print_data(stdout, &set);
+    integer_avl__output_state(&set);
 
     // insert random values
     int n = 40;
@@ -72,6 +71,9 @@ int main(int argc, char *argv[])
             integer_avl__cmp_predicate);
         integer_avl__output_state(&set);
     }
+
+    // assert length
+    assert(integer_avl__length(&set) == n);
 
     // shuffle an array of indexes
     int indexes[n];
@@ -90,6 +92,7 @@ int main(int argc, char *argv[])
     for (int i = 0; i < n; i++) {
         assert(integer_avl__in(&set, record[indexes[i]]));
     }
+
     // ensure inorder
     // ensure order in inorder traversal
     struct check_ascending_order cao = { INT_MIN, 1 };
@@ -101,6 +104,10 @@ int main(int argc, char *argv[])
         integer_avl__delete(&set, record[indexes[i]], integer_avl__equ_predicate);
         integer_avl__output_state(&set);
     }
+
+    // assert length
+    assert(integer_avl__length(&set) == 0);
+
     // assert null
     assert(set == NULL);
 }

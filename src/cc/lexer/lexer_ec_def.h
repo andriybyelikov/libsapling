@@ -13,8 +13,7 @@ struct ae_equal {
 static
 int match__ae_neq(const attributed_edge *data, void *info)
 {
-    struct info_insert *ii = info;
-    struct ae_equal *user = ii->info;
+    CAST_USER_INFO(struct ae_equal *, user, info);
     node_t node = user->s1;
     const attributed_edge *ae0 = data;
     attributed_edge *ae1 = NULL;
@@ -30,8 +29,7 @@ int match__ae_neq(const attributed_edge *data, void *info)
 static
 void apply__ae_nall_eq(UNUSED attributed_edge *data, void *info)
 {
-    struct info_insert *ii = info;
-    struct ae_equal *user = ii->info;
+    CAST_USER_INFO(struct ae_equal *, user, info);
 
     user->all_eq = 0;
 }

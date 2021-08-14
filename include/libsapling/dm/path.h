@@ -1,5 +1,5 @@
-#ifndef LIBSAPLING_PATH
-#define LIBSAPLING_PATH
+#ifndef _LIBSAPLING_PATH_H_
+#define _LIBSAPLING_PATH_H_
 
 /**
  * @file path.h
@@ -15,8 +15,8 @@ void path__access(enum qt qt, node_t *ref, void *info, predicate_t predicate,
     apply_t apply);
 void path__insert(node_t *ref, void *info, predicate_t predicate);
 void path__delete(enum qt qt, node_t *ref, void *info, predicate_t predicate);
-void path__print_data(FILE *stream, node_t *ref, fpfdata_fn fpfdata);
-void path__dump_dot(FILE *stream, node_t *ref, fpfdata_fn fpfdata);
+void path__print_data(FILE *stream, node_t *ref, fpfdata_t fpfdata);
+void path__dump_dot(FILE *stream, node_t *ref, fpfdata_t fpfdata);
 int path__length(const node_t *ref);
 
 /**

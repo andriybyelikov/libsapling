@@ -94,19 +94,22 @@ void all_access_adapter(node_t *ref, void *info, apply_t apply)
 
 
 static
-void print_data_aux0(FILE *stream, const node_t node, fpfdata_fn fpfdata, void *impl)
+void print_data_aux0(FILE *stream, const node_t node, fpfdata_t fpfdata,
+    void *impl)
 {
     fpfdata(stream, path__data(node));
 }
 
-void path__print_data(FILE *stream, node_t *ref, fpfdata_fn fpfdata)
+void path__print_data(FILE *stream, node_t *ref, fpfdata_t fpfdata)
 {
-    graph__print_data(stream, ref, all_access_adapter, print_data_aux0, fpfdata);
+    graph__print_data(stream, ref, all_access_adapter, print_data_aux0,
+        fpfdata);
 }
 
 
 static
-void dump_dot_aux0(FILE *stream, const node_t node, fpfdata_fn fpfdata, void *impl)
+void dump_dot_aux0(FILE *stream, const node_t node, fpfdata_t fpfdata,
+    void *impl)
 {
     fprintf(stream, "n%p[label=\"", node);
     if (fpfdata != NULL)
@@ -117,12 +120,13 @@ void dump_dot_aux0(FILE *stream, const node_t node, fpfdata_fn fpfdata, void *im
         fprintf(stream, "n%p->n%p;", node, node->next);
 }
 
-void path__dump_dot(FILE *stream, node_t *ref, fpfdata_fn fpfdata)
+void path__dump_dot(FILE *stream, node_t *ref, fpfdata_t fpfdata)
 {
-    graph__dump_dot(stream, ref, all_access_adapter, dump_dot_aux0, fpfdata, "");
+    graph__dump_dot(stream, ref, all_access_adapter, dump_dot_aux0, fpfdata,
+        "");
 }
 
-int path__length(node_t *ref)
+int path__length(const node_t *ref)
 {
     return graph__length(ref, all_access_adapter);
 }

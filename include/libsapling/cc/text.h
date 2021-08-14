@@ -1,5 +1,5 @@
-#ifndef LIBSAPLING_TEXT
-#define LIBSAPLING_TEXT
+#ifndef _LIBSAPLING_TEXT_H_
+#define _LIBSAPLING_TEXT_H_
 
 /**
  * @file text.h
@@ -15,11 +15,11 @@
  * @param src String to be escaped.
  * 
  * @attention Only escapes the following characters:
- * - \c \\ (Backslash)
- * - \c \" (Double quotation mark)
- * - \c \t (Horizontal Tab)
- * - \c \r (Carriage Return)
- * - \c \n (Newline/Line Feed)
+ * - @c \\ (Backslash)
+ * - @c \" (Double quotation mark)
+ * - @c \t (Horizontal Tab)
+ * - @c \r (Carriage Return)
+ * - @c \n (Newline/Line Feed)
  * 
  * @warning The destination array must be long enough to contain the escaped
  *   string (including the terminating null character). To be safe it should be
@@ -38,11 +38,11 @@ void text__escape(char *dst, const char *src);
  * @param src String to be unescaped.
  * 
  * @attention Only unescapes the following characters:
- * - \c \\ (Backslash)
- * - \c \" (Double quotation mark)
- * - \c \t (Horizontal Tab)
- * - \c \r (Carriage Return)
- * - \c \n (Newline/Line Feed)
+ * - @c \\ (Backslash)
+ * - @c \" (Double quotation mark)
+ * - @c \t (Horizontal Tab)
+ * - @c \r (Carriage Return)
+ * - @c \n (Newline/Line Feed)
  * 
  * @warning The destination array must be long enough to contain the unescaped
  *   string (including the terminating null character). To be safe it should be

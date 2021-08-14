@@ -28,7 +28,7 @@ do
     fi
 
     read -r line
-    echo -E "$line" | dot -Tpng -o $dir/$sym\_${symfreq[$index]}.png
+    echo -E "$line" | dot -Tsvg -o $dir/$sym\_${symfreq[$index]}.svg
 
     f="${symfreq[$index]}"
     ((f=f+1))

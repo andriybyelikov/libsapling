@@ -65,16 +65,37 @@
 #include "libsapling/idiom.h"
 #include "libsapling/dm/logic.h"
 
-typedef struct edge_storage *node_t;
-
 /**
- * @brief Means of passing user and implementation information between function
- * calls.
+ * @brief Means of passing arbitrary user and implementation information
+ * between function calls
  */
 struct info_stack {
     void *user;
     void *impl;
 };
+
+/**
+ * @struct info_insert
+ * 
+ * @brief Information required to perform insertion
+ * 
+ * @var info_insert::size
+ * Size of the data to be copied to the data storage of a node
+ * 
+ * @var info_insert::data
+ * Pointer to the data to be copied to the data storage of a node
+ * 
+ * @var info_insert::info
+ * Pointer to arbitrary user information to be passed to the predicate and
+ * apply functions
+ */
+struct info_insert {
+    size_t size;
+    void *data;
+    void *info;
+};
+
+typedef struct edge_storage *node_t;
 
 /**
  * @brief Decides whether to run the apply function on an item. Behavior is
@@ -105,36 +126,36 @@ typedef int (*next_t)(node_t **ref, const struct info_stack *info);
 /**
  * @brief Called upon the insertion and deletion protocols.
  * 
- * On insertion \c node contains the address of the newly created node and \c
+ * On insertion @c node contains the address of the newly created node and @c
  * ref the position in the graph where it was determined for it to be inserted,
  * so usually edge management functions should assign `*ref = node` at some
  * point. This is however, not enforced with any language construct to account
  * for the case of the AVL tree rotations, where instead of the newly created
- * node being directly appended to the graph at \c ref, it may become a child
- * of its child and the former child is instead appended at \c ref.
+ * node being directly appended to the graph at @c ref, it may become a child
+ * of its child and the former child is instead appended at @c ref.
  * 
- * On deletion \c node is the same as \c *ref. Likewise it takes care of
- * restructuring the graph at \c ref upon deleting a node.
+ * On deletion @c node is the same as @c *ref. Likewise it takes care of
+ * restructuring the graph at @c ref upon deleting a node.
  * 
  * It also may perform the task of initializing the data of the edge storage.
  * 
  * @attention The insertion and deletion protocols take care of allocating and
- * freeing the \c node, so that task must not be performed within the edge
+ * freeing the @c node, so that task must not be performed within the edge
  * management function.
  */
-typedef void (*edge_management_fn)(node_t *ref, const node_t node,
+typedef void (*edge_management_t)(node_t *ref, const node_t node,
     void *impl_ptr);
 
 /**
  * @brief File print format data function prototype.
  */
-typedef void (*fpfdata_fn)(FILE *stream, const void *data);
+typedef void (*fpfdata_t)(FILE *stream, const void *data);
 
 /**
  * @brief File print format node function prototype.
  */
-typedef void (*fpfnode_fn)(FILE *stream, const node_t node,
-    fpfdata_fn fpfdata, void *impl);
+typedef void (*fpfnode_t)(FILE *stream, const node_t node, fpfdata_t fpfdata,
+    void *impl_ptr);
 
 /**
  * @brief Generic access all nodes adapter function prototype.
@@ -178,25 +199,17 @@ void *graph__data(const node_t node, size_t edge_storage);
 void graph__access(enum qt qt, node_t *ref, const struct info_stack *info,
     predicate_t predicate, apply_t apply, next_t next);
 
-struct info_insert {
-    size_t size;
-    void *data;
-    void *info;
-    int (*predicate_adapter)();
-    void (*apply_adapter)();
-};
-
 /**
  * @brief Insertion protocol
  * 
  * @attention The protocol expects the contents of the user information of the
- * @ref info_stack to be a \c size_t indicating the size of the data followed
+ * @ref info_stack to be a @c size_t indicating the size of the data followed
  * by that number of bytes of data. That size will be allocated for the data
  * storage of the node and the data copied over as is. Extra information may
  * follow.
  */
 void graph__insert(node_t *ref, const struct info_stack *info,
-    edge_management_fn edge_management, size_t edge_storage);
+    edge_management_t edge_management, size_t edge_storage);
 
 
 /**
@@ -207,26 +220,26 @@ void graph__insert(node_t *ref, const struct info_stack *info,
  * data storage.
  */
 void graph__delete(node_t *ref, const struct info_stack *info,
-    edge_management_fn edge_management);
+    edge_management_t edge_management);
 
 /**
  * @brief Prints all the data contained in the set.
  */
 void graph__print_data(FILE *stream, node_t *ref,
-    all_access_adapter_fn access_adapter, fpfnode_fn fpfnode,
-    fpfdata_fn fpfdata);
+    all_access_adapter_fn access_adapter, fpfnode_t fpfnode,
+    fpfdata_t fpfdata);
 
 /**
  * @brief Dumps the graph in the DOT graph description language.
  */
 void graph__dump_dot(FILE *stream, node_t *ref,
-    all_access_adapter_fn access_adapter, fpfnode_fn fpfnode,
-    fpfdata_fn fpfdata, const char *graph_attributes);
+    all_access_adapter_fn access_adapter, fpfnode_t fpfnode,
+    fpfdata_t fpfdata, const char *graph_attributes);
 
 /**
  * @brief Returns the number of items contained in the set.
  * @returns the number of items contained in the set.
  */
-int graph__length(node_t *ref, all_access_adapter_fn access_adapter);
+int graph__length(const node_t *ref, all_access_adapter_fn access_adapter);
 
 #endif

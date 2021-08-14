@@ -18,7 +18,7 @@ void *graph__data(const node_t node, size_t edge_storage)
 }
 
 void graph__insert(node_t *ref, const struct info_stack *info,
-    edge_management_fn edge_management, size_t edge_storage)
+    edge_management_t edge_management, size_t edge_storage)
 {
     struct info_insert *user = info->user;
 
@@ -28,7 +28,7 @@ void graph__insert(node_t *ref, const struct info_stack *info,
 }
 
 void graph__delete(node_t *ref, const struct info_stack *info,
-    edge_management_fn edge_management)
+    edge_management_t edge_management)
 {
     node_t node = *ref;
 
@@ -91,8 +91,8 @@ void graph__access(enum qt qt, node_t *ref, const struct info_stack *info,
 
 struct info_print {
     FILE *stream;
-    fpfnode_fn fpfnode;
-    fpfdata_fn fpfdata;
+    fpfnode_t fpfnode;
+    fpfdata_t fpfdata;
     int first;
 };
 
@@ -109,8 +109,8 @@ void graph__print_data_aux0(node_t *ref, const struct info_stack *info)
 }
 
 void graph__print_data(FILE *stream, node_t *ref,
-    all_access_adapter_fn access_adapter, fpfnode_fn fpfnode,
-    fpfdata_fn fpfdata)
+    all_access_adapter_fn access_adapter, fpfnode_t fpfnode,
+    fpfdata_t fpfdata)
 {
     if (*ref == NULL) {
         fprintf(stream, "{}");
@@ -133,8 +133,8 @@ void graph__dump_dot_aux0(node_t *ref, const struct info_stack *info)
 }
 
 void graph__dump_dot(FILE *stream, node_t *ref,
-    all_access_adapter_fn access_adapter, fpfnode_fn fpfnode,
-    fpfdata_fn fpfdata, const char *graph_attributes)
+    all_access_adapter_fn access_adapter, fpfnode_t fpfnode,
+    fpfdata_t fpfdata, const char *graph_attributes)
 {
     fprintf(stream, "digraph{%sref[label=\"&\";shape=square];",
         graph_attributes);
@@ -158,7 +158,7 @@ void len_apply(UNUSED node_t *ref, const struct info_stack *info)
     user->len++;
 }
 
-int graph__length(node_t *ref, all_access_adapter_fn access_adapter)
+int graph__length(const node_t *ref, all_access_adapter_fn access_adapter)
 {
     struct length info = { 0 };
     access_adapter(ref, &info, len_apply);

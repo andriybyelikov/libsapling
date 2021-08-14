@@ -2,12 +2,12 @@
 #include <limits.h>
 #include <stdlib.h>
 #include <time.h>
-#include "test/test_utils.h"
-#include "libsapling/dm/path.h"
 #include "libsapling/idiom.h"
-#include "libsapling/dm/typed/typed_fpfdata_common.h"
+#include "libsapling/dm/path.h"
+#include "libsapling/dm/typed/typed_common.h"
+#include "test/test_utils.h"
 
-IMPLEMENT_TYPED_PATH(integer_path, int, fpfdata_int)
+IMPLEMENT_TYPED_PATH(integer_path, int, fpfdata_int, dummy_cmp)
 DEFINE_OUTPUT_STATE_FUNC(integer_path)
 
 static
@@ -34,8 +34,7 @@ struct check_ascending_order {
 static
 int check_ascending(const int *data, void *info)
 {
-    struct info_insert *ii = info;
-    struct check_ascending_order *user = ii->info;
+    CAST_USER_INFO(struct check_ascending_order *, user, info);
 
     int a = user->prev;
     int b = *data;
@@ -47,8 +46,7 @@ int check_ascending(const int *data, void *info)
 static
 void set_not_satisf(int *data, void *info)
 {
-    struct info_insert *ii = info;
-    struct check_ascending_order *user = ii->info;
+    CAST_USER_INFO(struct check_ascending_order *, user, info);
 
     user->satisf = 0;
 }
@@ -61,7 +59,7 @@ int gen_rand_val_rand_sign_abs_bound(int m)
 
 int main(int argc, char *argv[])
 {
-    PARSE_OPTIONS()
+    TEST_PARSE_OPTIONS()
 
     srand(time(NULL));
 
@@ -76,6 +74,9 @@ int main(int argc, char *argv[])
             gen_rand_val_rand_sign_abs_bound(m), ascending_predicate);
         integer_path__output_state(&ascending_list);
     }
+
+    // assert length
+    assert(integer_path__length(&ascending_list) == n);
 
     // assert ascending order
     struct check_ascending_order cao = { INT_MIN, 1 };
@@ -112,6 +113,9 @@ int main(int argc, char *argv[])
     integer_path__delete(U_QT, &ascending_list, NULL,
         integer_path__predicate_1);
     integer_path__output_state(&ascending_list);
+
+    // assert length
+    assert(integer_path__length(&ascending_list) == 0);
 
     // assert null
     assert(ascending_list == NULL);

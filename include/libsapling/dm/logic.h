@@ -1,5 +1,5 @@
-#ifndef _LIBSAPLING_LOGIC_H_
-#define _LIBSAPLING_LOGIC_H_
+#ifndef _LIBSAPLING_DM_LOGIC_H_
+#define _LIBSAPLING_DM_LOGIC_H_
 
 /**
  * @file logic.h
@@ -17,7 +17,7 @@ enum qt {
 };
 
 /**
- * @brief Generic comparator function prototype.
+ * @brief Generic comparator function prototype
  */
 typedef int (*cmp_t)(const void *a, const void *b);
 

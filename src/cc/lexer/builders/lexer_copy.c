@@ -33,8 +33,7 @@ IMPLEMENT_TYPED_AVL(nnm, node_node_mapping, nnm_cmp, nnm_equ, nnm_fpf)
 static
 void nnm__get_value_apply(node_node_mapping *data, void *info)
 {
-    struct info_insert *ii = info;
-    node_node_mapping *user = ii->info;
+    CAST_USER_INFO(node_node_mapping *, user, info);
     user->value = data->value;
 }
 
@@ -55,8 +54,7 @@ struct copy_attributed_edges {
 static
 void copy_attributed_edges(attributed_edge *data, void *info)
 {
-    struct info_insert *ii = info;
-    struct copy_attributed_edges *user = ii->info;
+    CAST_USER_INFO(struct copy_attributed_edges *, user, info);
     node_t *map = user->map;
     node_t copy = user->copy;
 
@@ -69,8 +67,8 @@ void copy_attributed_edges(attributed_edge *data, void *info)
 static
 void copy_edges(node_node_mapping *data, void *info)
 {
-    struct info_insert *ii = info;
-    node_t *map = ii->info;
+    CAST_USER_INFO(node_t *, map, info);
+
     node_t original = data->key;
     node_t copy = data->value;
 

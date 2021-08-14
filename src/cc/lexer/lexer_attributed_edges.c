@@ -9,8 +9,8 @@ struct reserve {
 static
 void reserve_get_ref(attributed_edge *data, void *info)
 {
-    struct info_insert *ii = info;
-    struct reserve *user = ii->info;
+    CAST_USER_INFO(struct reserve *, user, info);
+
     user->res = &data->node; // node is first field
 }
 

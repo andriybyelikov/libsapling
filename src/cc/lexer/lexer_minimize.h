@@ -1,5 +1,5 @@
-#ifndef LIBSAPLING_LEXER_MINIMIZE
-#define LIBSAPLING_LEXER_MINIMIZE
+#ifndef _LIBSAPLING_LEXER_MINIMIZE_H_
+#define _LIBSAPLING_LEXER_MINIMIZE_H_
 
 #include "libsapling/dm/graph.h"
 

@@ -3,11 +3,24 @@
 Click [here](../../maintainers/html/index.html) if you were looking for the
 documentation for maintainers.
 
+C library written for the sapling
+[compiler](https://github.com/andriybyelikov/sapling) and
+[editor](https://github.com/andriybyelikov/sapling-gui) suite.
+
+The library consists of a set of data structures, utilities and building blocks
+written with orthogonality in mind while also aiming to express their
+implementation with the fewest lines of code possible and in terms of each
+other.
 
 @author Andriy Byelikov
 
-@date 2021-03-03
+@date 2021-08-13
 
+
+## Examples
+
+See the tests included with this library and you may also check out the
+implementation of the sapling [compiler](https://github.com/andriybyelikov/sapling).
 
 ## Domains
 
@@ -15,13 +28,15 @@ documentation for maintainers.
 
 ### Data Management
 
+Please see @ref TYPED_INTERFACES.md.
+
 - @ref logic.h "Logic"
 - @ref graph.h "Graph"
 - @ref path.h "Path"
 - @ref stack.h "Stack"
 - @ref queue.h "Queue"
 - @ref equivalence_class.h "Equivalence class"
-- @ref avl.h "AVL tree"
+- @ref avl.h "AVL"
 - @ref trie.h "Trie"
 
 ### Compiler Construction

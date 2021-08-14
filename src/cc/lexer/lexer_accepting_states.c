@@ -3,8 +3,9 @@
 #include "libsapling/cc/lexer.h"
 #include "cc/lexer/lexer_edge_storage.h"
 #include "cc/lexer/lexer_attributed_edges.h"
+#include "libsapling/dm/typed/typed_common.h"
 
-IMPLEMENT_TYPED_PATH(sp, node_t, NULL)
+IMPLEMENT_TYPED_PATH(sp, node_t, NULL, dummy_cmp)
 IMPLEMENT_TYPED_QUEUE(sq, node_t, NULL)
 
 typedef node_t *pnode_t;
@@ -45,8 +46,7 @@ struct refs_to_state {
 static
 void get_ae_edges_to_accepting(attributed_edge *data, void *info)
 {
-    struct info_insert *ii = info;
-    struct refs_to_state *user = ii->info;
+    CAST_USER_INFO(struct refs_to_state *, user, info);
 
     if (data->node == user->accepting_state)
         rq__insert(user->result_set, &data->node);
@@ -70,8 +70,7 @@ void get_edges_to_accepting(node_t *ref, const struct info_stack *info)
 static
 void get_accepting_states_refs_apply(node_t *data, void *info)
 {
-    struct info_insert *ii = info;
-    struct refs_to_state *user = ii->info;
+    CAST_USER_INFO(struct refs_to_state *, user, info);
     node_t *result_set = user->result_set;
     node_t initial_state = user->accepting_state; // hacky, should be different struct to pass lexer ref
     node_t accepting_state = *data;
@@ -98,8 +97,7 @@ node_t lexer__get_accepting_states_refs(node_t *ref)
 static
 void set_data_ptr(node_t *data, void *info)
 {
-    struct info_insert *ii = info;
-    void *user_data = ii->info;
+    CAST_USER_INFO(void *, user_data, info);
 
     void **data_ptr = lexer__data(*data);
     *data_ptr = user_data;

@@ -1,5 +1,5 @@
-#ifndef LIBSAPLING_TYPED_TRIE
-#define LIBSAPLING_TYPED_TRIE
+#ifndef _LIBSAPLING_TYPED_TRIE_H_
+#define _LIBSAPLING_TYPED_TRIE_H_
 
 /**
  * @file typed_trie.h
@@ -8,6 +8,7 @@
 
 #include <stdlib.h>
 #include "libsapling/dm/typed/typed_adapters.h"
+#include "libsapling/cc/lexer.h"
 
 #define IMPLEMENT_TYPED_TRIE(SYM, TYPE, FPF)                                  \
                                                                               \
@@ -15,7 +16,7 @@ IMPLEMENT_TYPED_ADAPTERS(SYM, TYPE, trie)                                     \
                                                                               \
 static                                                                        \
 void SYM##__access(enum qt qt, node_t *ref, const char *key, void *info,      \
-    SYM##__predicate_t predicate, SYM##__apply_t apply)                     \
+    SYM##__predicate_t predicate, SYM##__apply_t apply)                       \
 {                                                                             \
     struct SYM##__adapt a = { 0, NULL, info, predicate, apply };              \
     trie__access(qt, ref, key, &a, SYM##__predicate_adapter,                  \
@@ -45,7 +46,13 @@ void SYM##__print_data(FILE *stream, node_t *ref)                             \
 static                                                                        \
 void SYM##__dump_dot(FILE *stream, node_t *ref)                               \
 {                                                                             \
-    trie__dump_dot(stream, ref, FPF);                                         \
+    lexer__dump_dot(stream, ref, FPF);                                        \
+}                                                                             \
+                                                                              \
+static                                                                        \
+int SYM##__length(const node_t *ref)                                          \
+{                                                                             \
+    return trie__length(ref);                                                 \
 }
 
 #endif

@@ -4,14 +4,16 @@
 #include "cc/lexer/lexer_ec_def.h"
 #include "cc/lexer/lexer_replace_node.h"
 #include "cc/lexer/lexer_minimize.h"
+#include "libsapling/dm/typed/typed_common.h"
 
-IMPLEMENT_TYPED_PATH(sp, node_t, NULL)
+IMPLEMENT_TYPED_PATH(sp, node_t, NULL, dummy_cmp)
 
 static
 void rea__union_foreach_edge(attributed_edge *data, void *info)
 {
-    struct info_insert *ii = info;
-    struct representative_and_equivalence_class_queue *user = ii->info;
+    CAST_USER_INFO(struct representative_and_equivalence_class_queue *, user,
+        info);
+
     node_t repr = user->representative;
     node_t *queue = user->equivalence_class_queue;
 
@@ -33,8 +35,9 @@ void rea__union_foreach_edge(attributed_edge *data, void *info)
 static
 void apply__move_edges_to_repr(node_t *data, void *info)
 {
-    struct info_insert *ii = info;
-    struct representative_and_equivalence_class_queue *user = ii->info;
+    CAST_USER_INFO(struct representative_and_equivalence_class_queue *, user,
+        info);
+
     node_t repr = user->representative;
     node_t *queue = user->equivalence_class_queue;
 

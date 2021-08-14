@@ -6,8 +6,7 @@
 #include "libsapling/cc/lexer.h"
 #include "cc/lexer/lexer_edge_storage.h"
 #include "cc/lexer/lexer_attributed_edges.h"
-
-#include <stdio.h>
+#include "libsapling/dm/typed/typed_common.h"
 
 void *trie__data(const node_t node)
 {
@@ -15,14 +14,8 @@ void *trie__data(const node_t node)
 }
 
 
-static
-void print_char(FILE *stream, const void *data)
-{
-    fprintf(stream, "%c", *(char *)data);
-}
-
-IMPLEMENT_TYPED_STACK(cs, char, print_char)
-IMPLEMENT_TYPED_PATH(cp, char, print_char)
+IMPLEMENT_TYPED_STACK(cs, char, fpfdata_char)
+IMPLEMENT_TYPED_PATH(cp, char, fpfdata_char, dummy_cmp)
 
 
 typedef attributed_edge *ae_ptr;
@@ -52,7 +45,7 @@ void print_trail0(FILE *stream, const void *data)
 
 typedef struct { node_t *q; } trail_t;
 IMPLEMENT_TYPED_STACK(trail0, trail_t, NULL)
-IMPLEMENT_TYPED_PATH(trail0p, trail_t, print_trail0)
+IMPLEMENT_TYPED_PATH(trail0p, trail_t, print_trail0, dummy_cmp)
 
 
 
@@ -64,8 +57,7 @@ struct info_impl_u {
 static
 void insert_ae_in_queue(attributed_edge *data, void *info)
 {
-    struct info_insert *ii = info;
-    node_t *q = ii->info;
+    CAST_USER_INFO(node_t *, q, info);
 
     trail1__insert(q, data);
 }
@@ -73,8 +65,8 @@ void insert_ae_in_queue(attributed_edge *data, void *info)
 static
 node_t *next_key(node_t *ref, node_t *stack)
 {
-    {
     // put all attributed edges on the queue (trail1)
+    {
         node_t *q = malloc(sizeof(node_t));
         *q = NULL;
         node_t node = *ref;
@@ -125,7 +117,8 @@ node_t *first_key(node_t *ref, node_t *stack)
             node_t node = *ref;
             // put all attributed edges on the queue (trail1)
             node_t *q = malloc(sizeof(node_t)); *q = NULL;
-            ae__access(U_QT, &node->attributed_edges, q, ae__predicate_1, insert_ae_in_queue);
+            ae__access(U_QT, &node->attributed_edges, q, ae__predicate_1,
+                insert_ae_in_queue);
             // put queue on the stack (trail0)
             trail0__insert(stack, (trail_t){ q });
         }
@@ -200,18 +193,6 @@ void trie__access(enum qt qt, node_t *ref, const char *key, void *info,
         struct info_stack is = { info, &impl };
         ref = search_key(ref, &is);
         graph__access(qt, ref, &is, predicate, apply, NULL);
-        // just run lexer analysis and get "class"
-        /*struct lexer_state lsta;
-        lexer__init(&lsta, key);
-        void *dptr = lexer__next_terminal2(ref, &lsta);
-        node_t temp = NULL;
-        if (dptr != NULL) {
-            temp = (node_t)((char *)dptr - sizeof(struct edge_storage));
-        }
-        struct info_stack is = { info, NULL };
-        if (temp != NULL && predicate(&temp, &is)) {
-            apply(&temp, &is);
-        }*/
     }
 }
 
@@ -254,7 +235,8 @@ void del_em(node_t *ref, const node_t node, void *impl_ptr)
         char c = impl->key[i--];
         pnode_t pnode = ps__access(&impl->s);
         node_t node = *pnode;
-        ae__delete(&node->attributed_edges, (attributed_edge){ .byte = c }, ae__equ_predicate);
+        ae__delete(&node->attributed_edges, (attributed_edge){ .byte = c },
+            ae__equ_predicate);
 
         // if no edges left delete node
         if (node->attributed_edges == NULL) {
@@ -297,15 +279,15 @@ void all_access_adapter(node_t *ref, void *info, apply_t apply)
 static
 void push_key_chars(trail_t *data, void *info)
 {
-    struct info_insert *ii = info;
-    node_t *krb = ii->info;
+    CAST_USER_INFO(node_t *, krb, info);
 
     if (data != NULL && data->q != NULL && *data->q != NULL)
         cs__insert(krb, trail1__access(data->q)->byte);
 }
 
 static
-void print_data_aux0(FILE *stream, const node_t node, fpfdata_fn fpfdata, void *impl)
+void print_data_aux0(FILE *stream, const node_t node, fpfdata_t fpfdata,
+    void *impl)
 {
     struct info_impl_u *impl_u = impl;
 
@@ -317,7 +299,8 @@ void print_data_aux0(FILE *stream, const node_t node, fpfdata_fn fpfdata, void *
 
     fprintf(stream, "(\"");
     node_t krb = NULL;
-    trail0p__access(U_QT, &impl_u->s, &krb, trail0p__predicate_1, push_key_chars);
+    trail0p__access(U_QT, &impl_u->s, &krb, trail0p__predicate_1,
+        push_key_chars);
     char *key = malloc((cp__length(&krb) + 1) * sizeof(char));
     key[cp__length(&krb)] = 0;
 
@@ -332,13 +315,13 @@ void print_data_aux0(FILE *stream, const node_t node, fpfdata_fn fpfdata, void *
     fprintf(stream, ")");
 }
 
-void trie__print_data(FILE *stream, node_t *ref, fpfdata_fn fpfdata)
+void trie__print_data(FILE *stream, node_t *ref, fpfdata_t fpfdata)
 {
-    graph__print_data(stream, ref, all_access_adapter, print_data_aux0, fpfdata);
+    graph__print_data(stream, ref, all_access_adapter, print_data_aux0,
+        fpfdata);
 }
 
-
-void trie__dump_dot(FILE *stream, node_t *ref, fpfdata_fn fpfdata)
+int trie__length(const node_t *ref)
 {
-    lexer__dump_dot(stream, ref, fpfdata);
+    return graph__length(ref, all_access_adapter);
 }

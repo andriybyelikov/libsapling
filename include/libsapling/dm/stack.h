@@ -1,5 +1,5 @@
-#ifndef LIBSAPLING_STACK
-#define LIBSAPLING_STACK
+#ifndef _LIBSAPLING_STACK_H_
+#define _LIBSAPLING_STACK_H_
 
 /**
  * @file stack.h
@@ -13,7 +13,5 @@
 void *stack__access(node_t *ref);
 void stack__insert(node_t *ref, void *info);
 void stack__delete(node_t *ref);
-void stack__print_data(FILE *stream, node_t *ref, fpfdata_fn fpfdata);
-void stack__dump_dot(FILE *stream, node_t *ref, fpfdata_fn fpfdata);
 
 #endif

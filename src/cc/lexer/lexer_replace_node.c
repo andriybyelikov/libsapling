@@ -5,8 +5,7 @@
 static
 void apply__replace_attributed_edges(attributed_edge *data, void *info)
 {
-    struct info_insert *ii = info;
-    node_t *ec = ii->info;
+    CAST_USER_INFO(node_t *, ec, info);
 
     // technically no need to check for NULL here since it wouldn't be in
     if (ec__in(ec, data->node))
@@ -41,8 +40,7 @@ void rea__replace_node_refs_rep(node_t *dst, node_t *ec)
 
 void apply__replace_node_refs_nreps(node_t *data, void *info)
 {
-    struct info_insert *ii = info;
-    node_t *user = ii->info;
+    CAST_USER_INFO(node_t *, user, info);
 
     lexer__access(U_QT, data, user, predicate_1, apply__replace_edges);
 }

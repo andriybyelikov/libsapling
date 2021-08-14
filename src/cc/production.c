@@ -2,8 +2,9 @@
 #include "libsapling/idiom.h"
 #include "libsapling/dm/path.h"
 #include "libsapling/cc/production.h"
+#include "libsapling/dm/typed/typed_common.h"
 
-IMPLEMENT_TYPED_PATH(body, int, NULL)
+IMPLEMENT_TYPED_PATH(body, int, NULL, dummy_cmp)
 
 struct production {
     int id;

@@ -5,9 +5,8 @@
  * @file idiom.h
  */
 
-
 /**
- * @brief Decorator to mark unused function parameters.
+ * @brief Decorator to mark unused function parameters
  */
 #define UNUSED
 

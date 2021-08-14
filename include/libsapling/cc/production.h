@@ -1,5 +1,5 @@
-#ifndef LIBSAPLING_PRODUCTION
-#define LIBSAPLING_PRODUCTION
+#ifndef _LIBSAPLING_PRODUCTION_H_
+#define _LIBSAPLING_PRODUCTION_H_
 
 /**
  * @file production.h

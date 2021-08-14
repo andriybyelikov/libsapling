@@ -5,9 +5,6 @@
 #include "cc/lexer/lexer_attributed_edges.h"
 
 
-int libsapling_lexer_explain_minimization = 0;
-
-
 void *lexer__data(const node_t node)
 {
     return graph__data(node, sizeof(struct edge_storage));
@@ -47,8 +44,8 @@ IMPLEMENT_TYPED_AVL(nrs, pnode_t, pnode_t__cmp, pnode_t__equ, pnode_t__fpf)
 static
 void nrs__get_node_ref(pnode_t *data, void *info)
 {
-    struct info_insert *ii = info;
-    pnode_t *user = ii->info;
+    CAST_USER_INFO(pnode_t *, user, info);
+
     *user = *data;
 }
 
@@ -79,8 +76,7 @@ void add_to_unvisited(struct info_impl_u *impl, node_t *ref)
 static
 void add_ae_to_unvisited(attributed_edge *data, void *info)
 {
-    struct info_insert *ii = info;
-    struct info_impl_u *user = ii->info;
+    CAST_USER_INFO(struct info_impl_u *, user, info);
 
     // add attributed edge target node to unvisited
     add_to_unvisited(user, &data->node);
@@ -165,8 +161,8 @@ struct info_dump_dot_ext {
 static
 void dot_edge(attributed_edge *data, void *info)
 {
-    struct info_insert *ii = info;
-    struct info_dump_dot_ext *idde = ii->info;
+    CAST_USER_INFO(struct info_dump_dot_ext *, idde, info);
+
     FILE *stream = idde->stream;
     node_t parent = idde->parent;
 
@@ -184,7 +180,8 @@ void dot_edge(attributed_edge *data, void *info)
 }
 
 static
-void dump_dot_aux0(FILE *stream, const node_t node, fpfdata_fn fpfdata, void *info)
+void dump_dot_aux0(FILE *stream, const node_t node, fpfdata_t fpfdata,
+    void *info)
 {
     fprintf(stream, "n%p", node);
     if (node->is_accepting_state) {
@@ -208,7 +205,7 @@ void dump_dot_aux0(FILE *stream, const node_t node, fpfdata_fn fpfdata, void *in
     }
 }
 
-void lexer__dump_dot(FILE *stream, node_t *ref, fpfdata_fn fpfdata)
+void lexer__dump_dot(FILE *stream, node_t *ref, fpfdata_t fpfdata)
 {
     graph__dump_dot(stream, ref, all_access_adapter, dump_dot_aux0, fpfdata,
         "rankdir=LR;");
@@ -228,14 +225,13 @@ void do_nothing(node_t *ref, const struct info_stack *info)
 {
 }
 
-void *lexer__next_terminal(node_t *ref, struct lexer_state *sta)
-{
-    lexer__access(E_QT, ref, sta, predicate_0, do_nothing);
-    return *sta->ref_to_data;
-}
-
-void *lexer__next_terminal2(node_t *ref, struct lexer_state *sta)
+void **lexer__next_terminal(node_t *ref, struct lexer_state *sta)
 {
     lexer__access(E_QT, ref, sta, predicate_0, do_nothing);
     return sta->ref_to_data;
+}
+
+int lexer__length(const node_t *ref)
+{
+    return graph__length(ref, all_access_adapter);
 }

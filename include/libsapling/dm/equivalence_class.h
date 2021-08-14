@@ -1,5 +1,5 @@
-#ifndef LIBSAPLING_EQUIVALENCE_CLASS
-#define LIBSAPLING_EQUIVALENCE_CLASS
+#ifndef _LIBSAPLING_EQUIVALENCE_CLASS_H_
+#define _LIBSAPLING_EQUIVALENCE_CLASS_H_
 
 /**
  * @file equivalence_class.h
@@ -15,9 +15,5 @@ void equivalence_class__insert(node_t *ref, void *info);
 void *equivalence_class__access_representative(node_t *ref);
 void equivalence_class__access_non_representatives(enum qt qt, node_t *ref,
     void *info, predicate_t predicate, apply_t apply);
-void equivalence_class__print_data(FILE *stream, node_t *ref,
-    fpfdata_fn fpfdata);
-void equivalence_class__dump_dot(FILE *stream, node_t *ref,
-    fpfdata_fn fpfdata);
 
 #endif

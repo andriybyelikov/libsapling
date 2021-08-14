@@ -1,19 +1,31 @@
-0.5.0 [Unreleased]
+0.5.0
 -----
-- Removed all ".*__edge_storage" functions
-- Renamed all "match" functions to "predicate"
-
-- Prefixed header guards with `LIBSAPLING_`
-- Transformed macro symbols to uppercase
+# Added
+- Implemented equivalence class and tests
+- Implemented trie and tests
 - Implemented typed interfaces
+- Added "UNUSED" function parameter decorator in idiom.h to mark unused
+  function parameters
+- Added Doxygen documentation: for users, documenting the API, and for
+  maintainers, documenting some implementation details
+
+# Changed
+- All tests have been rewritten with typed interfaces
+- Lexer code rewritten and improved (formerly REA or regular expression
+  automaton)
+- Scrapped manually written Makefile in favor of GNU Autotools for building,
+  testing and installing
+- Prefixed header guards with "_LIBSAPLING_{file path}_H_"
+- Transformed macro symbols to uppercase
 - Distilled common implementations as parametrized macros:
   - Stack and queue (first out buffer)
   - Typed stack and queue interface (typed first out buffer)
-- Added `UNUSED` function parameter decorator in idiom.h
-- Added Doxygen documentation, for users, documenting the API, and for
-  maintainers, documenting implementation details
-- Scrapped manual Makefile in favor of GNU Autotools for building, testing and
-  installing
+
+# Removed
+- Removed all ".*__edge_storage" functions
+- Renamed all "match" functions to "predicate"
+
+# Fixed
 - lexer:
   - Fixed state comparison (comparison of attributed edges was being performed
     with existential quantification on an AVL (search) instead of universal
@@ -25,6 +37,7 @@
     `ae(s0) ⊆ ae(s1) ∧ ae(s1) ⊆ ae(s0)`)
   - Removed forced minimization after applying an operator
 
+
 0.4.0
 -----
 - Implemented parse tree building and navigation
@@ -34,6 +47,7 @@
 - Defined macro for defining file scope typed stack operations
 - Updated library implementation dependency chart
 - Updated README
+
 
 0.3.0
 -----

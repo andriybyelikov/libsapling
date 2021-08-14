@@ -34,8 +34,7 @@ IMPLEMENT_TYPED_AVL(nim, node_int_mapping, nim_cmp, nim_equ, nim_fpf)
 static
 void nim__get_value_apply(node_int_mapping *data, void *info)
 {
-    struct info_insert *ii = info;
-    node_int_mapping *user = ii->info;
+    CAST_USER_INFO(node_int_mapping *, user, info);
     user->value = data->value;
 }
 
@@ -77,10 +76,10 @@ struct pretty_print_ae {
 static
 void pretty_print_ae(attributed_edge *data, void *info)
 {
-    struct info_insert *ii = info;
-    struct pretty_print_ae *user = ii->info;
+    CAST_USER_INFO(struct pretty_print_ae *, user, info);
 
-    sprintf(user->buf + strlen(user->buf), "%c->%2d ", data->byte, nim__get_value(user->map, data->node));
+    sprintf(user->buf + strlen(user->buf), "%c->%2d ", data->byte,
+        nim__get_value(user->map, data->node));
 }
 
 const char *lexer__to_string(node_t *ref, node_t *map)
@@ -95,4 +94,3 @@ const char *lexer__to_string(node_t *ref, node_t *map)
     sprintf(str + strlen(str), "\n");
     return str;
 }
-

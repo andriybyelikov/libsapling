@@ -2,10 +2,25 @@
 #include <string.h>
 #include "libsapling/cc/parse_tree.h"
 
+#define DUMP(SYMBOL, ALIAS) \
+if (flag_dump_dot) { \
+    printf(#ALIAS "\n"); \
+    parse_tree__dump_dot(stdout, &SYMBOL); \
+}
+
 int main(int argc, char *argv[])
 {
-    int dump_dot = argc > 1 && !strcmp(argv[1], "-v");
+    int flag_dump_dot = 0;
+    for (int i = 1; i < argc; i++)
+    if (*argv[i] == '-') {
+        switch (*(argv[i] + 1)) {
+        case 'g':
+            flag_dump_dot = 1;
+            break;
+        }
+    }
 
+    printf("%s\n", argv[0]);
 
     node_t mul = parse_tree__create_node("*");
     parse_tree__append_child(&mul, parse_tree__create_node("pi"));
@@ -23,10 +38,9 @@ int main(int argc, char *argv[])
     parse_tree__append_child(&pt, add);
     parse_tree__append_child(&pt, parse_tree__create_node("0"));
 
-    if (dump_dot)
-        parse_tree__dump_dot(stdout, &pt);
+    DUMP(pt, euler_s_identity)
 
-
+    // assert root is =
     assert(!strcmp(parse_tree__data(pt), "="));
 
     // search for child of =, 0
@@ -34,8 +48,6 @@ int main(int argc, char *argv[])
     node_t zero_pos = parse_tree__get_child_by_position(&pt, 1);
     assert(!strcmp(parse_tree__data(zero_str),
         parse_tree__data(zero_pos)));
-
-
 
 
     // build a regex-like tree
@@ -67,6 +79,5 @@ int main(int argc, char *argv[])
     node_t n13 = parse_tree__create_node("expr");
     parse_tree__append_child(&n13, n12);
 
-    if (dump_dot)
-        parse_tree__dump_dot(stdout, &n13);
+    DUMP(n13, regex)
 }

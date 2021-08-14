@@ -1,17 +1,17 @@
 #include "libsapling/dm/path.h"
 #include "libsapling/cc/lexer.h"
+#include "libsapling/dm/typed/typed_common.h"
 #include "cc/lexer/lexer_edge_storage.h"
 #include "cc/lexer/lexer_minimize.h"
 #include "cc/lexer/lexer_accepting_states.h"
 
 typedef node_t *pnode_t;
-IMPLEMENT_TYPED_PATH(rp, pnode_t, NULL)
+IMPLEMENT_TYPED_PATH(rp, pnode_t, NULL, dummy_cmp)
 
 static
 void aux_ks_union(pnode_t *data, void *info)
 {
-    struct info_insert *ii = info;
-    node_t *src = ii->info;
+    CAST_USER_INFO(node_t *, src, info);
 
     lexer__union(src, *data);
 

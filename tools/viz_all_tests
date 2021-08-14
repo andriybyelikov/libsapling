@@ -1,0 +1,7 @@
+#! /bin/sh
+
+for test in $(find test -name *_test)
+do
+    if [[ $test == "test/equivalence_class_test" ]]; then continue; fi
+    echo "$test -g | sh ../tools/viz" | sh
+done

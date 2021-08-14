@@ -1,11 +1,22 @@
-#ifndef LIBSAPLING_TYPED_FIRST_OUT_BUFFER
-#define LIBSAPLING_TYPED_FIRST_OUT_BUFFER
+#ifndef _LIBSAPLING_TYPED_FIRST_OUT_BUFFER_H_
+#define _LIBSAPLING_TYPED_FIRST_OUT_BUFFER_H_
 
 /**
  * @file typed_first_out_buffer.h
  * @brief Metaimplementation of the typed stack and queue interfaces
  */
 
+#include "libsapling/dm/path.h"
+
+/**
+ * @brief Defines a typed stack implementation
+ * 
+ * @param SYM Prefix symbol of all implemented functions
+ * @param TYPE Type with which the implementation will be dealing with
+ * @param FPF fpfdata function that prints the formatted data of the
+ * implementation's type
+ * @param IMPL Access, insert, delete functions' prefix (stack or queue)
+ */
 #define IMPLEMENT_TYPED_FIRST_OUT_BUFFER(SYM, TYPE, FPF, IMPL)                \
                                                                               \
 static                                                                        \
@@ -32,13 +43,19 @@ TYPE SYM##__delete(node_t *ref)                                               \
 static                                                                        \
 void SYM##__print_data(FILE *stream, node_t *ref)                             \
 {                                                                             \
-    IMPL##__print_data(stream, ref, FPF);                                     \
+    path__print_data(stream, ref, FPF);                                       \
 }                                                                             \
                                                                               \
 static                                                                        \
 void SYM##__dump_dot(FILE *stream, node_t *ref)                               \
 {                                                                             \
-    IMPL##__dump_dot(stream, ref, FPF);                                       \
+    path__dump_dot(stream, ref, FPF);                                         \
+}                                                                             \
+                                                                              \
+static                                                                        \
+int SYM##__length(const node_t *ref)                                          \
+{                                                                             \
+    return path__length(ref);                                                 \
 }
 
 #endif

@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include "libsapling/dm/path.h"
 #include "libsapling/dm/queue.h"
+#include "libsapling/dm/typed/typed_common.h"
 
 struct edge_storage {
     node_t children; // queue
@@ -150,7 +151,8 @@ void dump_dot_aux1(node_t *ref, const struct info_stack *info)
 }
 
 static
-void dump_dot_aux0(FILE *stream, const node_t node, fpfdata_fn fpfdata, void *impl)
+void dump_dot_aux0(FILE *stream, const node_t node, fpfdata_t fpfdata,
+    void *impl)
 {
     fprintf(stream, "n%p[label=\"", node);
     if (fpfdata != NULL)
@@ -159,12 +161,6 @@ void dump_dot_aux0(FILE *stream, const node_t node, fpfdata_fn fpfdata, void *im
 
     struct dump_dot_aux info = { stream, node };
     path__access(U_QT, &node->children, &info, predicate_1, dump_dot_aux1);
-}
-
-static
-void fpfdata_str(FILE *stream, const void *data)
-{
-    fprintf(stream, "%s", (const char *)data);
 }
 
 void parse_tree__dump_dot(FILE *stream, node_t *ref)

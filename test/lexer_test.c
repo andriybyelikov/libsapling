@@ -21,7 +21,7 @@ if (flag_dump_dot) { \
         lexer__copy(&copy, &SYMBOL); \
         printf(#ALIAS "_copy\n"); \
         lexer__dump_dot(stdout, &copy, print_integer); \
-    }\
+    } \
     lexer__minimize(&SYMBOL); \
     printf(#ALIAS "_minimized\n"); \
     lexer__dump_dot(stdout, &SYMBOL, print_integer); \
@@ -30,7 +30,7 @@ if (flag_dump_dot) { \
         lexer__copy(&minimized_copy, &SYMBOL); \
         printf(#ALIAS "_minimized_copy\n"); \
         lexer__dump_dot(stdout, &minimized_copy, print_integer); \
-    }\
+    } \
 }
 
 int main(int argc, char *argv[])
@@ -329,6 +329,9 @@ int main(int argc, char *argv[])
         lexer__union(&a1, &a2);
         lexer__union(&a0, &a1);
 
+        // should have 4 states
+        assert(lexer__length(&a0) == 4);
+
         DUMP(a0, union_classes_1_2_3)
 
 
@@ -339,13 +342,13 @@ int main(int argc, char *argv[])
         lexer__init(&lsta, bufmem);
         int *res;
 
-        res = (int *)lexer__next_terminal(&a0, &lsta);
+        res = *(int **)lexer__next_terminal(&a0, &lsta);
         assert(res != NULL && *res == id0); // classify 'F' as class 0
 
-        res = (int *)lexer__next_terminal(&a0, &lsta);
+        res = *(int **)lexer__next_terminal(&a0, &lsta);
         assert(res != NULL && *res == id1); // classify 'a' as class 1
 
-        res = (int *)lexer__next_terminal(&a0, &lsta);
+        res = *(int **)lexer__next_terminal(&a0, &lsta);
         assert(res != NULL && *res == id2); // classify '8' as class 2
     }
 }

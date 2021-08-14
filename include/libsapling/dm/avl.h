@@ -1,5 +1,5 @@
-#ifndef LIBSAPLING_AVL
-#define LIBSAPLING_AVL
+#ifndef _LIBSAPLING_AVL_H_
+#define _LIBSAPLING_AVL_H_
 
 /**
  * @file avl.h
@@ -24,7 +24,8 @@ void avl__insert(node_t *ref, void *info, predicate_t predicate,
     cmp_t comparator);
 void avl__delete(node_t *ref, void *info, predicate_t predicate,
     cmp_t comparator);
-void avl__print_data(FILE *stream, node_t *ref, fpfdata_fn fpfdata);
-void avl__dump_dot(FILE *stream, node_t *ref, fpfdata_fn fpfdata);
+void avl__print_data(FILE *stream, node_t *ref, fpfdata_t fpfdata);
+void avl__dump_dot(FILE *stream, node_t *ref, fpfdata_t fpfdata);
+int avl__length(const node_t *ref);
 
 #endif

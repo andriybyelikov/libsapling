@@ -1,7 +1,0 @@
-#!/usr/bin/bash
-
-for tag in $(git tag)
-do
-    cloc {include,src} --git $tag --include-lang=C,C/C++\ Header | grep SUM \
-        | awk '{print $5}'
-done

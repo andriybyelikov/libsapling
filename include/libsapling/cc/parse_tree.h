@@ -1,5 +1,5 @@
-#ifndef LIBSAPLING_PARSE_TREE
-#define LIBSAPLING_PARSE_TREE
+#ifndef _LIBSAPLING_PARSE_TREE_H_
+#define _LIBSAPLING_PARSE_TREE_H_
 
 /**
  * @file parse_tree.h

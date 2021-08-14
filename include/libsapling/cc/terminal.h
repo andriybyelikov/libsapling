@@ -1,5 +1,5 @@
-#ifndef LIBSAPLING_TERMINAL
-#define LIBSAPLING_TERMINAL
+#ifndef _LIBSAPLING_TERMINAL_H_
+#define _LIBSAPLING_TERMINAL_H_
 
 /**
  * @file terminal.h

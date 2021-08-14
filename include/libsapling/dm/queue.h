@@ -1,5 +1,5 @@
-#ifndef LIBSAPLING_QUEUE
-#define LIBSAPLING_QUEUE
+#ifndef _LIBSAPLING_QUEUE_H_
+#define _LIBSAPLING_QUEUE_H_
 
 /**
  * @file queue.h
@@ -13,7 +13,5 @@
 void *queue__access(node_t *ref);
 void queue__insert(node_t *ref, void *info);
 void queue__delete(node_t *ref);
-void queue__print_data(FILE *stream, node_t *ref, fpfdata_fn fpfdata);
-void queue__dump_dot(FILE *stream, node_t *ref, fpfdata_fn fpfdata);
 
 #endif

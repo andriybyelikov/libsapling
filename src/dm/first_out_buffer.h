@@ -1,5 +1,5 @@
-#ifndef LIBSAPLING_FIRST_OUT_BUFFER
-#define LIBSAPLING_FIRST_OUT_BUFFER
+#ifndef _LIBSAPLING_FIRST_OUT_BUFFER_H_
+#define _LIBSAPLING_FIRST_OUT_BUFFER_H_
 
 /**
  * @file first_out_buffer.h
@@ -54,17 +54,6 @@ void *SYM##__access(node_t *ref)                                              \
     struct get_data info = { NULL };                                          \
     path__access(E_QT, ref, &info, predicate_1, get_data);                    \
     return info.data;                                                         \
-}                                                                             \
-                                                                              \
-                                                                              \
-void SYM##__print_data(FILE *stream, node_t *ref, fpfdata_fn fpfdata)         \
-{                                                                             \
-    path__print_data(stream, ref, fpfdata);                                   \
-}                                                                             \
-                                                                              \
-void SYM##__dump_dot(FILE *stream, node_t *ref, fpfdata_fn fpfdata)           \
-{                                                                             \
-    path__dump_dot(stream, ref, fpfdata);                                     \
 }
 
 #endif
