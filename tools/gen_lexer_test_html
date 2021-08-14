@@ -1,0 +1,35 @@
+#! /bin/sh
+
+echo \
+"<!DOCTYPE html>
+<html>
+  <head></head>
+  <body>"
+
+i=0
+for file in $(find ../build/viz/lexer_test -name *.svg | xargs stat -c '%.Y %n' | sort | cut -c 22-)
+do
+    if [[ "((i%2))" -eq 0 ]]
+    then
+        echo \
+"    <div>
+      <h2>$(echo $file | sed 's/.*test\/\(.*\)_.*/\1/')</h2>"
+    fi
+
+        echo \
+"     <figure>
+       <img src=\"$file\">
+         <figcaption>$(echo $file | sed 's/.*test\/\(.*\)_.*/\1/')</figcaption>
+      </figure>"
+
+    if [[ "((i%4))" -eq 3 ]]
+    then
+        echo \
+"    </div>"
+    fi
+    ((i=i+1))
+done
+
+echo \
+"  </body>
+</html>"

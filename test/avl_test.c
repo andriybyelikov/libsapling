@@ -1,93 +1,79 @@
 #include <assert.h>
 #include <limits.h>
 #include <stdlib.h>
-#include <string.h>
 #include <time.h>
-#include "graph.h"
-#include "avl.h"
+#include "libsapling/dm/avl.h"
+#include "libsapling/dm/typed/typed_common.h"
+#include "test/test_utils.h"
 
 static
-int even(int a)
+int cmpi(const void *a, const void *b)
 {
-    return a % 2 == 0;
+    return *(int *)a <= *(int *)b;
 }
 
-struct info_insert {
-    size_t size;
-    int data;
+static
+int equi(const void *a, const void *b)
+{
+    return *(int *)a == *(int *)b;
+}
+
+IMPLEMENT_TYPED_AVL(integer_avl, int, cmpi, equi, fpfdata_int)
+DEFINE_OUTPUT_STATE_FUNC(integer_avl)
+
+static
+int rand_rand_sign(int m)
+{
+    return ((rand() & 1) ? -1 : 1) * (rand() % m);
+}
+
+struct check_ascending_order {
+    int prev;
+    int satisf;
 };
 
 static
-int choose(void **ref, void *info)
+int check_ascending(const int *data, void *info)
 {
-    struct info_insert *i = get_user_info(info);
-    void *node = *ref;
-    int a = i->data;
-    int b = *(int *)avl__node__data(ref);
-    return a < b ? 0 : 1;
+    CAST_USER_INFO(struct check_ascending_order *, user, info);
+
+    int a = user->prev;
+    int b = *data;
+    int temp = !(a <= b);
+    user->prev = *data;
+    return temp;
 }
 
 static
-int match(void **ref, void *info)
+void set_not_satisf(int *data, void *info)
 {
-    struct info_insert *i = get_user_info(info);
-    void *node = *ref;
-    int a = i->data;
-    int b = *(int *)avl__node__data(ref);
-    return a == b;
-}
+    CAST_USER_INFO(struct check_ascending_order *, user, info);
 
-static
-void fpd_int(FILE *fd, void **ref)
-{
-    int val = *(int *)avl__node__data(ref);
-    fprintf(fd, "%d", val);
-}
-
-static
-void check_exists(void **ref, void *info)
-{
-    if (*ref != NULL) {
-        struct info_insert *i = get_user_info(info);
-        void *node = *ref;
-        int a = *(int *)avl__node__data(ref);
-        i->data = a;
-    }
-}
-
-struct info_ensure_inorder {
-    int last;
-};
-
-static
-void ensure_inorder(void **ref, void *info)
-{
-    struct info_ensure_inorder *i = get_user_info(info);
-    int val = *(int *)avl__node__data(ref);
-    assert(i->last <= val);
-    i->last = val;
+    user->satisf = 0;
 }
 
 int main(int argc, char *argv[])
 {
-    int dump_dot = argc > 1 && !strcmp(argv[1], "-v");
-
-    void *avl = NULL;
-
-    struct info_insert ii = { sizeof(int) };
+    TEST_PARSE_OPTIONS()
 
     srand(time(NULL));
-    const int n = 40;
-    const int m = 100;
-    int record[n];
 
-    // insert 'n random values mod 'm and save them in record
+    // output empty AVL state
+    node_t set = NULL;
+    integer_avl__output_state(&set);
+
+    // insert random values
+    int n = 40;
+    int m = 100;
+    int record[n];
     for (int i = 0; i < n; i++) {
-        record[i] = ii.data = (rand() % m) * (even(rand()) ? 1 : -1);
-        avl__insert(&avl, &ii, choose);
-        if (dump_dot)
-            avl__dump_dot(stdout, &avl, fpd_int);
+        integer_avl__insert(&set, record[i] = rand_rand_sign(m),
+            integer_avl__cmp_predicate);
+        integer_avl__output_state(&set);
     }
+
+    // assert length
+    assert(integer_avl__length(&set) == n);
 
     // shuffle an array of indexes
     int indexes[n];
@@ -101,25 +87,27 @@ int main(int argc, char *argv[])
         indexes[i1] = temp;
     }
 
+    // check all values in
     // randomly access data and ensure it matches
     for (int i = 0; i < n; i++) {
-        ii.data = record[indexes[i]];
-        avl__access(E_QT, &avl, &ii, choose, match, check_exists);
-        assert(ii.data == record[indexes[i]]);
+        assert(integer_avl__in(&set, record[indexes[i]]));
     }
 
+    // ensure inorder
     // ensure order in inorder traversal
-    struct info_ensure_inorder ieo = { INT_MIN };
-    avl__access(U_QT, &avl, &ieo, choose, match_1, ensure_inorder);
+    struct check_ascending_order cao = { INT_MIN, 1 };
+    integer_avl__access(U_QT, &set, &cao, check_ascending, set_not_satisf);
+    assert(cao.satisf);
 
-    // randomly delete values
+    // randomly delete
     for (int i = 0; i < n; i++) {
-        ii.data = record[indexes[i]];
-        avl__delete(&avl, &ii, choose, match);
-        if (dump_dot)
-            avl__dump_dot(stdout, &avl, fpd_int);
+        integer_avl__delete(&set, record[indexes[i]], integer_avl__equ_predicate);
+        integer_avl__output_state(&set);
     }
 
-    // assert all deleted
-    assert(avl == NULL);
+    // assert length
+    assert(integer_avl__length(&set) == 0);
+
+    // assert null
+    assert(set == NULL);
 }

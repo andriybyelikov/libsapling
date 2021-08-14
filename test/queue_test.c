@@ -1,41 +1,38 @@
 #include <assert.h>
 #include <string.h>
-#include "graph.h"
-#include "queue.h"
+#include "libsapling/dm/queue.h"
+#include "libsapling/dm/typed/typed_common.h"
+#include "test/test_utils.h"
 
-struct info_insert {
-    size_t size;
-    int data;
-};
-
-static
-void fpd_int(FILE *fd, void **ref)
-{
-    int val = *(int *)queue__node__data(ref);
-    fprintf(fd, "%d", val);
-}
+IMPLEMENT_TYPED_QUEUE(integer_queue, int, fpfdata_int)
+DEFINE_OUTPUT_STATE_FUNC(integer_queue)
 
 int main(int argc, char *argv[])
 {
-    int dump_dot = argc > 1 && !strcmp(argv[1], "-v");
+    TEST_PARSE_OPTIONS()
 
-    void *queue = NULL;
+    // output empty queue state
+    node_t queue = NULL;
+    integer_queue__output_state(&queue);
 
-    struct info_insert info = { sizeof(int) };
-    // push 1..10 and ensure pop in original order
+    // push from 1 to 10 to the queue
     for (int i = 1; i <= 10; i++) {
-        info.data = i;
-        queue__insert(&queue, &info);
-        if (dump_dot)
-            queue__dump_dot(stdout, &queue, fpd_int);
+        integer_queue__insert(&queue, i);
+        integer_queue__output_state(&queue);
     }
+
+    // assert length
+    assert(integer_queue__length(&queue) == 10);
+
+    // pop from 1 to 10 from the queue
     for (int i = 1; i <= 10; i++) {
-        int val = *(int *)queue__access(&queue);
-        assert(val == i);
-        queue__delete(&queue);
-        if (dump_dot)
-            queue__dump_dot(stdout, &queue, fpd_int);
+        assert(integer_queue__delete(&queue) == i);
+        integer_queue__output_state(&queue);
     }
-    // ensure all deleted
+
+    // assert length
+    assert(integer_queue__length(&queue) == 0);
+
+    // queue should now be empty
     assert(queue == NULL);
 }

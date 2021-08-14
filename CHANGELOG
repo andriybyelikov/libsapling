@@ -1,3 +1,43 @@
+0.5.0
+-----
+# Added
+- Implemented equivalence class and tests
+- Implemented trie and tests
+- Implemented typed interfaces
+- Added "UNUSED" function parameter decorator in idiom.h to mark unused
+  function parameters
+- Added Doxygen documentation: for users, documenting the API, and for
+  maintainers, documenting some implementation details
+
+# Changed
+- All tests have been rewritten with typed interfaces
+- Lexer code rewritten and improved (formerly REA or regular expression
+  automaton)
+- Scrapped manually written Makefile in favor of GNU Autotools for building,
+  testing and installing
+- Prefixed header guards with "_LIBSAPLING_{file path}_H_"
+- Transformed macro symbols to uppercase
+- Distilled common implementations as parametrized macros:
+  - Stack and queue (first out buffer)
+  - Typed stack and queue interface (typed first out buffer)
+
+# Removed
+- Removed all ".*__edge_storage" functions
+- Renamed all "match" functions to "predicate"
+
+# Fixed
+- lexer:
+  - Fixed state comparison (comparison of attributed edges was being performed
+    with existential quantification on an AVL (search) instead of universal
+    quantification (traversal), also only one node's attributed edges were
+    compared with the other, if all that node's attributed edges were in the
+    second node, the states would be considered equal even if the second state
+    had all of the first node's attributed edges and more, e.g. only
+    `ae(s0) ⊆ ae(s1)` was being evaluated instead of
+    `ae(s0) ⊆ ae(s1) ∧ ae(s1) ⊆ ae(s0)`)
+  - Removed forced minimization after applying an operator
+
+
 0.4.0
 -----
 - Implemented parse tree building and navigation
@@ -7,6 +47,7 @@
 - Defined macro for defining file scope typed stack operations
 - Updated library implementation dependency chart
 - Updated README
+
 
 0.3.0
 -----
