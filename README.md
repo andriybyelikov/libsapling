@@ -61,6 +61,7 @@ Lexer
 Using GNU Autotools.
 
 ```
+$ autoreconf --install
 $ mkdir build
 $ cd build
 $ ../configure
