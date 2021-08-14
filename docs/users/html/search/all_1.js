@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['cmp_5ft_3',['cmp_t',['../logic_8h.html#a50ca695f099ce823c11afe35b6d90d90',1,'logic.h']]]
+  ['typed_20interfaces_1',['Typed interfaces',['../md_TYPED_INTERFACES.html',1,'']]]
 ];

@@ -86,21 +86,24 @@ Functions</h2></td></tr>
 <tr class="memitem:a016e3457706533cea1b6366ade811a5b"><td class="memItemLeft" align="right" valign="top"><a id="a016e3457706533cea1b6366ade811a5b"></a>
 void *&#160;</td><td class="memItemRight" valign="bottom"><b>avl__data</b> (const node_t node)</td></tr>
 <tr class="separator:a016e3457706533cea1b6366ade811a5b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aad99b03b391d09f8b9057054bdad37b0"><td class="memItemLeft" align="right" valign="top"><a id="aad99b03b391d09f8b9057054bdad37b0"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>avl__access</b> (enum <a class="el" href="logic_8h.html#a92452e3188bb558c8ed61df7c58e5d40">qt</a> <a class="el" href="logic_8h.html#a92452e3188bb558c8ed61df7c58e5d40">qt</a>, node_t *ref, void *info, <a class="el" href="graph_8h.html#a6be98da7fb6f356688ca6e4974d9f38d">predicate_fn</a> predicate, <a class="el" href="graph_8h.html#a5263355d886339d0f4b13f0c5f607cf8">apply_fn</a> apply, <a class="el" href="logic_8h.html#a50ca695f099ce823c11afe35b6d90d90">cmp_t</a> comparator)</td></tr>
-<tr class="separator:aad99b03b391d09f8b9057054bdad37b0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a548242eb134b8de153ed1564e72f30e8"><td class="memItemLeft" align="right" valign="top"><a id="a548242eb134b8de153ed1564e72f30e8"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>avl__insert</b> (node_t *ref, void *info, <a class="el" href="graph_8h.html#a6be98da7fb6f356688ca6e4974d9f38d">predicate_fn</a> predicate, <a class="el" href="logic_8h.html#a50ca695f099ce823c11afe35b6d90d90">cmp_t</a> comparator)</td></tr>
-<tr class="separator:a548242eb134b8de153ed1564e72f30e8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa5ad6a41756484ec5a4daa073222c5ec"><td class="memItemLeft" align="right" valign="top"><a id="aa5ad6a41756484ec5a4daa073222c5ec"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>avl__delete</b> (node_t *ref, void *info, <a class="el" href="graph_8h.html#a6be98da7fb6f356688ca6e4974d9f38d">predicate_fn</a> predicate, <a class="el" href="logic_8h.html#a50ca695f099ce823c11afe35b6d90d90">cmp_t</a> comparator)</td></tr>
-<tr class="separator:aa5ad6a41756484ec5a4daa073222c5ec"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a70b48e818e0e774554e87182442791e4"><td class="memItemLeft" align="right" valign="top"><a id="a70b48e818e0e774554e87182442791e4"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>avl__print_data</b> (FILE *stream, node_t *ref, <a class="el" href="graph_8h.html#a595058f2f07e082d0e134f6ee94f348f">fpfdata_fn</a> fpfdata)</td></tr>
-<tr class="separator:a70b48e818e0e774554e87182442791e4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a18841a29a9db60db947c6fbd63449bcb"><td class="memItemLeft" align="right" valign="top"><a id="a18841a29a9db60db947c6fbd63449bcb"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>avl__dump_dot</b> (FILE *stream, node_t *ref, <a class="el" href="graph_8h.html#a595058f2f07e082d0e134f6ee94f348f">fpfdata_fn</a> fpfdata)</td></tr>
-<tr class="separator:a18841a29a9db60db947c6fbd63449bcb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a399f4eb670072b4a0fbd220331cccc71"><td class="memItemLeft" align="right" valign="top"><a id="a399f4eb670072b4a0fbd220331cccc71"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>avl__access</b> (enum <a class="el" href="logic_8h.html#a92452e3188bb558c8ed61df7c58e5d40">qt</a> <a class="el" href="logic_8h.html#a92452e3188bb558c8ed61df7c58e5d40">qt</a>, node_t *ref, void *info, <a class="el" href="graph_8h.html#a2cb6239813581ac6a406b723264e03c3">predicate_t</a> predicate, <a class="el" href="graph_8h.html#a05e6c21fe88b580c19ee9b036540e200">apply_t</a> apply, <a class="el" href="logic_8h.html#a50ca695f099ce823c11afe35b6d90d90">cmp_t</a> comparator)</td></tr>
+<tr class="separator:a399f4eb670072b4a0fbd220331cccc71"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3b4e3d1e4c291b9f44a48853707d9efc"><td class="memItemLeft" align="right" valign="top"><a id="a3b4e3d1e4c291b9f44a48853707d9efc"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>avl__insert</b> (node_t *ref, void *info, <a class="el" href="graph_8h.html#a2cb6239813581ac6a406b723264e03c3">predicate_t</a> predicate, <a class="el" href="logic_8h.html#a50ca695f099ce823c11afe35b6d90d90">cmp_t</a> comparator)</td></tr>
+<tr class="separator:a3b4e3d1e4c291b9f44a48853707d9efc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a257511ec63468de857737d53bc62f71d"><td class="memItemLeft" align="right" valign="top"><a id="a257511ec63468de857737d53bc62f71d"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>avl__delete</b> (node_t *ref, void *info, <a class="el" href="graph_8h.html#a2cb6239813581ac6a406b723264e03c3">predicate_t</a> predicate, <a class="el" href="logic_8h.html#a50ca695f099ce823c11afe35b6d90d90">cmp_t</a> comparator)</td></tr>
+<tr class="separator:a257511ec63468de857737d53bc62f71d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a64da0cc8232f52f612530c1c025efe5b"><td class="memItemLeft" align="right" valign="top"><a id="a64da0cc8232f52f612530c1c025efe5b"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>avl__print_data</b> (FILE *stream, node_t *ref, <a class="el" href="graph_8h.html#a2810b6e9a9e57b98a254bd7e3e4c1be0">fpfdata_t</a> fpfdata)</td></tr>
+<tr class="separator:a64da0cc8232f52f612530c1c025efe5b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3f6ac6b884677c426d40630b628b176c"><td class="memItemLeft" align="right" valign="top"><a id="a3f6ac6b884677c426d40630b628b176c"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>avl__dump_dot</b> (FILE *stream, node_t *ref, <a class="el" href="graph_8h.html#a2810b6e9a9e57b98a254bd7e3e4c1be0">fpfdata_t</a> fpfdata)</td></tr>
+<tr class="separator:a3f6ac6b884677c426d40630b628b176c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a17c36133016ea7c40728ef4d4259694e"><td class="memItemLeft" align="right" valign="top"><a id="a17c36133016ea7c40728ef4d4259694e"></a>
+int&#160;</td><td class="memItemRight" valign="bottom"><b>avl__length</b> (const node_t *ref)</td></tr>
+<tr class="separator:a17c36133016ea7c40728ef4d4259694e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>AVL tree implementation. </p>

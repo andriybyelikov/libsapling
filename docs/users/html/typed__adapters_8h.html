@@ -82,13 +82,107 @@ $(function() {
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
 Macros</h2></td></tr>
-<tr class="memitem:a30f890fc82e1810f0cb29982ea2f4870"><td class="memItemLeft" align="right" valign="top"><a id="a30f890fc82e1810f0cb29982ea2f4870"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>IMPLEMENT_TYPED_ADAPTERS</b>(SYM,  TYPE,  IMPL)</td></tr>
+<tr class="memitem:ac533050ef31434f3ae5fa9ae5382482e"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="typed__adapters_8h.html#ac533050ef31434f3ae5fa9ae5382482e">CAST_USER_INFO</a>(TYPE,  VAR,  INFO)&#160;&#160;&#160;TYPE VAR = ((struct <a class="el" href="structinfo__insert.html">info_insert</a> *)INFO)-&gt;info</td></tr>
+<tr class="memdesc:ac533050ef31434f3ae5fa9ae5382482e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates a variable of the specified type with the user information proper.  <a href="typed__adapters_8h.html#ac533050ef31434f3ae5fa9ae5382482e">More...</a><br /></td></tr>
+<tr class="separator:ac533050ef31434f3ae5fa9ae5382482e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a30f890fc82e1810f0cb29982ea2f4870"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="typed__adapters_8h.html#a30f890fc82e1810f0cb29982ea2f4870">IMPLEMENT_TYPED_ADAPTERS</a>(SYM,  TYPE,  IMPL)</td></tr>
+<tr class="memdesc:a30f890fc82e1810f0cb29982ea2f4870"><td class="mdescLeft">&#160;</td><td class="mdescRight">Pastes all definitions that implement typed adapters.  <a href="typed__adapters_8h.html#a30f890fc82e1810f0cb29982ea2f4870">More...</a><br /></td></tr>
 <tr class="separator:a30f890fc82e1810f0cb29982ea2f4870"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Implementation of typed adapters for predicate and apply functions. </p>
-</div></div><!-- contents -->
+<p>Adapters allow predicates and apply functions to be defined without having to expose the node and the implementation information. Adapters provide these predicate and apply functions with a pointer to node's data cast to the appropiate type and the pointer to the user information directly, instead of providing a pointer to the node and the information stack proper. This reduces the number of casts the user has to write when writing a predicate or an apply function. </p>
+</div><h2 class="groupheader">Macro Definition Documentation</h2>
+<a id="ac533050ef31434f3ae5fa9ae5382482e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac533050ef31434f3ae5fa9ae5382482e">&#9670;&nbsp;</a></span>CAST_USER_INFO</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define CAST_USER_INFO</td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">TYPE, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">VAR, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">INFO&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td>&#160;&#160;&#160;TYPE VAR = ((struct <a class="el" href="structinfo__insert.html">info_insert</a> *)INFO)-&gt;info</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Creates a variable of the specified type with the user information proper. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">TYPE</td><td>Type of the variable </td></tr>
+    <tr><td class="paramname">VAR</td><td>Name of the variable </td></tr>
+    <tr><td class="paramname">INFO</td><td>Name of function parameter that points to the user information </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a30f890fc82e1810f0cb29982ea2f4870"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a30f890fc82e1810f0cb29982ea2f4870">&#9670;&nbsp;</a></span>IMPLEMENT_TYPED_ADAPTERS</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define IMPLEMENT_TYPED_ADAPTERS</td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">SYM, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">TYPE, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname">IMPL&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Pastes all definitions that implement typed adapters. </p>
+<dl class="section attention"><dt>Attention</dt><dd>This macro is only intended to be used when defining a typed interface for a set implementation.</dd></dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">SYM</td><td>Prefix symbol for the adapter definitions </td></tr>
+    <tr><td class="paramname">TYPE</td><td>Type with which the adapters will be dealing with </td></tr>
+    <tr><td class="paramname">IMPL</td><td>Which set implementation's data will be accessed </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+</div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
 Generated by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.1

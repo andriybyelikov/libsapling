@@ -77,6 +77,7 @@ $(function() {
 <p>Path implementation.  
 <a href="#details">More...</a></p>
 <div class="textblock"><code>#include &quot;<a class="el" href="graph_8h_source.html">libsapling/dm/graph.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="typed__path_8h_source.html">libsapling/dm/typed/typed_path.h</a>&quot;</code><br />
 </div>
 <p><a href="path_8h_source.html">Go to the source code of this file.</a></p>
 <table class="memberdecls">
@@ -85,21 +86,21 @@ Functions</h2></td></tr>
 <tr class="memitem:a0f00843d8ee568b33aa2a84fe0c53aa9"><td class="memItemLeft" align="right" valign="top"><a id="a0f00843d8ee568b33aa2a84fe0c53aa9"></a>
 void *&#160;</td><td class="memItemRight" valign="bottom"><b>path__data</b> (const node_t node)</td></tr>
 <tr class="separator:a0f00843d8ee568b33aa2a84fe0c53aa9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7deedbd6e0718a4d0228eca9f0a69089"><td class="memItemLeft" align="right" valign="top"><a id="a7deedbd6e0718a4d0228eca9f0a69089"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>path__access</b> (enum <a class="el" href="logic_8h.html#a92452e3188bb558c8ed61df7c58e5d40">qt</a> <a class="el" href="logic_8h.html#a92452e3188bb558c8ed61df7c58e5d40">qt</a>, node_t *ref, void *info, <a class="el" href="graph_8h.html#a6be98da7fb6f356688ca6e4974d9f38d">predicate_fn</a> predicate, <a class="el" href="graph_8h.html#a5263355d886339d0f4b13f0c5f607cf8">apply_fn</a> apply)</td></tr>
-<tr class="separator:a7deedbd6e0718a4d0228eca9f0a69089"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9f9c389c7613b995658b2701ff53d1a1"><td class="memItemLeft" align="right" valign="top"><a id="a9f9c389c7613b995658b2701ff53d1a1"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>path__insert</b> (node_t *ref, void *info, <a class="el" href="graph_8h.html#a6be98da7fb6f356688ca6e4974d9f38d">predicate_fn</a> predicate)</td></tr>
-<tr class="separator:a9f9c389c7613b995658b2701ff53d1a1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aef55bafb38d40b5d34bf0f5720b8b5fb"><td class="memItemLeft" align="right" valign="top"><a id="aef55bafb38d40b5d34bf0f5720b8b5fb"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>path__delete</b> (enum <a class="el" href="logic_8h.html#a92452e3188bb558c8ed61df7c58e5d40">qt</a> <a class="el" href="logic_8h.html#a92452e3188bb558c8ed61df7c58e5d40">qt</a>, node_t *ref, void *info, <a class="el" href="graph_8h.html#a6be98da7fb6f356688ca6e4974d9f38d">predicate_fn</a> predicate)</td></tr>
-<tr class="separator:aef55bafb38d40b5d34bf0f5720b8b5fb"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6c9fac9e0c1422eb44a53ad405379480"><td class="memItemLeft" align="right" valign="top"><a id="a6c9fac9e0c1422eb44a53ad405379480"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>path__print_data</b> (FILE *stream, node_t *ref, <a class="el" href="graph_8h.html#a595058f2f07e082d0e134f6ee94f348f">fpfdata_fn</a> fpfdata)</td></tr>
-<tr class="separator:a6c9fac9e0c1422eb44a53ad405379480"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a15bf7da98c169cb5be70871bc12d5aac"><td class="memItemLeft" align="right" valign="top"><a id="a15bf7da98c169cb5be70871bc12d5aac"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>path__dump_dot</b> (FILE *stream, node_t *ref, <a class="el" href="graph_8h.html#a595058f2f07e082d0e134f6ee94f348f">fpfdata_fn</a> fpfdata)</td></tr>
-<tr class="separator:a15bf7da98c169cb5be70871bc12d5aac"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9411cde1a710d7b0d2c734fe62c19a64"><td class="memItemLeft" align="right" valign="top"><a id="a9411cde1a710d7b0d2c734fe62c19a64"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>path__access</b> (enum <a class="el" href="logic_8h.html#a92452e3188bb558c8ed61df7c58e5d40">qt</a> <a class="el" href="logic_8h.html#a92452e3188bb558c8ed61df7c58e5d40">qt</a>, node_t *ref, void *info, <a class="el" href="graph_8h.html#a2cb6239813581ac6a406b723264e03c3">predicate_t</a> predicate, <a class="el" href="graph_8h.html#a05e6c21fe88b580c19ee9b036540e200">apply_t</a> apply)</td></tr>
+<tr class="separator:a9411cde1a710d7b0d2c734fe62c19a64"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:addc1b2bb71fb245c3acfee69d605e5d7"><td class="memItemLeft" align="right" valign="top"><a id="addc1b2bb71fb245c3acfee69d605e5d7"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>path__insert</b> (node_t *ref, void *info, <a class="el" href="graph_8h.html#a2cb6239813581ac6a406b723264e03c3">predicate_t</a> predicate)</td></tr>
+<tr class="separator:addc1b2bb71fb245c3acfee69d605e5d7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2e32e261f5f7eac7f61609fb940453d3"><td class="memItemLeft" align="right" valign="top"><a id="a2e32e261f5f7eac7f61609fb940453d3"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>path__delete</b> (enum <a class="el" href="logic_8h.html#a92452e3188bb558c8ed61df7c58e5d40">qt</a> <a class="el" href="logic_8h.html#a92452e3188bb558c8ed61df7c58e5d40">qt</a>, node_t *ref, void *info, <a class="el" href="graph_8h.html#a2cb6239813581ac6a406b723264e03c3">predicate_t</a> predicate)</td></tr>
+<tr class="separator:a2e32e261f5f7eac7f61609fb940453d3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7a8d636b1c3efdadec6f1183e32b25ac"><td class="memItemLeft" align="right" valign="top"><a id="a7a8d636b1c3efdadec6f1183e32b25ac"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>path__print_data</b> (FILE *stream, node_t *ref, <a class="el" href="graph_8h.html#a2810b6e9a9e57b98a254bd7e3e4c1be0">fpfdata_t</a> fpfdata)</td></tr>
+<tr class="separator:a7a8d636b1c3efdadec6f1183e32b25ac"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6fae84905722a89b8e439044ab841991"><td class="memItemLeft" align="right" valign="top"><a id="a6fae84905722a89b8e439044ab841991"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>path__dump_dot</b> (FILE *stream, node_t *ref, <a class="el" href="graph_8h.html#a2810b6e9a9e57b98a254bd7e3e4c1be0">fpfdata_t</a> fpfdata)</td></tr>
+<tr class="separator:a6fae84905722a89b8e439044ab841991"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:adbe32dd1aeb38304373864c90c8d7cf3"><td class="memItemLeft" align="right" valign="top"><a id="adbe32dd1aeb38304373864c90c8d7cf3"></a>
 int&#160;</td><td class="memItemRight" valign="bottom"><b>path__length</b> (const node_t *ref)</td></tr>
 <tr class="separator:adbe32dd1aeb38304373864c90c8d7cf3"><td class="memSeparator" colspan="2">&#160;</td></tr>

@@ -71,8 +71,8 @@ $(function() {
 <div class="title">stack.h</div>  </div>
 </div><!--header-->
 <div class="contents">
-<a href="stack_8h.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="preprocessor">#ifndef LIBSAPLING_STACK</span></div>
-<div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;<span class="preprocessor">#define LIBSAPLING_STACK</span></div>
+<a href="stack_8h.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="preprocessor">#ifndef _LIBSAPLING_STACK_H_</span></div>
+<div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;<span class="preprocessor">#define _LIBSAPLING_STACK_H_</span></div>
 <div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160; </div>
 <div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="graph_8h.html">libsapling/dm/graph.h</a>&quot;</span></div>
 <div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="typed__stack_8h.html">libsapling/dm/typed/typed_stack.h</a>&quot;</span></div>
@@ -80,12 +80,9 @@ $(function() {
 <div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;<span class="keywordtype">void</span> *stack__access(node_t *ref);</div>
 <div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;<span class="keywordtype">void</span> stack__insert(node_t *ref, <span class="keywordtype">void</span> *info);</div>
 <div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;<span class="keywordtype">void</span> stack__delete(node_t *ref);</div>
-<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;<span class="keywordtype">void</span> stack__print_data(FILE *stream, node_t *ref, <a class="code" href="graph_8h.html#a595058f2f07e082d0e134f6ee94f348f">fpfdata_fn</a> fpfdata);</div>
-<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;<span class="keywordtype">void</span> stack__dump_dot(FILE *stream, node_t *ref, <a class="code" href="graph_8h.html#a595058f2f07e082d0e134f6ee94f348f">fpfdata_fn</a> fpfdata);</div>
-<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160; </div>
-<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160; </div>
+<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;<span class="preprocessor">#endif</span></div>
 <div class="ttc" id="agraph_8h_html"><div class="ttname"><a href="graph_8h.html">graph.h</a></div><div class="ttdoc">Graph implementation.</div></div>
-<div class="ttc" id="agraph_8h_html_a595058f2f07e082d0e134f6ee94f348f"><div class="ttname"><a href="graph_8h.html#a595058f2f07e082d0e134f6ee94f348f">fpfdata_fn</a></div><div class="ttdeci">void(* fpfdata_fn)(FILE *stream, const void *data)</div><div class="ttdoc">File print format data function prototype.</div><div class="ttdef"><b>Definition:</b> graph.h:127</div></div>
 <div class="ttc" id="atyped__stack_8h_html"><div class="ttname"><a href="typed__stack_8h.html">typed_stack.h</a></div><div class="ttdoc">Typed stack interface implementation.</div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->

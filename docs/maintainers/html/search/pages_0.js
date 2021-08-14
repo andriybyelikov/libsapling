@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['coding_20style_9',['Coding style',['../md_CODING_STYLE.html',1,'']]]
+  ['coding_20style_4',['Coding style',['../md_CODING_STYLE.html',1,'']]]
 ];

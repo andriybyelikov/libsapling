@@ -1,6 +1,7 @@
 var searchData=
 [
-  ['e_5fqt_7',['E_QT',['../logic_8h.html#a92452e3188bb558c8ed61df7c58e5d40a27934c658a636b6cc1682062166e9345',1,'logic.h']]],
-  ['edge_5fmanagement_5ffn_8',['edge_management_fn',['../graph_8h.html#a656ef1a53025dbe374a1d87ddf8c1c77',1,'graph.h']]],
-  ['equivalence_5fclass_2eh_9',['equivalence_class.h',['../equivalence__class_8h.html',1,'']]]
+  ['data_7',['data',['../structinfo__insert.html#ae14826417b66c721221d13cd6f7ec47b',1,'info_insert']]],
+  ['delete_5fproduction_8',['delete_production',['../production_8h.html#a204c4a5a1ed3a316708fbf75cb2f1d8c',1,'production.h']]],
+  ['delete_5fterminal_9',['delete_terminal',['../terminal_8h.html#a97b019ad1e1cb1bb1ef8237d55e084ae',1,'terminal.h']]],
+  ['documentation_20for_20users_10',['Documentation for users',['../index.html',1,'']]]
 ];
