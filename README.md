@@ -91,6 +91,7 @@ implementation of the sapling [compiler](https://github.com/andriybyelikov/sapli
 Build without optimization and run the tests like this:
 
 ```
+$ autoreconf --install
 $ mkdir build
 $ cd build
 $ ../configure CFLAGS='-O0 -g'
@@ -134,7 +135,15 @@ $ test/lexer_test -g | sh ../tools/viz
 $ sh ../tools/gen_lexer_test_html > lexer_test.html
 ```
 
-### Contributing
+---
+
+## Arch Linux packages
+
+[Link to repository with PKGBUILD scripts](https://github.com/andriybyelikov/archlinux-sapling-packages)
+
+---
+
+## Contributing
 
 Before contributing please consider that for the future of this project I plan
 to write and use a custom LGPL-like license that is significantly stricter than
