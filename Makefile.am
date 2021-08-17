@@ -16,7 +16,7 @@ noinst_HEADERS = src/cc/lexer/lexer_attributed_edges.h src/cc/lexer/lexer_minimi
 AM_CFLAGS = -std=c11 -pedantic -Wall -Werror -Wno-format -Wno-unused-function -Wno-unused-variable -Wno-unused-but-set-variable -Wno-discarded-qualifiers
 AM_CPPFLAGS = -I$(srcdir)/include -I$(srcdir)/src
 
-check_PROGRAMS = test/stack_test test/queue_test test/path_test test/equivalence_class_test test/parse_tree_test test/avl_test test/lexer_test test/trie_test
+check_PROGRAMS = test/stack_test test/queue_test test/path_test test/equivalence_class_test test/parse_tree_test test/avl_test test/lexer_test test/trie_test test/production_test
 TESTS = $(check_PROGRAMS)
 
 # meta test sources
@@ -51,4 +51,8 @@ test_lexer_test_LDADD = libsapling.a
 test_trie_test_SOURCES = test/trie_test.c
 test_trie_test_CPPFLAGS = -I$(srcdir)/include
 test_trie_test_LDADD = libsapling.a
+
+test_production_test_SOURCES = test/production_test.c
+test_production_test_CPPFLAGS = -I$(srcdir)/include
+test_production_test_LDADD = libsapling.a
 
