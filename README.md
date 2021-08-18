@@ -101,7 +101,8 @@ $ make check
 ### Development
 
 `tools/Makefile.am.meta` is a shell script that is used to automatically detect
-and add source files to `Makefile.am`.
+and add source files to `Makefile.am`. Note that it should be run from the
+sources' root folder and not from the `build` folder.
 
 ### Tests and graph visualization
 

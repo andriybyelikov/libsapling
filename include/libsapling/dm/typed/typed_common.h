@@ -32,7 +32,7 @@ void fpfdata_char(FILE *stream, const void *data)
 static
 void fpfdata_str(FILE *stream, const void *data)
 {
-    fprintf(stream, "%s", (const char *)data);
+    fprintf(stream, "%s", *(const char **)data);
 }
 
 /**
