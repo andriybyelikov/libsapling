@@ -8,7 +8,7 @@
 
 #include "libsapling/dm/graph.h"
 
-const char *parse_tree__data(node_t node);
+const char **parse_tree__data(node_t node);
 
 node_t parse_tree__create_node(char *string);
 void parse_tree__append_child(node_t *ref, node_t child);

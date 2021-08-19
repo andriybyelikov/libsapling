@@ -7,42 +7,27 @@
  */
 
 #include <stdio.h>
+#include "libsapling/idiom.h"
 
 /**
  * @brief File print format function for nodes holding integers
  */
-static
-void fpfdata_int(FILE *stream, const void *data)
-{
-    fprintf(stream, "%d", *(int *)data);
-}
+void fpfdata_int(FILE *stream, const void *data);
 
 /**
  * @brief File print format function for nodes holding characters
  */
-static
-void fpfdata_char(FILE *stream, const void *data)
-{
-    fprintf(stream, "%c", *(char *)data);
-}
+void fpfdata_char(FILE *stream, const void *data);
 
 /**
  * @brief File print format function for nodes holding strings
  */
-static
-void fpfdata_str(FILE *stream, const void *data)
-{
-    fprintf(stream, "%s", *(const char **)data);
-}
+void fpfdata_str(FILE *stream, const void *data);
 
 /**
  * @brief Dummy comparator function (if you don't want to specify one it when
  * using the IMPLEMENT_TYPED_X macro)
  */
-static
-int dummy_cmp(UNUSED const void *a, UNUSED const void *b)
-{
-    return -1;
-}
+int dummy_cmp(UNUSED const void *a, UNUSED const void *b);
 
 #endif

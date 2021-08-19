@@ -1,16 +1,9 @@
 #include <assert.h>
 #include "libsapling/dm/trie.h"
-#include "test_utils.h"
+#include "libsapling/dm/typed/typed_common.h"
+#include "test/test_utils.h"
 
-static
-void print_integer(FILE *stream, const void *data)
-{
-    // data is pointer to data, need double dereference
-    if (*(void **)data != NULL)
-        fprintf(stream, "%d", **(int **)data);
-}
-
-IMPLEMENT_TYPED_TRIE(it, int, print_integer)
+IMPLEMENT_TYPED_TRIE(it, int, fpfdata_int)
 
 
 struct index_key {
@@ -19,7 +12,7 @@ struct index_key {
 };
 
 static
-int find_key_by_index(const int *data, void *info)
+int key_has_value(const int *data, void *info)
 {
     CAST_USER_INFO(struct index_key *, user, info);
 
@@ -61,9 +54,15 @@ int main(int argc, char *argv[])
     // assert that key with value i exists and is keys[i]
     for (int i = 0; i < num_keys; i++) {
         struct index_key info = { i, 0 };
-        it__access(E_QT, &trie, keys[i], &info, find_key_by_index, found_key);
+        it__access(E_QT, &trie, keys[i], &info, key_has_value, found_key);
         assert(info.found);
     }
+
+    // try to access a key that is not in the set
+    assert(!it__in(&trie, "Sheogorath"));
+
+    // try to access a key that is in the set
+    assert(it__in(&trie, "outlander"));
 
     // delete keys
     for (int i = 0; i < num_keys; i++) {

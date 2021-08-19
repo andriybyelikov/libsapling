@@ -1,3 +1,20 @@
+0.6.0
+-----
+# Added
+- Implemented tests for terminal and production
+- Implemented in function for trie
+
+# Fixed
+- Fixed fpfdata_str incorrectly dereferencing strings
+- Trie no longer crashes when it has not found a key
+- Fixed tools/viz_all_tests
+
+# Changed
+- The implementations of the lexer and trie print_data and dump_dot functions,
+  as well as the parse_tree__data function have been adapted so that common
+  typed fpfdata functions can now be used with them in the same manner as with
+  rest of implementations
+
 0.5.1
 -----
 # Fixed:

@@ -8,9 +8,9 @@ struct edge_storage {
     node_t children; // queue
 };
 
-const char *parse_tree__data(node_t node)
+const char **parse_tree__data(node_t node)
 {
-    return (const char *)graph__data(node, sizeof(struct edge_storage));
+    return (const char **)graph__data(node, sizeof(struct edge_storage));
 }
 
 
@@ -25,12 +25,9 @@ node_t parse_tree__create_node(char *string)
 {
     node_t node = NULL;
 
-    const size_t string_storage = strlen(string) + 1;
-    {
-        struct info_insert info2 = { string_storage, string };
-        struct info_stack is = { &info2, NULL };
-        graph__insert(&node, &is, ins_em, sizeof(struct edge_storage));
-    }
+    struct info_insert info = { sizeof(const char *), &string };
+    struct info_stack is = { &info, NULL };
+    graph__insert(&node, &is, ins_em, sizeof(struct edge_storage));
 
     return node;
 }
@@ -64,7 +61,7 @@ int is_str(const node_t *ref, const struct info_stack *info)
     struct get_child_by_str *user = info->user;
 
     node_t child = *(node_t *)path__data(node);
-    return !strcmp(user->str, parse_tree__data(child));
+    return !strcmp(user->str, *parse_tree__data(child));
 }
 
 static

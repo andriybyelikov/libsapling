@@ -186,8 +186,9 @@ void dump_dot_aux0(FILE *stream, const node_t node, fpfdata_t fpfdata,
     fprintf(stream, "n%p", node);
     if (node->is_accepting_state) {
         fprintf(stream, "[shape=doublecircle;label=\"");
-        if (fpfdata != NULL)
-            fpfdata(stream, lexer__data(node));
+        void *data = *(void **)lexer__data(node);
+        if (fpfdata != NULL && data != NULL)
+            fpfdata(stream, data);
         fprintf(stream, "\"];");
     } else {
         fprintf(stream, "[shape=circle;label=\"\"];");

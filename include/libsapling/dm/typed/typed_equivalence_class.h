@@ -64,8 +64,7 @@ int SYM##__equ_predicate(const TYPE *data, void *info)                        \
 static                                                                        \
 void SYM##__a_in(UNUSED TYPE *data, void *info)                               \
 {                                                                             \
-    struct info_insert *i = info;                                             \
-    int *in = i->info;                                                        \
+    CAST_USER_INFO(int *, in, info);                                          \
                                                                               \
     *in = 1;                                                                  \
 }                                                                             \

@@ -53,6 +53,23 @@ static                                                                        \
 int SYM##__length(const node_t *ref)                                          \
 {                                                                             \
     return trie__length(ref);                                                 \
+}                                                                             \
+                                                                              \
+                                                                              \
+static                                                                        \
+void SYM##__found_key(node_t *ref, const struct info_stack *info)             \
+{                                                                             \
+    int *found = info->user;                                                  \
+                                                                              \
+    *found = 1;                                                               \
+}                                                                             \
+                                                                              \
+static                                                                        \
+int SYM##__in(node_t *ref, const char *key)                                   \
+{                                                                             \
+    int in = 0;                                                               \
+    trie__access(E_QT, ref, key, &in, predicate_1, SYM##__found_key);         \
+    return in;                                                                \
 }
 
 #endif

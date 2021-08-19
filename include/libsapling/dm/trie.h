@@ -9,6 +9,10 @@
  * @attention
  * - The key only needs to be specified with existential quantification,
  *   otherwise it can just be left as NULL.
+ * - Accessing with `E_QT` and `predicate_1`, and managing to execute the apply
+ *   function means that the key exists, therefore there is no need for an
+ *   `equ_predicate` for the key. A predicate different from `predicate_1` is
+ *   only useful when you want to check non-key values.
  */
 
 #include "libsapling/dm/graph.h"

@@ -41,18 +41,18 @@ int main(int argc, char *argv[])
     DUMP(pt, euler_s_identity)
 
     // assert root is =
-    assert(!strcmp(parse_tree__data(pt), "="));
+    assert(!strcmp(*parse_tree__data(pt), "="));
 
     // search for child of =, 0
     node_t zero_str = parse_tree__get_child_by_string(&pt, "0");
     node_t zero_pos = parse_tree__get_child_by_position(&pt, 1);
-    assert(!strcmp(parse_tree__data(zero_str),
-        parse_tree__data(zero_pos)));
+    assert(!strcmp(*parse_tree__data(zero_str),
+        *parse_tree__data(zero_pos)));
 
 
     // build a regex-like tree
     node_t n0 = parse_tree__create_node("[a-z]");
-    node_t n1 = parse_tree__create_node("t_union");
+    node_t n1 = parse_tree__create_node("t_class");
     parse_tree__append_child(&n1, n0);
     node_t n2 = parse_tree__create_node("expr_4");
     parse_tree__append_child(&n2, n1);

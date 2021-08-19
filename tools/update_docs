@@ -1,0 +1,22 @@
+#! /bin/sh
+
+# scrap version from configure.ac
+ver=$(cat configure.ac | grep AC_INIT | sed 's/AC_INIT(\[.*\[\(.*\)\],.*)/\1/')
+
+# get ISO date
+date=$(date -I)
+
+echo "sed -i 's/\(PROJECT_NUMBER         =\) .\..\../\1 "$ver"/'" \
+    "docs/users/Doxyfile" | sh
+
+echo "sed -i 's/\(@date\) .*-.*-.*/\1 "$date"/'" \
+    "docs/users/MAINPAGE.md" | sh
+
+echo "sed -i 's/\(PROJECT_NUMBER         =\) .\..\../\1 "$ver"/'" \
+    "docs/maintainers/Doxyfile" | sh
+
+echo "sed -i 's/\(@date\) .*-.*-.*/\1 "$date"/'" \
+    "docs/maintainers/MAINPAGE.md" | sh
+
+(cd docs/users && doxygen Doxyfile)
+(cd docs/maintainers && doxygen Doxyfile)

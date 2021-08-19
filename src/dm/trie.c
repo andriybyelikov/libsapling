@@ -167,7 +167,7 @@ node_t *search_key(node_t *ref, const struct info_stack *info)
 
     pnode_t pnode = ref;
     int i = 0;
-    while (*pnode != NULL && i < strlen(impl->key)) {
+    while (pnode != NULL && *pnode != NULL && i < strlen(impl->key)) {
         node_t node = *pnode;
         ps__insert(&impl->s, pnode);
         attributed_edge *ae = ae__get_edge(&node->attributed_edges,
@@ -192,6 +192,7 @@ void trie__access(enum qt qt, node_t *ref, const char *key, void *info,
         struct info_impl_e impl = { NULL, key };
         struct info_stack is = { info, &impl };
         ref = search_key(ref, &is);
+        if (ref == NULL) return; // key not found
         graph__access(qt, ref, &is, predicate, apply, NULL);
     }
 }
@@ -311,7 +312,9 @@ void print_data_aux0(FILE *stream, const node_t node, fpfdata_t fpfdata,
 
     fprintf(stream, key);
     fprintf(stream, "\", ");
-    fpfdata(stream, trie__data(node));
+    void *data = *(void **)trie__data(node);
+    if (fpfdata != NULL && data != NULL)
+        fpfdata(stream, data);
     fprintf(stream, ")");
 }
 

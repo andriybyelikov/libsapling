@@ -3,5 +3,8 @@
 for test in $(find test -name *_test)
 do
     if [[ $test == "test/equivalence_class_test" ]]; then continue; fi
+    if [[ $test == "test/terminal_test" ]]; then continue; fi
+    if [[ $test == "test/production_test" ]]; then continue; fi
+    if [[ $test == "test/fpfdata_test" ]]; then continue; fi
     echo "$test -g | sh ../tools/viz" | sh
 done
