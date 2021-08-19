@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="sapling.svg"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">libsapling
-   &#160;<span id="projectnumber">0.5.1</span>
+   &#160;<span id="projectnumber">0.6.0</span>
    </div>
   </td>
  </tr>
@@ -75,33 +75,23 @@ $(function() {
 <div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;<span class="preprocessor">#define _LIBSAPLING_TYPED_COMMON_H_</span></div>
 <div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160; </div>
 <div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;<span class="preprocessor">#include &lt;stdio.h&gt;</span></div>
-<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160; </div>
-<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;<span class="keyword">static</span></div>
-<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;<span class="keywordtype">void</span> fpfdata_int(FILE *stream, <span class="keyword">const</span> <span class="keywordtype">void</span> *data)</div>
-<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;{</div>
-<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;    fprintf(stream, <span class="stringliteral">&quot;%d&quot;</span>, *(<span class="keywordtype">int</span> *)data);</div>
-<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;}</div>
-<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160; </div>
-<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;<span class="keyword">static</span></div>
-<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;<span class="keywordtype">void</span> fpfdata_char(FILE *stream, <span class="keyword">const</span> <span class="keywordtype">void</span> *data)</div>
-<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;{</div>
-<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;    fprintf(stream, <span class="stringliteral">&quot;%c&quot;</span>, *(<span class="keywordtype">char</span> *)data);</div>
-<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;}</div>
-<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160; </div>
-<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;<span class="keyword">static</span></div>
-<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;<span class="keywordtype">void</span> fpfdata_str(FILE *stream, <span class="keyword">const</span> <span class="keywordtype">void</span> *data)</div>
-<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;{</div>
-<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;    fprintf(stream, <span class="stringliteral">&quot;%s&quot;</span>, (<span class="keyword">const</span> <span class="keywordtype">char</span> *)data);</div>
-<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;}</div>
-<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160; </div>
-<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;<span class="keyword">static</span></div>
-<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;<span class="keywordtype">int</span> dummy_cmp(<a class="code" href="idiom_8h.html#addf5ec070e9499d36b7f2009ce736076">UNUSED</a> <span class="keyword">const</span> <span class="keywordtype">void</span> *a, <a class="code" href="idiom_8h.html#addf5ec070e9499d36b7f2009ce736076">UNUSED</a> <span class="keyword">const</span> <span class="keywordtype">void</span> *b)</div>
-<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;{</div>
-<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;    <span class="keywordflow">return</span> -1;</div>
-<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;}</div>
-<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160; </div>
-<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="idiom_8h.html">libsapling/idiom.h</a>&quot;</span></div>
+<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160; </div>
+<div class="line"><a name="l00015"></a><span class="lineno"><a class="line" href="typed__common_8h.html#aa1d39db23c794afb22b4bd657469f8c3">   15</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="typed__common_8h.html#aa1d39db23c794afb22b4bd657469f8c3">fpfdata_int</a>(FILE *stream, <span class="keyword">const</span> <span class="keywordtype">void</span> *data);</div>
+<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160; </div>
+<div class="line"><a name="l00020"></a><span class="lineno"><a class="line" href="typed__common_8h.html#a3ffe5d8536bbaadb8188b41bf7d67ac9">   20</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="typed__common_8h.html#a3ffe5d8536bbaadb8188b41bf7d67ac9">fpfdata_char</a>(FILE *stream, <span class="keyword">const</span> <span class="keywordtype">void</span> *data);</div>
+<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160; </div>
+<div class="line"><a name="l00025"></a><span class="lineno"><a class="line" href="typed__common_8h.html#ab409a0acb9180a592df9e10a75e5169c">   25</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="typed__common_8h.html#ab409a0acb9180a592df9e10a75e5169c">fpfdata_str</a>(FILE *stream, <span class="keyword">const</span> <span class="keywordtype">void</span> *data);</div>
+<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160; </div>
+<div class="line"><a name="l00031"></a><span class="lineno"><a class="line" href="typed__common_8h.html#a0981cd962a10c9fc33125f9f851c1eab">   31</a></span>&#160;<span class="keywordtype">int</span> <a class="code" href="typed__common_8h.html#a0981cd962a10c9fc33125f9f851c1eab">dummy_cmp</a>(<a class="code" href="idiom_8h.html#addf5ec070e9499d36b7f2009ce736076">UNUSED</a> <span class="keyword">const</span> <span class="keywordtype">void</span> *a, <a class="code" href="idiom_8h.html#addf5ec070e9499d36b7f2009ce736076">UNUSED</a> <span class="keyword">const</span> <span class="keywordtype">void</span> *b);</div>
+<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160; </div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="ttc" id="aidiom_8h_html"><div class="ttname"><a href="idiom_8h.html">idiom.h</a></div></div>
 <div class="ttc" id="aidiom_8h_html_addf5ec070e9499d36b7f2009ce736076"><div class="ttname"><a href="idiom_8h.html#addf5ec070e9499d36b7f2009ce736076">UNUSED</a></div><div class="ttdeci">#define UNUSED</div><div class="ttdoc">Decorator to mark unused function parameters.</div><div class="ttdef"><b>Definition:</b> idiom.h:11</div></div>
+<div class="ttc" id="atyped__common_8h_html_a0981cd962a10c9fc33125f9f851c1eab"><div class="ttname"><a href="typed__common_8h.html#a0981cd962a10c9fc33125f9f851c1eab">dummy_cmp</a></div><div class="ttdeci">int dummy_cmp(UNUSED const void *a, UNUSED const void *b)</div><div class="ttdoc">Dummy comparator function (if you don't want to specify one it when using the IMPLEMENT_TYPED_X macro...</div></div>
+<div class="ttc" id="atyped__common_8h_html_a3ffe5d8536bbaadb8188b41bf7d67ac9"><div class="ttname"><a href="typed__common_8h.html#a3ffe5d8536bbaadb8188b41bf7d67ac9">fpfdata_char</a></div><div class="ttdeci">void fpfdata_char(FILE *stream, const void *data)</div><div class="ttdoc">File print format function for nodes holding characters.</div></div>
+<div class="ttc" id="atyped__common_8h_html_aa1d39db23c794afb22b4bd657469f8c3"><div class="ttname"><a href="typed__common_8h.html#aa1d39db23c794afb22b4bd657469f8c3">fpfdata_int</a></div><div class="ttdeci">void fpfdata_int(FILE *stream, const void *data)</div><div class="ttdoc">File print format function for nodes holding integers.</div></div>
+<div class="ttc" id="atyped__common_8h_html_ab409a0acb9180a592df9e10a75e5169c"><div class="ttname"><a href="typed__common_8h.html#ab409a0acb9180a592df9e10a75e5169c">fpfdata_str</a></div><div class="ttdeci">void fpfdata_str(FILE *stream, const void *data)</div><div class="ttdoc">File print format function for nodes holding strings.</div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>

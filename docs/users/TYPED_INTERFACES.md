@@ -35,9 +35,7 @@ their all lowercase form, unless you don't include them in your source file:
 @param TYPE The type the instance will be dealing with.
 
 @param FPF File print format function for the data the nodes hold. There are
-some predefined ones in @ref typed_common.h (Doxygen doesn't show them because
-they are `static`, click `Go to the source code of this file.` instead) :
-`fpfdata_int`, `fpfdata_char` and `fpfdata_str`.
+some predefined ones in @ref typed_common.h
 
 @param CMP Comparator function (e.g. function that returns `a < b`)
 @param EQU Equality function (e.g. function that returns `a == b`). Can be

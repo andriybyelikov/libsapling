@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="sapling.svg"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">libsapling
-   &#160;<span id="projectnumber">0.5.1</span>
+   &#160;<span id="projectnumber">0.6.0</span>
    </div>
   </td>
  </tr>
@@ -106,7 +106,8 @@ int&#160;</td><td class="memItemRight" valign="bottom"><b>trie__length</b> (cons
 <div class="textblock"><p>Trie implementation. </p>
 <dl class="section see"><dt>See also</dt><dd><a class="el" href="graph_8h.html" title="Graph implementation.">graph.h</a></dd></dl>
 <dl class="section attention"><dt>Attention</dt><dd><ul>
-<li>The key only needs to be specified with existential quantification, otherwise it can just be left as NULL. </li>
+<li>The key only needs to be specified with existential quantification, otherwise it can just be left as NULL.</li>
+<li>Accessing with <code>E_QT</code> and <code>predicate_1</code>, and managing to execute the apply function means that the key exists, therefore there is no need for an <code>equ_predicate</code> for the key. A predicate different from <code>predicate_1</code> is only useful when you want to check non-key values. </li>
 </ul>
 </dd></dl>
 </div></div><!-- contents -->
