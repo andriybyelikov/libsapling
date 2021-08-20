@@ -138,7 +138,7 @@ $ sh ../tools/gen_lexer_test_html > lexer_test.html
 
 ---
 
-## Arch Linux packages
+## ![Arch Linux logo](https://raw.githubusercontent.com/unixporn/distro-icons/71c205b588a9ea021705867ebfccbd859a196192/SVG/arch.svg) Arch Linux packages
 
 [Link to repository with PKGBUILD scripts](https://github.com/andriybyelikov/archlinux-sapling-packages)
 

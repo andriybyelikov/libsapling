@@ -192,9 +192,17 @@ void trie__access(enum qt qt, node_t *ref, const char *key, void *info,
         struct info_impl_e impl = { NULL, key };
         struct info_stack is = { info, &impl };
         ref = search_key(ref, &is);
-        if (ref == NULL) return; // key not found
+        if (ref == NULL || *ref == NULL || !(*ref)->is_accepting_state)
+            return; // key not found
         graph__access(qt, ref, &is, predicate, apply, NULL);
     }
+}
+
+
+static
+void apply_union_of_data(node_t *ref, const struct info_stack *info)
+{
+    *(void **)trie__data(*ref) = info->user;
 }
 
 void trie__insert(node_t *ref, const char *key, void *info)
@@ -215,8 +223,11 @@ void trie__insert(node_t *ref, const char *key, void *info)
 
     if (*ref == NULL)
         *ref = a;
-    else
+    else {
         lexer__union(ref, &a);
+        // union of data pointer
+        trie__access(E_QT, ref, key, info, predicate_1, apply_union_of_data);
+    }
 }
 
 

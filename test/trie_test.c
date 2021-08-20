@@ -64,6 +64,12 @@ int main(int argc, char *argv[])
     // try to access a key that is in the set
     assert(it__in(&trie, "outlander"));
 
+    // make sure that invalid prefixes that are part of a valid key, that is,
+    // part of a key whose nodes exist but the node corresponding to the last
+    // character of the key is not an accepting state, are not considered as
+    // being in the set
+    assert(!it__in(&trie, "out"));
+
     // delete keys
     for (int i = 0; i < num_keys; i++) {
         it__delete(&trie, keys[i]);
@@ -75,4 +81,7 @@ int main(int argc, char *argv[])
 
     // trie should now be empty
     assert(trie == NULL);
+
+    // make sure that the in function returns 0 when the trie is empty
+    assert(it__in(&trie, "whatever") == 0);
 }
