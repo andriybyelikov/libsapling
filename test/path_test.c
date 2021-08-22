@@ -1,5 +1,6 @@
 #include <assert.h>
 #include <limits.h>
+#include <math.h>
 #include <stdlib.h>
 #include <time.h>
 #include "libsapling/idiom.h"
@@ -23,7 +24,7 @@ int ascending_predicate(const int *data, void *info)
 static
 int odd_predicate(const int *data, UNUSED void *info)
 {
-    return (*data % 2) == 1;
+    return abs(*data % 2) == 1;
 }
 
 struct check_ascending_order {
