@@ -85,7 +85,7 @@ int main(int argc, char *argv[])
         set_not_satisf);
     assert(cao.satisf);
 
-    // insert breaking value, assert not ascending order
+    // insert order breaking value at the end, assert not ascending order
     integer_path__insert(&ascending_list, INT_MIN, integer_path__predicate_0);
     integer_path__output_state(&ascending_list);
     cao.prev = INT_MIN;
@@ -103,7 +103,7 @@ int main(int argc, char *argv[])
         set_not_satisf);
     assert(cao.satisf);
 
-    // insert odd, assert not all even
+    // insert odd value at the beginning, assert not all even
     integer_path__insert(&ascending_list, 1, integer_path__predicate_1);
     integer_path__output_state(&ascending_list);
     integer_path__access(E_QT, &ascending_list, &cao, odd_predicate,
