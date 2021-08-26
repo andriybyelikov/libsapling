@@ -14,7 +14,7 @@ other.
 
 @author Andriy Byelikov
 
-@date 2021-08-20
+@date 2021-08-26
 
 
 ## Examples
@@ -46,3 +46,4 @@ Please see @ref TYPED_INTERFACES.md.
 - @ref production.h "Production"
 - @ref parse_tree.h "Parse Tree"
 - @ref lexer.h "Lexer"
+- @ref grammar.h "Grammar"
