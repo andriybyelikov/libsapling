@@ -1,7 +1,17 @@
-0.7.0
+0.7.0 [Unreleased]
 -----
 # Added
-- Implemented grammar and added grammar test
+- Implemented int__compare, int__equals, and char__compare, char__equals
+  functions
+- Implemented production__print function
+- Implemented grammar and grammar test
+
+# Changed
+- Typed interfaces now include the common typed functions header for
+  convenience
+- Changed fpfdata_int, fpfdata_char, and fpfdata_str function names to
+  int__print, char__print and string__print
+
 
 0.6.1
 -----

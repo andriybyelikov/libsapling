@@ -1,15 +1,9 @@
 #include <assert.h>
 #include "libsapling/idiom.h"
 #include "libsapling/dm/equivalence_class.h"
-#include "libsapling/dm/typed/typed_common.h"
 
-static
-int equi(const void *a, const void *b)
-{
-    return *(int *)a == *(int *)b;
-}
-
-IMPLEMENT_TYPED_EQUIVALENCE_CLASS(equivalent_states, int, fpfdata_int, equi)
+IMPLEMENT_TYPED_EQUIVALENCE_CLASS(equivalent_states, int, int__print,
+    int__equals)
 
 
 struct i_invalidate_optimized_states {

@@ -8,21 +8,21 @@
 #define DUMP(SYMBOL, ALIAS) \
 if (flag_dump_dot) { \
     printf(#ALIAS "\n"); \
-    lexer__dump_dot(stdout, &SYMBOL, fpfdata_int); \
+    lexer__dump_dot(stdout, &SYMBOL, int__print); \
     if (dump_copies) { \
         node_t copy = NULL; \
         lexer__copy(&copy, &SYMBOL); \
         printf(#ALIAS "_copy\n"); \
-        lexer__dump_dot(stdout, &copy, fpfdata_int); \
+        lexer__dump_dot(stdout, &copy, int__print); \
     } \
     lexer__minimize(&SYMBOL); \
     printf(#ALIAS "_minimized\n"); \
-    lexer__dump_dot(stdout, &SYMBOL, fpfdata_int); \
+    lexer__dump_dot(stdout, &SYMBOL, int__print); \
     if (dump_copies) { \
         node_t minimized_copy = NULL; \
         lexer__copy(&minimized_copy, &SYMBOL); \
         printf(#ALIAS "_minimized_copy\n"); \
-        lexer__dump_dot(stdout, &minimized_copy, fpfdata_int); \
+        lexer__dump_dot(stdout, &minimized_copy, int__print); \
     } \
 }
 

@@ -3,22 +3,9 @@
 #include <stdlib.h>
 #include <time.h>
 #include "libsapling/dm/avl.h"
-#include "libsapling/dm/typed/typed_common.h"
 #include "test/test_utils.h"
 
-static
-int cmpi(const void *a, const void *b)
-{
-    return *(int *)a <= *(int *)b;
-}
-
-static
-int equi(const void *a, const void *b)
-{
-    return *(int *)a == *(int *)b;
-}
-
-IMPLEMENT_TYPED_AVL(integer_avl, int, cmpi, equi, fpfdata_int)
+IMPLEMENT_TYPED_AVL(integer_avl, int, int__compare, int__equals, int__print)
 DEFINE_OUTPUT_STATE_FUNC(integer_avl)
 
 static

@@ -3,7 +3,6 @@
 #include "libsapling/cc/lexer.h"
 #include "cc/lexer/lexer_edge_storage.h"
 #include "cc/lexer/lexer_attributed_edges.h"
-#include "libsapling/dm/typed/typed_common.h"
 
 IMPLEMENT_TYPED_PATH(sp, node_t, NULL, dummy_cmp)
 IMPLEMENT_TYPED_QUEUE(sq, node_t, NULL)

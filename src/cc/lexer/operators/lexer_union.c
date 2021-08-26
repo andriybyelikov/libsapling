@@ -4,7 +4,6 @@
 #include "cc/lexer/lexer_ec_def.h"
 #include "cc/lexer/lexer_replace_node.h"
 #include "cc/lexer/lexer_minimize.h"
-#include "libsapling/dm/typed/typed_common.h"
 
 IMPLEMENT_TYPED_PATH(sp, node_t, NULL, dummy_cmp)
 

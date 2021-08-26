@@ -36,11 +36,12 @@
  * 6 [9 -> 0]
  */
 
-IMPLEMENT_TYPED_QUEUE(body_queue, int, NULL)
-IMPLEMENT_TYPED_QUEUE(production_queue, production_t, NULL)
+IMPLEMENT_TYPED_QUEUE(body_queue, int, int__print)
+IMPLEMENT_TYPED_QUEUE(production_queue, production_t, production__print)
 
 int main(void)
 {
+    // build grammar
     node_t productions = NULL;
     node_t pbodies[7]; for (int i = 0; i < 7; i++) pbodies[i] = NULL;
     int pbody_id = 0;
@@ -92,8 +93,8 @@ int main(void)
         production_queue__insert(&productions, new_production(9, pbody));
         pbody_id++;
     }
-
     grammar_t g = new_grammar(&productions, 6, 10);
+
     assert(grammar__num_terminals(g) == 6);
     assert(grammar__num_nonterminals(g) == 4);
     assert(grammar__num_symbols(g) == 10);

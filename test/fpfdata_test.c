@@ -1,8 +1,7 @@
 #include <string.h>
 #include "libsapling/dm/queue.h"
-#include "libsapling/dm/typed/typed_common.h"
 
-IMPLEMENT_TYPED_QUEUE(str_queue, const char *, fpfdata_str)
+IMPLEMENT_TYPED_QUEUE(str_queue, const char *, string__print)
 
 int main(void)
 {

@@ -1,9 +1,8 @@
 #include <assert.h>
 #include "libsapling/dm/trie.h"
-#include "libsapling/dm/typed/typed_common.h"
 #include "test/test_utils.h"
 
-IMPLEMENT_TYPED_TRIE(it, int, fpfdata_int)
+IMPLEMENT_TYPED_TRIE(it, int, int__print)
 
 
 struct index_key {

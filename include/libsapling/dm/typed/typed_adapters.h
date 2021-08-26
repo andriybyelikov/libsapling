@@ -16,6 +16,9 @@
 
 #include "libsapling/dm/graph.h"
 
+// Include typed_common.h for convenience
+#include "libsapling/dm/typed/typed_common.h"
+
 /**
  * @brief Creates a variable of the specified type with the user information
  * proper.

@@ -47,4 +47,11 @@ int production__len(production_t ref);
  */
 int *production__get(production_t ref, int pos);
 
+/**
+ * @brief Prints a production through the specified stream.
+ * 
+ * @param data A `production_t` object
+ */
+void production__print(FILE *stream, const void *data);
+
 #endif

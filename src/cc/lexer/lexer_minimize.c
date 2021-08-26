@@ -5,7 +5,6 @@
 #include "cc/lexer/lexer_attributed_edges.h"
 #include "cc/lexer/lexer_ec_def.h"
 #include "cc/lexer/lexer_replace_node.h"
-#include "libsapling/dm/typed/typed_common.h"
 
 IMPLEMENT_TYPED_PATH(sp, node_t, NULL, dummy_cmp)
 IMPLEMENT_TYPED_QUEUE(sq, node_t, NULL)

@@ -1,6 +1,5 @@
 #include "libsapling/dm/path.h"
 #include "libsapling/cc/lexer.h"
-#include "libsapling/dm/typed/typed_common.h"
 #include "cc/lexer/lexer_edge_storage.h"
 #include "cc/lexer/lexer_minimize.h"
 #include "cc/lexer/lexer_accepting_states.h"

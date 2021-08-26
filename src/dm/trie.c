@@ -6,7 +6,6 @@
 #include "libsapling/cc/lexer.h"
 #include "cc/lexer/lexer_edge_storage.h"
 #include "cc/lexer/lexer_attributed_edges.h"
-#include "libsapling/dm/typed/typed_common.h"
 
 void *trie__data(const node_t node)
 {
@@ -14,8 +13,8 @@ void *trie__data(const node_t node)
 }
 
 
-IMPLEMENT_TYPED_STACK(cs, char, fpfdata_char)
-IMPLEMENT_TYPED_PATH(cp, char, fpfdata_char, dummy_cmp)
+IMPLEMENT_TYPED_STACK(cs, char, char__print)
+IMPLEMENT_TYPED_PATH(cp, char, char__print, dummy_cmp)
 
 
 typedef attributed_edge *ae_ptr;

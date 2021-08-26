@@ -1,10 +1,9 @@
 #include <assert.h>
 #include <string.h>
 #include "libsapling/dm/stack.h"
-#include "libsapling/dm/typed/typed_common.h"
 #include "test/test_utils.h"
 
-IMPLEMENT_TYPED_STACK(integer_stack, int, fpfdata_int)
+IMPLEMENT_TYPED_STACK(integer_stack, int, int__print)
 DEFINE_OUTPUT_STATE_FUNC(integer_stack)
 
 int main(int argc, char *argv[])

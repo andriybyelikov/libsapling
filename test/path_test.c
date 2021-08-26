@@ -5,10 +5,9 @@
 #include <time.h>
 #include "libsapling/idiom.h"
 #include "libsapling/dm/path.h"
-#include "libsapling/dm/typed/typed_common.h"
 #include "test/test_utils.h"
 
-IMPLEMENT_TYPED_PATH(integer_path, int, fpfdata_int, dummy_cmp)
+IMPLEMENT_TYPED_PATH(integer_path, int, int__print, dummy_cmp)
 DEFINE_OUTPUT_STATE_FUNC(integer_path)
 
 static

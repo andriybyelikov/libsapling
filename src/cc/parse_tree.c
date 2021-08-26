@@ -2,7 +2,6 @@
 #include <stdlib.h>
 #include "libsapling/dm/path.h"
 #include "libsapling/dm/queue.h"
-#include "libsapling/dm/typed/typed_common.h"
 
 struct edge_storage {
     node_t children; // queue
@@ -163,5 +162,5 @@ void dump_dot_aux0(FILE *stream, const node_t node, fpfdata_t fpfdata,
 void parse_tree__dump_dot(FILE *stream, node_t *ref)
 {
     graph__dump_dot(stream, ref, all_access_adapter, dump_dot_aux0,
-        fpfdata_str, "");
+        string__print, "");
 }
