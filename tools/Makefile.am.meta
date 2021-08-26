@@ -11,13 +11,21 @@ f1()
     echo "$(find $1 $maxdepth -name $2 | sed 's/\//\\\//g')"
 }
 
+needs_parser_test_utils()
+{
+    if [[ "$1" == "test/parser"* ]]
+    then
+        echo "test/parser/parser_test_utils.c"
+    fi
+}
+
 f2()
 {
     sed -i '/# meta test sources/q' $1
     for file in $(grep -oP "(?<=check_PROGRAMS = ).*" $1)
     do
         file_canonical=$(echo $file | sed 's/[\/.]/_/g')
-        echo $file_canonical"_SOURCES =" $file.c
+        echo $file_canonical"_SOURCES =" $file.c $(needs_parser_test_utils $file)
         echo $file_canonical"_CPPFLAGS = -I\$(srcdir)/include"
         echo $file_canonical"_LDADD = libsapling.a"
         echo

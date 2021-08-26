@@ -25,7 +25,8 @@ graph 138
 
 This library is in early development and is NOT non-functionally fit for
 production. In particular, deallocation of dynamically allocated memory is not
-implemented.
+implemented. Always use the latest patch version of a minor version. There
+isn't any support.
 
 ---
 
@@ -47,7 +48,8 @@ Text ·
 Terminal ·
 Production ·
 Parse Tree ·
-Lexer
+Lexer ·
+Grammar
 
 ---
 

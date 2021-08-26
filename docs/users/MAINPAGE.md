@@ -47,3 +47,4 @@ Please see @ref TYPED_INTERFACES.md.
 - @ref parse_tree.h "Parse Tree"
 - @ref lexer.h "Lexer"
 - @ref grammar.h "Grammar"
+- @ref first.h "First"

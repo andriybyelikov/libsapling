@@ -1,5 +1,5 @@
-#ifndef _LIBSAPLING_GRAMMAR_H_
-#define _LIBSAPLING_GRAMMAR_H_
+#ifndef _LIBSAPLING_PARSER_GRAMMAR_H_
+#define _LIBSAPLING_PARSER_GRAMMAR_H_
 
 /**
  * @file grammar.h
@@ -7,7 +7,6 @@
  */
 
 #include "libsapling/dm/graph.h"
-
 
 typedef struct grammar *grammar_t;
 
