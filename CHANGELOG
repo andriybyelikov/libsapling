@@ -6,6 +6,7 @@
 - Implemented production__print function
 - Implemented grammar and grammar test
 - Implemented first set computation and first set computation test
+- Implemented follow set computation and follow set computation test
 
 # Changed
 - Typed interfaces now include the common typed functions header for

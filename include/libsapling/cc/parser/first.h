@@ -13,7 +13,7 @@
 /**
  * @brief Computes the first set of a grammar symbol.
  * 
- * @returns A path (symbol set) with all the terminal symbols that are part of
+ * @returns path (symbol set) with all the terminal symbols that are part of
  * the first set of the specified symbol.
  * 
  * @warning This implementation does not yet handle empty strings (ε, λ, Λ).
