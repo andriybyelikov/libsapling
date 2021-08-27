@@ -7,6 +7,7 @@
 - Implemented grammar and grammar test
 - Implemented first set computation and first set computation test
 - Implemented follow set computation and follow set computation test
+- Implemented LR(0) item and LR(0) item test
 
 # Changed
 - Typed interfaces now include the common typed functions header for

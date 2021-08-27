@@ -9,6 +9,38 @@ IMPLEMENT_TYPED_QUEUE(production_queue, production_t, production__print)
 
 grammar_t build_test_grammar(void)
 {
+    /*
+     * Example 4.40 from the Dragon Book
+     * 
+     * E' -> E;
+     * E  -> E + T | T;
+     * T  -> T * F | F;
+     * F  -> ( E ) | id;
+     * 
+     * 
+     * terminals:
+     * 0 id
+     * 1 +
+     * 2 *
+     * 3 (
+     * 4 )
+     * 5 $
+     * 
+     * nonterminals:
+     * 6 E'
+     * 7 E
+     * 8 T
+     * 9 F
+     * 
+     * productions:
+     * 0 [6 -> 7]
+     * 1 [7 -> 7 1 8]
+     * 2 [7 -> 8]
+     * 3 [8 -> 8 2 9]
+     * 4 [8 -> 9]
+     * 5 [9 -> 3 7 4]
+     * 6 [9 -> 0]
+     */
     node_t *productions = malloc(sizeof(node_t));
     *productions = NULL;
     node_t *pbodies = malloc(7 * sizeof(node_t));
