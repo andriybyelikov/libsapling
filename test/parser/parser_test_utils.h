@@ -6,6 +6,7 @@
 grammar_t build_test_grammar(void);
 node_t *build_test_first_sets(void);
 node_t *build_test_follow_sets(void);
+node_t *build_test_set_of_sets_of_lr0_items(grammar_t g);
 int symbol_set__compare(node_t *a, node_t *b);
 
 #endif

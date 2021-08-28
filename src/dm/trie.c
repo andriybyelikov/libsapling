@@ -29,8 +29,6 @@ void ae_ptr__fpf(FILE *stream, const void *data)
 
 IMPLEMENT_TYPED_QUEUE(trail1, ae_ptr, ae_ptr__fpf)
 
-
-typedef node_t *pnode_t;
 IMPLEMENT_TYPED_STACK(ps, pnode_t, NULL)
 
 

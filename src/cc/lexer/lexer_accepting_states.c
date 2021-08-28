@@ -6,8 +6,6 @@
 
 IMPLEMENT_TYPED_PATH(sp, node_t, NULL, dummy_cmp)
 IMPLEMENT_TYPED_QUEUE(sq, node_t, NULL)
-
-typedef node_t *pnode_t;
 IMPLEMENT_TYPED_QUEUE(rq, pnode_t, NULL)
 
 static

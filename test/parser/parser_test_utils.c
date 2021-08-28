@@ -2,10 +2,12 @@
 #include "libsapling/dm/queue.h"
 #include "libsapling/cc/production.h"
 #include "libsapling/cc/parser/grammar.h"
+#include "libsapling/cc/parser/lr0_item.h"
 #include "libsapling/cc/parser/aux/symbol_set.h"
+#include "libsapling/cc/parser/aux/production_set.h"
+#include "libsapling/cc/parser/aux/set_of_sets_of_lr0_items.h"
 
 IMPLEMENT_TYPED_QUEUE(body_queue, int, int__print)
-IMPLEMENT_TYPED_QUEUE(production_queue, production_t, production__print)
 
 grammar_t build_test_grammar(void)
 {
@@ -165,6 +167,173 @@ node_t *build_test_follow_sets(void)
     symbol_queue__insert(&follow_sets[3], 4);
     symbol_queue__insert(&follow_sets[3], 2);
     return follow_sets;
+}
+
+
+struct info_index_productions {
+    production_t *parr;
+    int i;
+};
+
+static
+void index_productions_apply(production_t *data, void *info)
+{
+    CAST_USER_INFO(struct info_index_productions *, user, info);
+
+    user->parr[user->i++] = *data;
+}
+
+#define PUT_ITEM(P, C) \
+set_of_lr0_items_queue__insert(set_of_items, new_lr0_item(productions[P], C))
+
+node_t *build_test_set_of_sets_of_lr0_items(grammar_t g)
+{
+    /*
+     * I_0  { [6 -> ·7], [7 -> ·7 1 8], [7 -> ·8], [8 -> ·8 2 9], [8 -> ·9],
+     *        [9 -> ·3 7 4], [9 -> ·0] }
+     * I_1  { [6 -> 7·], [7 -> 7 ·1 8] }
+     * I_2  { [7 -> 8·], [8 -> 8 ·2 9] }
+     * I_3  { [8 -> 9·] }
+     * I_4  { [9 -> 3 ·7 4], [7 -> ·7 1 8], [7 -> ·8], [8 -> ·8 2 9],
+     *        [8 -> ·9], [9 -> ·3 7 4], [9 -> ·0] }
+     * I_5  { [9 -> 0·] }
+     * I_6  { [7 -> 7 1 ·8], [8 -> ·8 2 9], [8 -> ·9], [9 -> ·3 7 4],
+     *        [9 -> ·0] }
+     * I_7  { [8 -> 8 2 ·9], [9 -> ·3 7 4], [9 -> ·0] }
+     * I_8  { [9 -> 3 7 ·4], [7 -> 7 ·1 8] }
+     * I_9  { [7 -> 7 1 8·], [8 -> 8 ·2 9] }
+     * I_10 { [8 -> 8 2 9·] }
+     * I_11 { [9 -> 3 7 4·] }
+     * 
+     * I_0  { (0, 0), (1, 0), (2, 0), (3, 0), (4, 0), (5, 0), (6, 0) }
+     * I_1  { (0, 1), (1, 1) }
+     * I_2  { (2, 1), (3, 1) }
+     * I_3  { (4, 1) }
+     * I_4  { (5, 1), (1, 0), (2, 0), (3, 0), (4, 0), (5, 0), (6, 0) }
+     * I_5  { (6, 1) }
+     * I_6  { (1, 2), (3, 0), (4, 0), (5, 0), (6, 0) }
+     * I_7  { (3, 2), (5, 0), (6, 0) }
+     * I_8  { (5, 2), (1, 1) }
+     * I_9  { (1, 3), (3, 1) }
+     * I_10 { (3, 3) }
+     * I_11 { (5, 3) }
+     */
+    node_t *set_of_set_of_items = malloc(sizeof(node_t));
+    *set_of_set_of_items = NULL;
+
+    production_t productions[7];
+    struct info_index_productions iip = { productions, 0 };
+    production_path__access(U_QT, grammar__productions(g), &iip,
+        production_path__predicate_1, index_productions_apply);
+
+    {
+        node_t *set_of_items = malloc(sizeof(node_t));
+        *set_of_items = NULL;
+        PUT_ITEM(0, 0);
+        PUT_ITEM(1, 0);
+        PUT_ITEM(2, 0);
+        PUT_ITEM(3, 0);
+        PUT_ITEM(4, 0);
+        PUT_ITEM(5, 0);
+        PUT_ITEM(6, 0);
+        set_of_sets_of_lr0_items_queue__insert(set_of_set_of_items,
+            set_of_items);
+    }
+    {
+        node_t *set_of_items = malloc(sizeof(node_t));
+        *set_of_items = NULL;
+        PUT_ITEM(0, 1);
+        PUT_ITEM(1, 1);
+        set_of_sets_of_lr0_items_queue__insert(set_of_set_of_items,
+            set_of_items);
+    }
+    {
+        node_t *set_of_items = malloc(sizeof(node_t));
+        *set_of_items = NULL;
+        PUT_ITEM(2, 1);
+        PUT_ITEM(3, 1);
+        set_of_sets_of_lr0_items_queue__insert(set_of_set_of_items,
+            set_of_items);
+    }
+    {
+        node_t *set_of_items = malloc(sizeof(node_t));
+        *set_of_items = NULL;
+        PUT_ITEM(4, 1);
+        set_of_sets_of_lr0_items_queue__insert(set_of_set_of_items,
+            set_of_items);
+    }
+    {
+        node_t *set_of_items = malloc(sizeof(node_t));
+        *set_of_items = NULL;
+        PUT_ITEM(5, 1);
+        PUT_ITEM(1, 0);
+        PUT_ITEM(2, 0);
+        PUT_ITEM(3, 0);
+        PUT_ITEM(4, 0);
+        PUT_ITEM(5, 0);
+        PUT_ITEM(6, 0);
+        set_of_sets_of_lr0_items_queue__insert(set_of_set_of_items,
+            set_of_items);
+    }
+    {
+        node_t *set_of_items = malloc(sizeof(node_t));
+        *set_of_items = NULL;
+        PUT_ITEM(6, 1);
+        set_of_sets_of_lr0_items_queue__insert(set_of_set_of_items,
+            set_of_items);
+    }
+    {
+        node_t *set_of_items = malloc(sizeof(node_t));
+        *set_of_items = NULL;
+        PUT_ITEM(1, 2);
+        PUT_ITEM(3, 0);
+        PUT_ITEM(4, 0);
+        PUT_ITEM(5, 0);
+        PUT_ITEM(6, 0);
+        set_of_sets_of_lr0_items_queue__insert(set_of_set_of_items,
+            set_of_items);
+    }
+    {
+        node_t *set_of_items = malloc(sizeof(node_t));
+        *set_of_items = NULL;
+        PUT_ITEM(3, 2);
+        PUT_ITEM(5, 0);
+        PUT_ITEM(6, 0);
+        set_of_sets_of_lr0_items_queue__insert(set_of_set_of_items,
+            set_of_items);
+    }
+    {
+        node_t *set_of_items = malloc(sizeof(node_t));
+        *set_of_items = NULL;
+        PUT_ITEM(5, 2);
+        PUT_ITEM(1, 1);
+        set_of_sets_of_lr0_items_queue__insert(set_of_set_of_items,
+            set_of_items);
+    }
+    {
+        node_t *set_of_items = malloc(sizeof(node_t));
+        *set_of_items = NULL;
+        PUT_ITEM(1, 3);
+        PUT_ITEM(3, 1);
+        set_of_sets_of_lr0_items_queue__insert(set_of_set_of_items,
+            set_of_items);
+    }
+    {
+        node_t *set_of_items = malloc(sizeof(node_t));
+        *set_of_items = NULL;
+        PUT_ITEM(3, 3);
+        set_of_sets_of_lr0_items_queue__insert(set_of_set_of_items,
+            set_of_items);
+    }
+    {
+        node_t *set_of_items = malloc(sizeof(node_t));
+        *set_of_items = NULL;
+        PUT_ITEM(5, 3);
+        set_of_sets_of_lr0_items_queue__insert(set_of_set_of_items,
+            set_of_items);
+    }
+
+    return set_of_set_of_items;
 }
 
 

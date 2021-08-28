@@ -4,7 +4,6 @@
 #include "cc/lexer/lexer_minimize.h"
 #include "cc/lexer/lexer_accepting_states.h"
 
-typedef node_t *pnode_t;
 IMPLEMENT_TYPED_PATH(rp, pnode_t, NULL, dummy_cmp)
 
 static

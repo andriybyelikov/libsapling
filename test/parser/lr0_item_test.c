@@ -31,6 +31,13 @@ int main(void)
     lr0_item_t item3 = new_lr0_item(p2, 1);
     assert(!lr0_item__equals(&item, &item3));
 
+    /*lr0_item__print(stderr, &item);
+    fprintf(stderr, "\n");
+    lr0_item__print(stderr, &item2);
+    fprintf(stderr, "\n");
+    lr0_item__print(stderr, &item3);
+    fprintf(stderr, "\n");*/
+
     delete_lr0_item(item);
     delete_lr0_item(item2);
     delete_lr0_item(item3);

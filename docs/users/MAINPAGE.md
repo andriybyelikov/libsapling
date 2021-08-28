@@ -14,7 +14,7 @@ other.
 
 @author Andriy Byelikov
 
-@date 2021-08-27
+@date 2021-08-28
 
 
 ## Examples
@@ -50,3 +50,6 @@ Please see @ref TYPED_INTERFACES.md.
 - @ref first.h "First"
 - @ref follow.h "Follow"
 - @ref lr0_item.h "LR(0) item"
+- @ref closure.h "Closure"
+- @ref goto.h "Goto"
+- @ref slr.h "Simple LR"

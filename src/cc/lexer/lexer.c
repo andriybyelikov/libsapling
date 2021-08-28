@@ -11,8 +11,6 @@ void *lexer__data(const node_t node)
 }
 
 
-typedef node_t *pnode_t;
-
 /*
  * Gee. Don't forget that this implementation discriminates by node address
  * and not by node reference address. That's why double dereferencing. One for

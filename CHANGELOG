@@ -4,10 +4,13 @@
 - Implemented int__compare, int__equals, and char__compare, char__equals
   functions
 - Implemented production__print function
-- Implemented grammar and grammar test
-- Implemented first set computation and first set computation test
-- Implemented follow set computation and follow set computation test
-- Implemented LR(0) item and LR(0) item test
+- Implemented grammar and test
+- Implemented first set computation and test
+- Implemented follow set computation and test
+- Implemented LR(0) item and test
+- Added a pnode_t definition to the common typed header
+- Implemented computation of the set of sets of LR(0) items for Simple LR and
+  test
 
 # Changed
 - Typed interfaces now include the common typed functions header for
@@ -15,6 +18,10 @@
 - Changed fpfdata_int, fpfdata_char, and fpfdata_str function names to
   int__print, char__print and string__print
 - Renamed fpfdata_test to print_test
+
+# Removed
+- Removed pnode_t definitions from all files that defined it locally in favour
+  of the single definition that now lives in the common typed header
 
 
 0.6.1

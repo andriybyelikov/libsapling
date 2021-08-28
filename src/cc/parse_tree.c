@@ -87,7 +87,6 @@ struct info_impl {
     node_t queue;
 };
 
-typedef node_t *pnode_t;
 IMPLEMENT_TYPED_QUEUE(trail, pnode_t, NULL)
 
 static
