@@ -12,4 +12,6 @@ IMPLEMENT_TYPED_QUEUE(set_of_sets_of_lr0_items_queue, pnode_t,
 
 int set_of_sets_of_lr0_items__equals(const void *a, const void *b);
 
+int set_of_sets_of_lr0_items__get_j(node_t *C, node_t *I);
+
 #endif

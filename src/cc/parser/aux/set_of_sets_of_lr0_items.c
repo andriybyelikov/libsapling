@@ -42,3 +42,38 @@ int set_of_sets_of_lr0_items__equals(const void *a, const void *b)
     return set_of_sets_of_lr0_items_is_subset_of(x, y)
         && set_of_sets_of_lr0_items_is_subset_of(y, x);
 }
+
+
+struct info_get_j {
+    node_t *I;
+    int j;
+};
+
+static
+void get_j_apply(pnode_t *data, void *info)
+{
+    return;
+}
+
+static
+int get_j_predicate(const pnode_t *data, void *info)
+{
+    CAST_USER_INFO(struct info_get_j *, user, info);
+
+    node_t *a = *data;
+    node_t *b = user->I;
+    int res = set_of_lr0_items__equals(&a, &b);
+
+    if (!res)
+        user->j++;
+
+    return res;
+}
+
+int set_of_sets_of_lr0_items__get_j(node_t *C, node_t *I)
+{
+    struct info_get_j info = { I, 0 };
+    set_of_sets_of_lr0_items_path__access(E_QT, C, &info, get_j_predicate,
+        get_j_apply);
+    return info.j;
+}

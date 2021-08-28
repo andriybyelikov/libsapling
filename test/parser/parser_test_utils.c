@@ -1,7 +1,6 @@
 #include <stdlib.h>
-#include "libsapling/dm/queue.h"
-#include "libsapling/cc/production.h"
-#include "libsapling/cc/parser/grammar.h"
+#include "libsapling/cc/parser/action_table.h"
+#include "libsapling/cc/parser/goto_table.h"
 #include "libsapling/cc/parser/lr0_item.h"
 #include "libsapling/cc/parser/aux/symbol_set.h"
 #include "libsapling/cc/parser/aux/production_set.h"
@@ -336,6 +335,77 @@ node_t *build_test_set_of_sets_of_lr0_items(grammar_t g)
     return set_of_set_of_items;
 }
 
+#define PUT_SHIFT(STA, SYM, STA2) \
+action_table__set_action(at, g, STA, SYM, PARSER_ACTION_SHIFT); \
+action_table__set_action_info(at, g, STA, SYM, STA2)
+
+#define PUT_REDUCE(STA, SYM, PROD) \
+action_table__set_action(at, g, STA, SYM, PARSER_ACTION_REDUCE); \
+action_table__set_action_info(at, g, STA, SYM, PROD)
+
+#define PUT_ACCEPT(STA, SYM) \
+action_table__set_action(at, g, STA, SYM, PARSER_ACTION_ACCEPT)
+
+action_table_t build_test_action_table(grammar_t g, node_t *C)
+{
+    action_table_t at = new_action_table(g, C);
+    PUT_SHIFT(0, 0, 5);
+    PUT_SHIFT(4, 0, 5);
+    PUT_SHIFT(6, 0, 5);
+    PUT_SHIFT(7, 0, 5);
+    PUT_SHIFT(1, 1, 6);
+    PUT_REDUCE(2, 1, 2);
+    PUT_REDUCE(3, 1, 4);
+    PUT_REDUCE(5, 1, 6);
+    PUT_SHIFT(8, 1, 6);
+    PUT_REDUCE(9, 1, 1);
+    PUT_REDUCE(10, 1, 3);
+    PUT_REDUCE(11, 1, 5);
+    PUT_SHIFT(2, 2, 7);
+    PUT_REDUCE(3, 2, 4);
+    PUT_REDUCE(5, 2, 6);
+    PUT_SHIFT(9, 2, 7);
+    PUT_REDUCE(10, 2, 3);
+    PUT_REDUCE(11, 2, 5);
+    PUT_SHIFT(0, 3, 4);
+    PUT_SHIFT(4, 3, 4);
+    PUT_SHIFT(6, 3, 4);
+    PUT_SHIFT(7, 3, 4);
+    PUT_REDUCE(2, 4, 2);
+    PUT_REDUCE(3, 4, 4);
+    PUT_REDUCE(5, 4, 6);
+    PUT_SHIFT(8, 4, 11);
+    PUT_REDUCE(9, 4, 1);
+    PUT_REDUCE(10, 4, 3);
+    PUT_REDUCE(11, 4, 5);
+    PUT_ACCEPT(1, 5);
+    PUT_REDUCE(2, 5, 2);
+    PUT_REDUCE(3, 5, 4);
+    PUT_REDUCE(5, 5, 6);
+    PUT_REDUCE(9, 5, 1);
+    PUT_REDUCE(10, 5, 3);
+    PUT_REDUCE(11, 5, 5);
+    return at;
+}
+
+#define PUT_STATE(STA, SYM, STA2) \
+goto_table__set_state(gt, g, STA, SYM, STA2);
+
+goto_table_t build_test_goto_table(grammar_t g, node_t *C)
+{
+    goto_table_t gt = new_goto_table(g, C);
+    PUT_STATE(0, 7, 1);
+    PUT_STATE(4, 7, 8);
+    PUT_STATE(0, 8, 2);
+    PUT_STATE(4, 8, 2);
+    PUT_STATE(6, 8, 9);
+    PUT_STATE(0, 9, 3);
+    PUT_STATE(4, 9, 3);
+    PUT_STATE(6, 9, 3);
+    PUT_STATE(7, 9, 10);
+    return gt;
+}
+
 
 struct info_symbol_set_is_subset_of {
     node_t *b;
@@ -370,4 +440,38 @@ int symbol_set__is_subset_of(node_t *a, node_t *b)
 int symbol_set__compare(node_t *a, node_t *b)
 {
     return symbol_set__is_subset_of(a, b) && symbol_set__is_subset_of(b, a);
+}
+
+
+int compare_slr_tables(grammar_t g, node_t *C, action_table_t at0,
+    goto_table_t gt0, action_table_t at1, goto_table_t gt1)
+{
+    int num_states = set_of_sets_of_lr0_items_path__length(C);
+
+    for (int i = 0; i < num_states; i++) {
+        for (int j = 0; j < grammar__num_terminals(g); j++) {
+            int action0 = action_table__get_action(at0, g, i, j);
+            int action1 = action_table__get_action(at1, g, i, j);
+            int action0_info = action_table__get_action_info(at0, g, i, j);
+            int action1_info = action_table__get_action_info(at1, g, i, j);
+            if (action0 != action1
+                    || ((action0 == PARSER_ACTION_SHIFT
+                            || action0 == PARSER_ACTION_REDUCE)
+                        && action0_info != action1_info)) {
+                return 0;
+            }
+        }
+    }
+
+    for (int i = 0; i < num_states; i++) {
+        for (int j = grammar__num_terminals(g) + 1;
+                j < grammar__num_symbols(g); j++) {
+            if (goto_table__get_state(gt0, g, i, j)
+                    != goto_table__get_state(gt1, g, i, j)) {
+                return 0;
+            }
+        }
+    }
+
+    return 1;
 }
