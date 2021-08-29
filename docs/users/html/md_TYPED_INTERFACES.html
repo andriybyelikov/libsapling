@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="sapling.svg"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">libsapling
-   &#160;<span id="projectnumber">0.6.1</span>
+   &#160;<span id="projectnumber">0.7.0</span>
    </div>
   </td>
  </tr>
@@ -80,7 +80,7 @@ $(function() {
 <p>All interfaces have at least the <code>SYM</code>, <code>TYPE</code> and <code>FPF</code> parameters, while the <code>CMP</code> and <code>EQU</code> parameters may both appear, or just one of them or none at all.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">SYM</td><td>Name of the instance. This serves as the prefix for the method definitions. For example if you called the macro <code><a class="el" href="typed__stack_8h.html#a6054f3eea1f4bbea5df4b79d8f12683d" title="Defines a typed stack implementation.">IMPLEMENT_TYPED_STACK(stack_of_integers, int, fpfdata_int)</a></code> then to use this instance's methods you would write <code>stack_of_integers__insert(&amp;stack, 21);</code>. Naturally, <code>SYM</code> can't be of the base implementations' names, at least not in their all lowercase form, unless you don't include them in your source file:<ul>
+    <tr><td class="paramname">SYM</td><td>Name of the instance. This serves as the prefix for the method definitions. For example if you called the macro <code><a class="el" href="typed__stack_8h.html#a6054f3eea1f4bbea5df4b79d8f12683d" title="Defines a typed stack implementation.">IMPLEMENT_TYPED_STACK(stack_of_integers, int, int__print)</a></code> then to use this instance's methods you would write <code>stack_of_integers__insert(&amp;stack, 21);</code>. Naturally, <code>SYM</code> can't be of the base implementations' names, at least not in their all lowercase form, unless you don't include them in your source file:<ul>
 <li><code>graph</code></li>
 <li><code>path</code></li>
 <li><code>stack</code></li>

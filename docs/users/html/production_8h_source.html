@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="sapling.svg"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">libsapling
-   &#160;<span id="projectnumber">0.6.1</span>
+   &#160;<span id="projectnumber">0.7.0</span>
    </div>
   </td>
  </tr>
@@ -89,12 +89,15 @@ $(function() {
 <div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160; </div>
 <div class="line"><a name="l00048"></a><span class="lineno"><a class="line" href="production_8h.html#a037461b0abbfc0192ca3ac850ecfa888">   48</a></span>&#160;<span class="keywordtype">int</span> *<a class="code" href="production_8h.html#a037461b0abbfc0192ca3ac850ecfa888">production__get</a>(production_t ref, <span class="keywordtype">int</span> pos);</div>
 <div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160; </div>
-<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00055"></a><span class="lineno"><a class="line" href="production_8h.html#a27eb9897662748eaddf1953daf92c76c">   55</a></span>&#160;<span class="keywordtype">void</span> <a class="code" href="production_8h.html#a27eb9897662748eaddf1953daf92c76c">production__print</a>(FILE *stream, <span class="keyword">const</span> <span class="keywordtype">void</span> *data);</div>
+<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160; </div>
+<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;<span class="preprocessor">#endif</span></div>
 <div class="ttc" id="agraph_8h_html"><div class="ttname"><a href="graph_8h.html">graph.h</a></div><div class="ttdoc">Graph implementation.</div></div>
 <div class="ttc" id="aproduction_8h_html_a037461b0abbfc0192ca3ac850ecfa888"><div class="ttname"><a href="production_8h.html#a037461b0abbfc0192ca3ac850ecfa888">production__get</a></div><div class="ttdeci">int * production__get(production_t ref, int pos)</div><div class="ttdoc">Returns the grammar symbol at the specified position in the production's body.</div></div>
 <div class="ttc" id="aproduction_8h_html_a037b1a834c69d1291cf680120aa3b717"><div class="ttname"><a href="production_8h.html#a037b1a834c69d1291cf680120aa3b717">new_production</a></div><div class="ttdeci">production_t new_production(int id, node_t *body)</div><div class="ttdoc">Allocates a new production on the heap.</div></div>
 <div class="ttc" id="aproduction_8h_html_a203e0ce095bcb2a74ecd34ee7880fed8"><div class="ttname"><a href="production_8h.html#a203e0ce095bcb2a74ecd34ee7880fed8">production__len</a></div><div class="ttdeci">int production__len(production_t ref)</div><div class="ttdoc">Returns the length of the production's body.</div></div>
 <div class="ttc" id="aproduction_8h_html_a204c4a5a1ed3a316708fbf75cb2f1d8c"><div class="ttname"><a href="production_8h.html#a204c4a5a1ed3a316708fbf75cb2f1d8c">delete_production</a></div><div class="ttdeci">void delete_production(production_t ref)</div><div class="ttdoc">Frees the memory previously allocated on the heap for a production with new_production.</div></div>
+<div class="ttc" id="aproduction_8h_html_a27eb9897662748eaddf1953daf92c76c"><div class="ttname"><a href="production_8h.html#a27eb9897662748eaddf1953daf92c76c">production__print</a></div><div class="ttdeci">void production__print(FILE *stream, const void *data)</div><div class="ttdoc">Prints a production through the specified stream.</div></div>
 <div class="ttc" id="aproduction_8h_html_ac57d83983e647a9f3e7dc3e2bf364c30"><div class="ttname"><a href="production_8h.html#ac57d83983e647a9f3e7dc3e2bf364c30">production__id</a></div><div class="ttdeci">int production__id(production_t ref)</div><div class="ttdoc">Returns the productions's grammar symbol identifier.</div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->

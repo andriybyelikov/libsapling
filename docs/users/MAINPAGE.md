@@ -14,7 +14,7 @@ other.
 
 @author Andriy Byelikov
 
-@date 2021-08-20
+@date 2021-08-29
 
 
 ## Examples
@@ -46,3 +46,12 @@ Please see @ref TYPED_INTERFACES.md.
 - @ref production.h "Production"
 - @ref parse_tree.h "Parse Tree"
 - @ref lexer.h "Lexer"
+- @ref grammar.h "Grammar"
+- @ref first.h "First"
+- @ref follow.h "Follow"
+- @ref lr0_item.h "LR(0) item"
+- @ref closure.h "Closure"
+- @ref goto.h "Goto"
+- @ref action_table.h "Action table"
+- @ref goto_table.h "Goto table"
+- @ref slr.h "Simple LR"

@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="sapling.svg"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">libsapling
-   &#160;<span id="projectnumber">0.6.1</span>
+   &#160;<span id="projectnumber">0.7.0</span>
    </div>
   </td>
  </tr>
@@ -105,6 +105,9 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="prod
 <tr class="memitem:a037461b0abbfc0192ca3ac850ecfa888"><td class="memItemLeft" align="right" valign="top">int *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="production_8h.html#a037461b0abbfc0192ca3ac850ecfa888">production__get</a> (production_t ref, int pos)</td></tr>
 <tr class="memdesc:a037461b0abbfc0192ca3ac850ecfa888"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the grammar symbol at the specified position in the production's body.  <a href="production_8h.html#a037461b0abbfc0192ca3ac850ecfa888">More...</a><br /></td></tr>
 <tr class="separator:a037461b0abbfc0192ca3ac850ecfa888"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a27eb9897662748eaddf1953daf92c76c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="production_8h.html#a27eb9897662748eaddf1953daf92c76c">production__print</a> (FILE *stream, const void *data)</td></tr>
+<tr class="memdesc:a27eb9897662748eaddf1953daf92c76c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Prints a production through the specified stream.  <a href="production_8h.html#a27eb9897662748eaddf1953daf92c76c">More...</a><br /></td></tr>
+<tr class="separator:a27eb9897662748eaddf1953daf92c76c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Production implementation. </p>
@@ -217,6 +220,42 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="prod
 
 <p>Returns the length of the production's body. </p>
 <dl class="section return"><dt>Returns</dt><dd>the length of the production's body. </dd></dl>
+
+</div>
+</div>
+<a id="a27eb9897662748eaddf1953daf92c76c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a27eb9897662748eaddf1953daf92c76c">&#9670;&nbsp;</a></span>production__print()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void production__print </td>
+          <td>(</td>
+          <td class="paramtype">FILE *&#160;</td>
+          <td class="paramname"><em>stream</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const void *&#160;</td>
+          <td class="paramname"><em>data</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Prints a production through the specified stream. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">data</td><td>A <code>production_t</code> object </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
