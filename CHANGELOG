@@ -1,4 +1,4 @@
-0.7.0 [Unreleased]
+0.7.0
 -----
 # Added
 - Implemented int__compare, int__equals, and char__compare, char__equals
