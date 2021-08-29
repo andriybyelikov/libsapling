@@ -11,7 +11,7 @@
 - Added a pnode_t definition to the common typed header
 - Implemented computation of the set of sets of LR(0) items for Simple LR and
   test
-- Implemented computation of the LR(0) ACTION and GOTO tables and test
+- Implemented computation of the ACTION and GOTO tables for Simple LR and test
 
 # Changed
 - Typed interfaces now include the common typed functions header for
@@ -19,6 +19,7 @@
 - Changed fpfdata_int, fpfdata_char, and fpfdata_str function names to
   int__print, char__print and string__print
 - Renamed fpfdata_test to print_test
+- Renamed all "print_data" symbols to "print"
 
 # Removed
 - Removed pnode_t definitions from all files that defined it locally in favour

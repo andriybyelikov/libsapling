@@ -2,6 +2,8 @@ lib_LIBRARIES = libsapling.a
 dmdir = $(pkgincludedir)/dm
 dm_typeddir = $(pkgincludedir)/dm/typed
 ccdir = $(pkgincludedir)/cc
+cc_parserdir = $(pkgincludedir)/cc/parser
+cc_parser_auxdir = $(pkgincludedir)/cc/parser/aux
 testdir = test
 
 # meta
@@ -11,6 +13,8 @@ pkginclude_HEADERS = include/libsapling/idiom.h
 dm_HEADERS = include/libsapling/dm/stack.h include/libsapling/dm/logic.h include/libsapling/dm/graph.h include/libsapling/dm/queue.h include/libsapling/dm/equivalence_class.h include/libsapling/dm/path.h include/libsapling/dm/trie.h include/libsapling/dm/avl.h
 dm_typed_HEADERS = include/libsapling/dm/typed/typed_avl.h include/libsapling/dm/typed/typed_first_out_buffer.h include/libsapling/dm/typed/typed_stack.h include/libsapling/dm/typed/typed_path.h include/libsapling/dm/typed/typed_adapters.h include/libsapling/dm/typed/typed_equivalence_class.h include/libsapling/dm/typed/typed_queue.h include/libsapling/dm/typed/typed_common.h include/libsapling/dm/typed/typed_trie.h
 cc_HEADERS = include/libsapling/cc/text.h include/libsapling/cc/terminal.h include/libsapling/cc/production.h include/libsapling/cc/parser/closure.h include/libsapling/cc/parser/goto_table.h include/libsapling/cc/parser/follow.h include/libsapling/cc/parser/goto.h include/libsapling/cc/parser/action_table.h include/libsapling/cc/parser/lr0_item.h include/libsapling/cc/parser/first.h include/libsapling/cc/parser/slr.h include/libsapling/cc/parser/grammar.h include/libsapling/cc/parser/aux/set_of_lr0_items.h include/libsapling/cc/parser/aux/set_of_sets_of_lr0_items.h include/libsapling/cc/parser/aux/production_set.h include/libsapling/cc/parser/aux/symbol_set.h include/libsapling/cc/lexer.h include/libsapling/cc/parse_tree.h
+cc_parser_HEADERS = include/libsapling/cc/parser/closure.h include/libsapling/cc/parser/goto_table.h include/libsapling/cc/parser/follow.h include/libsapling/cc/parser/goto.h include/libsapling/cc/parser/action_table.h include/libsapling/cc/parser/lr0_item.h include/libsapling/cc/parser/first.h include/libsapling/cc/parser/slr.h include/libsapling/cc/parser/grammar.h include/libsapling/cc/parser/aux/set_of_lr0_items.h include/libsapling/cc/parser/aux/set_of_sets_of_lr0_items.h include/libsapling/cc/parser/aux/production_set.h include/libsapling/cc/parser/aux/symbol_set.h
+cc_parser_aux_HEADERS = include/libsapling/cc/parser/aux/set_of_lr0_items.h include/libsapling/cc/parser/aux/set_of_sets_of_lr0_items.h include/libsapling/cc/parser/aux/production_set.h include/libsapling/cc/parser/aux/symbol_set.h
 noinst_HEADERS = src/cc/lexer/lexer_attributed_edges.h src/cc/lexer/lexer_minimize.h src/cc/lexer/lexer_replace_node.h src/cc/lexer/lexer_attributed_edge.h src/cc/lexer/lexer_insert_state.h src/cc/lexer/lexer_ec_def.h src/cc/lexer/lexer_edge_storage.h src/cc/lexer/lexer_accepting_states.h src/dm/first_out_buffer.h
 
 AM_CFLAGS = -std=c11 -pedantic -Wall -Werror -Wno-format -Wno-unused-function -Wno-unused-variable -Wno-unused-but-set-variable -Wno-discarded-qualifiers

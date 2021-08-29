@@ -23,12 +23,14 @@ void compute_follow_set_apply(production_t *data, void *info)
         if (sym != user->nonterminal)
             continue;
         if (i == production__len(*data) - 1) {
-            // FOLLOW(B) = FOLLOW(B) ∪ FOLLOW(A), where B = nonterminal
-            // compute FOLLOW(A):
-            node_t *follow_set = compute_follow_set(user->g,
-                production__id(*data));
-            // FOLLOW(B) = FOLLOW(B) ∪ FOLLOW(A):
-            symbol_set__union(user->follow_set, follow_set);
+            if (user->nonterminal != production__id(*data)) {
+                // FOLLOW(B) = FOLLOW(B) ∪ FOLLOW(A), where B = nonterminal
+                // compute FOLLOW(A):
+                node_t *follow_set = compute_follow_set(user->g,
+                    production__id(*data));
+                // FOLLOW(B) = FOLLOW(B) ∪ FOLLOW(A):
+                symbol_set__union(user->follow_set, follow_set);
+            }
         } else {
             // FOLLOW(B) = FOLLOW(B) ∪ FIRST(next grammar symbol),
             // where B = nonterminal

@@ -37,6 +37,9 @@ f0 Makefile.am pkginclude_HEADERS "$(f1 include/libsapling *.h 1)" | sh
 f0 Makefile.am dm_HEADERS "$(f1 include/libsapling/dm *.h 1)" | sh
 f0 Makefile.am dm_typed_HEADERS "$(f1 include/libsapling/dm/typed *.h 1)" | sh
 f0 Makefile.am cc_HEADERS "$(f1 include/libsapling/cc *.h)" | sh
+f0 Makefile.am cc_parser_HEADERS "$(f1 include/libsapling/cc/parser *.h)" | sh
+f0 Makefile.am cc_parser_aux_HEADERS \
+    "$(f1 include/libsapling/cc/parser/aux *.h)" | sh
 f0 Makefile.am noinst_HEADERS "$(f1 src *.h)" | sh
 
 f2 Makefile.am

@@ -41,9 +41,9 @@ TYPE SYM##__delete(node_t *ref)                                               \
 }                                                                             \
                                                                               \
 static                                                                        \
-void SYM##__print_data(FILE *stream, node_t *ref)                             \
+void SYM##__print(FILE *stream, node_t *ref)                             \
 {                                                                             \
-    path__print_data(stream, ref, FPF);                                       \
+    path__print(stream, ref, FPF);                                       \
 }                                                                             \
                                                                               \
 static                                                                        \

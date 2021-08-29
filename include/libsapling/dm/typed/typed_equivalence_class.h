@@ -37,9 +37,9 @@ void SYM##__insert(node_t *ref, TYPE val)                                     \
 }                                                                             \
                                                                               \
 static                                                                        \
-void SYM##__print_data(FILE *stream, node_t *ref)                             \
+void SYM##__print(FILE *stream, node_t *ref)                             \
 {                                                                             \
-    path__print_data(stream, ref, FPF);                                       \
+    path__print(stream, ref, FPF);                                       \
 }                                                                             \
                                                                               \
 static                                                                        \

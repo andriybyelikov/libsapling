@@ -46,5 +46,5 @@ int set_of_lr0_items__equals(const void *a, const void *b)
 void set_of_lr0_items__print(FILE *stream, const void *data)
 {
     pnode_t pnode = *(pnode_t *)data;
-    set_of_lr0_items_path__print_data(stream, pnode);
+    set_of_lr0_items_path__print(stream, pnode);
 }

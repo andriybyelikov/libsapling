@@ -225,7 +225,7 @@ void graph__delete(node_t *ref, const struct info_stack *info,
 /**
  * @brief Prints all the data contained in the set.
  */
-void graph__print_data(FILE *stream, node_t *ref,
+void graph__print(FILE *stream, node_t *ref,
     all_access_adapter_fn access_adapter, fpfnode_t fpfnode,
     fpfdata_t fpfdata);
 

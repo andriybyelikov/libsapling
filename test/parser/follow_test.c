@@ -10,9 +10,9 @@ int main(void)
         node_t *follow_set = compute_follow_set(g, i);
         assert(symbol_set__compare(follow_set, &follow_sets[
             i - grammar__num_terminals(g)]));
-        /*symbol_path__print_data(stderr, follow_set);
+        /*symbol_path__print(stderr, follow_set);
         fprintf(stderr, " ?= ");
-        symbol_path__print_data(stderr, &follow_sets[
+        symbol_path__print(stderr, &follow_sets[
             i - grammar__num_terminals(g)]);
         fprintf(stderr, "\n");*/
     }

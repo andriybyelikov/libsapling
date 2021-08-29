@@ -316,15 +316,15 @@ void all_access_adapter(node_t *ref, void *info, apply_t apply)
 
 
 static
-void print_data_aux0(FILE *stream, const node_t node, fpfdata_t fpfdata,
+void print_aux0(FILE *stream, const node_t node, fpfdata_t fpfdata,
     void *impl)
 {
     fpfdata(stream, avl__data(node));
 }
 
-void avl__print_data(FILE *stream, node_t *ref, fpfdata_t fpfdata)
+void avl__print(FILE *stream, node_t *ref, fpfdata_t fpfdata)
 {
-    graph__print_data(stream, ref, all_access_adapter, print_data_aux0,
+    graph__print(stream, ref, all_access_adapter, print_aux0,
         fpfdata);
 }
 

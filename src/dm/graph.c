@@ -97,7 +97,7 @@ struct info_print {
 };
 
 static
-void graph__print_data_aux0(node_t *ref, const struct info_stack *info)
+void graph__print_aux0(node_t *ref, const struct info_stack *info)
 {
     const node_t node = *ref;
     struct info_print *user = info->user;
@@ -108,7 +108,7 @@ void graph__print_data_aux0(node_t *ref, const struct info_stack *info)
     user->fpfnode(user->stream, node, user->fpfdata, info->impl);
 }
 
-void graph__print_data(FILE *stream, node_t *ref,
+void graph__print(FILE *stream, node_t *ref,
     all_access_adapter_fn access_adapter, fpfnode_t fpfnode,
     fpfdata_t fpfdata)
 {
@@ -119,7 +119,7 @@ void graph__print_data(FILE *stream, node_t *ref,
 
     fprintf(stream, "{ ");
     struct info_print info = { stream, fpfnode, fpfdata, 1 };
-    access_adapter(ref, &info, graph__print_data_aux0);
+    access_adapter(ref, &info, graph__print_aux0);
     fprintf(stream, " }");
 }
 

@@ -10,6 +10,6 @@ int main(void)
     str_queue__insert(&str_queue, "beyond");
     str_queue__insert(&str_queue, "measure");
     str_queue__insert(&str_queue, "outlander");
-    str_queue__print_data(stdout, &str_queue);
+    str_queue__print(stdout, &str_queue);
     fprintf(stdout, "\n");
 }

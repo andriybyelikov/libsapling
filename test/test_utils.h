@@ -10,7 +10,7 @@ for (int i = 1; i < argc; i++) {                                              \
     if (*argv[i] == '-') {                                                    \
         switch (*(argv[i] + 1)) {                                             \
         case 'p':                                                             \
-            flag_print_data = 1;                                              \
+            flag_print = 1;                                              \
             break;                                                            \
         case 'g':                                                             \
             flag_dump_dot = 1;                                                \
@@ -20,13 +20,13 @@ for (int i = 1; i < argc; i++) {                                              \
 }
 
 #define DEFINE_OUTPUT_STATE_FUNC(SYM)                                         \
-static int flag_print_data = 0;                                               \
+static int flag_print = 0;                                               \
 static int flag_dump_dot = 0;                                                 \
 static                                                                        \
 void SYM##__output_state(node_t *ref)                                         \
 {                                                                             \
-    if (flag_print_data) {                                                    \
-        SYM##__print_data(stdout, ref);                                       \
+    if (flag_print) {                                                    \
+        SYM##__print(stdout, ref);                                       \
         printf("\n");                                                         \
     } else if (flag_dump_dot) {                                               \
         printf(#SYM "\n");                                                    \

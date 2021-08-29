@@ -13,10 +13,10 @@ int main(void)
     assert(set_of_sets_of_lr0_items__equals(
         &expected_set_of_sets_of_lr0_items,
         &computed_set_of_sets_of_lr0_items));
-    /*set_of_sets_of_lr0_items_path__print_data(stderr,
+    /*set_of_sets_of_lr0_items_path__print(stderr,
         expected_set_of_sets_of_lr0_items);
     fprintf(stderr, "\n");
-    set_of_sets_of_lr0_items_path__print_data(stderr,
+    set_of_sets_of_lr0_items_path__print(stderr,
         computed_set_of_sets_of_lr0_items);
     fprintf(stderr, "\n");*/
 

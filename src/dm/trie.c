@@ -37,7 +37,7 @@ void print_trail0(FILE *stream, const void *data)
 {
     const node_t **q = data;
 
-    trail1__print_data(stream, *q);
+    trail1__print(stream, *q);
 }
 
 typedef struct { node_t *q; } trail_t;
@@ -295,7 +295,7 @@ void push_key_chars(trail_t *data, void *info)
 }
 
 static
-void print_data_aux0(FILE *stream, const node_t node, fpfdata_t fpfdata,
+void print_aux0(FILE *stream, const node_t node, fpfdata_t fpfdata,
     void *impl)
 {
     struct info_impl_u *impl_u = impl;
@@ -303,7 +303,7 @@ void print_data_aux0(FILE *stream, const node_t node, fpfdata_t fpfdata,
     // reconstruct and print key
     // run through the whole stack and get the first characters in the queue
     /*fprintf(stderr, "DEBUG\n");
-    trail0p__print_data(stderr, &impl_u->s);
+    trail0p__print(stderr, &impl_u->s);
     fprintf(stderr, "\n\n");*/
 
     fprintf(stream, "(\"");
@@ -326,9 +326,9 @@ void print_data_aux0(FILE *stream, const node_t node, fpfdata_t fpfdata,
     fprintf(stream, ")");
 }
 
-void trie__print_data(FILE *stream, node_t *ref, fpfdata_t fpfdata)
+void trie__print(FILE *stream, node_t *ref, fpfdata_t fpfdata)
 {
-    graph__print_data(stream, ref, all_access_adapter, print_data_aux0,
+    graph__print(stream, ref, all_access_adapter, print_aux0,
         fpfdata);
 }
 
