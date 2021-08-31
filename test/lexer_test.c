@@ -343,5 +343,9 @@ int main(int argc, char *argv[])
 
         res = *(int **)lexer__next_terminal(&a0, &lsta);
         assert(res != NULL && *res == id2); // classify '8' as class 2
+
+        // test lexer print
+        lexer__print(stdout, &a0, int__print);
+        fprintf(stdout, "\n");
     }
 }

@@ -210,6 +210,33 @@ void lexer__dump_dot(FILE *stream, node_t *ref, fpfdata_t fpfdata)
         "rankdir=LR;");
 }
 
+static
+void print_aux0(FILE *stream, const node_t node, fpfdata_t fpfdata,
+    void *impl)
+{
+    fprintf(stream, "(");
+    fprintf(stream, "%p", node);
+    fprintf(stream, ", ");
+    ae__print(stream, &node->attributed_edges);
+    fprintf(stream, ", ");
+    fprintf(stream, "%p", node->anything_edge);
+    fprintf(stream, ", ");
+    fprintf(stream, "%d", node->is_accepting_state);
+    fprintf(stream, ", ");
+    void *data = *(void **)lexer__data(node);
+    if (fpfdata != NULL && data != NULL)
+        fpfdata(stream, data);
+    else
+        if (fpfdata != NULL)
+            fprintf(stream, "%p", data);
+    fprintf(stream, ")");
+}
+
+void lexer__print(FILE *stream, node_t *ref, fpfdata_t fpfdata)
+{
+    graph__print(stream, ref, all_access_adapter, print_aux0, fpfdata);
+}
+
 
 void lexer__init(struct lexer_state *ref, const char *buf)
 {
