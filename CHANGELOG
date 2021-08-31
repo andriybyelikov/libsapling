@@ -1,3 +1,9 @@
+0.8.0 [Unreleased]
+-----
+# Changed
+- Print dashes "-" instead of blanks when printing SLR tables, this is helpful
+  for awk to print the right columns
+
 0.7.0
 -----
 # Added

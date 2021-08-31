@@ -133,7 +133,7 @@ void slr__print_tables(FILE *stream, action_table_t tbl_action,
             buf[0] = 0;
             switch (action_table__get_action(tbl_action, g, i, j)) {
             case PARSER_ACTION_ERROR:
-                fprintf(stream, "%*s ", cols_symbol - 1, "");
+                fprintf(stream, "%*s ", cols_symbol - 1, "-");
                 break;
             case PARSER_ACTION_SHIFT:
                 buf[sprintf(buf, "s%d",
@@ -153,7 +153,7 @@ void slr__print_tables(FILE *stream, action_table_t tbl_action,
         for (int j = num_terminals + 1; j < num_symbols; j++) {
             int state = goto_table__get_state(tbl_goto, g, i, j);
             if (state == -1) {
-                fprintf(stream, "%*s", cols_symbol, "");
+                fprintf(stream, "%*s", cols_symbol, "-");
             } else {
                 fprintf(stream, "%*d", cols_symbol, state);
             }
