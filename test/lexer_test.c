@@ -345,7 +345,70 @@ int main(int argc, char *argv[])
         assert(res != NULL && *res == id2); // classify '8' as class 2
 
         // test lexer print
-        lexer__print(stdout, &a0, int__print);
-        fprintf(stdout, "\n");
+        /*lexer__print(stdout, &a0, int__print);
+        fprintf(stdout, "\n");*/
+    }
+
+    // test lexeme extraction
+    {
+        node_t a0 = NULL;
+        lexer__class(&a0, "[a-z_]");
+        lexer__kleene_plus(&a0);
+        int id0 = 0;
+        lexer__set_accepting_states_data(&a0, &id0);
+
+        node_t a1 = NULL;
+        lexer__literal(&a1, "\"0x\"");
+        node_t a2 = NULL;
+        lexer__class(&a2, "[0-9A-Fa-f]");
+        lexer__kleene_plus(&a2);
+        lexer__concatenation(&a1, &a2);
+        int id1 = 1;
+        lexer__set_accepting_states_data(&a1, &id1);
+
+        node_t a3 = NULL;
+        lexer__class(&a3, "[ ]");
+        lexer__kleene_plus(&a3);
+        int id2 = 2;
+        lexer__set_accepting_states_data(&a3, &id2);
+
+        lexer__union(&a1, &a3);
+        lexer__union(&a0, &a1);
+
+        DUMP(a0, lexeme_test)
+
+        char bufmem[256];
+        strcpy(bufmem, " t_symbol  nonterm  0x4F ");
+        struct lexer_state lsta;
+        lexer__init(&lsta, bufmem);
+        int *res;
+
+        res = *(int **)lexer__next_terminal(&a0, &lsta);
+        assert(res != NULL && *res == id2); // classify " " as class 2
+        assert(!strcmp(lsta.lexeme, " "));
+
+        res = *(int **)lexer__next_terminal(&a0, &lsta);
+        assert(res != NULL && *res == id0); // classify "t_symbol" as class 0
+        assert(!strcmp(lsta.lexeme, "t_symbol"));
+
+        res = *(int **)lexer__next_terminal(&a0, &lsta);
+        assert(res != NULL && *res == id2); // classify "  " as class 2
+        assert(!strcmp(lsta.lexeme, "  "));
+
+        res = *(int **)lexer__next_terminal(&a0, &lsta);
+        assert(res != NULL && *res == id0); // classify "nonterm" as class 0
+        assert(!strcmp(lsta.lexeme, "nonterm"));
+
+        res = *(int **)lexer__next_terminal(&a0, &lsta);
+        assert(res != NULL && *res == id2); // classify "  " as class 2
+        assert(!strcmp(lsta.lexeme, "  "));
+
+        res = *(int **)lexer__next_terminal(&a0, &lsta);
+        assert(res != NULL && *res == id1); // classify "0x4F" as class 1
+        assert(!strcmp(lsta.lexeme, "0x4F"));
+
+        res = *(int **)lexer__next_terminal(&a0, &lsta);
+        assert(res != NULL && *res == id2); // classify " " as class 2
+        assert(!strcmp(lsta.lexeme, " "));
     }
 }

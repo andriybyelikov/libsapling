@@ -133,12 +133,18 @@ void lexer__set_accepting_states_data(node_t *ref, void *data);
  * Pointer to the data pointer of a state. When an acceptable lexeme is found
  * we store the pointer to the pointer to the data of the accepting state that
  * determined the terminal.
+ * 
+ * @var lexer_state::lexeme
+ * For each successive call to @ref lexer__next_terminal the terminal's lexeme
+ * string is stored in this array.
  */
 struct lexer_state {
     const char *buf;
     int cursor;
     int overread;
     void **ref_to_data;
+    char lexeme[4096];
+    int lexeme_cursor;
 };
 
 /**

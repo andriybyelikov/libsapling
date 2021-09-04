@@ -2,6 +2,7 @@
 -----
 # Added
 - Implemented lexer__print function
+- Implemented lexer lexeme extraction
 
 # Changed
 - Dashes "-" are now printed instead of blanks when printing SLR tables, this
