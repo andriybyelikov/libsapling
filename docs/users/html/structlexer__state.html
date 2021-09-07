@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="sapling.svg"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">libsapling
-   &#160;<span id="projectnumber">0.7.0</span>
+   &#160;<span id="projectnumber">0.8.0</span>
    </div>
   </td>
  </tr>
@@ -85,6 +85,13 @@ Data Fields</h2></td></tr>
 <tr class="separator:aa88dbb97085c5180273e6396d16ffbc1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a45f82b60c02e8fb6dfdee7d4de905edd"><td class="memItemLeft" align="right" valign="top">void **&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structlexer__state.html#a45f82b60c02e8fb6dfdee7d4de905edd">ref_to_data</a></td></tr>
 <tr class="separator:a45f82b60c02e8fb6dfdee7d4de905edd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7bab4371cda87c252104e8dcf93822d4"><td class="memItemLeft" align="right" valign="top">char&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structlexer__state.html#a7bab4371cda87c252104e8dcf93822d4">lexeme</a> [4096]</td></tr>
+<tr class="separator:a7bab4371cda87c252104e8dcf93822d4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a88886750c4fe325007870247e1a444dc"><td class="memItemLeft" align="right" valign="top"><a id="a88886750c4fe325007870247e1a444dc"></a>
+int&#160;</td><td class="memItemRight" valign="bottom"><b>lexeme_cursor</b></td></tr>
+<tr class="separator:a88886750c4fe325007870247e1a444dc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5004fac5a397a4caf529fd23774d352b"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structlexer__state.html#a5004fac5a397a4caf529fd23774d352b">end</a></td></tr>
+<tr class="separator:a5004fac5a397a4caf529fd23774d352b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Lexer state object. </p>
@@ -116,6 +123,36 @@ Data Fields</h2></td></tr>
       </table>
 </div><div class="memdoc">
 <p>Current position in the buffer </p>
+
+</div>
+</div>
+<a id="a5004fac5a397a4caf529fd23774d352b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5004fac5a397a4caf529fd23774d352b">&#9670;&nbsp;</a></span>end</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">lexer_state::end</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Boolean that indicates the end of buffer's string. </p>
+
+</div>
+</div>
+<a id="a7bab4371cda87c252104e8dcf93822d4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7bab4371cda87c252104e8dcf93822d4">&#9670;&nbsp;</a></span>lexeme</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">lexer_state::lexeme</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>For each successive call to <a class="el" href="lexer_8h.html#a05f753b671922c05bd65a100fc13d47f">lexer__next_terminal</a> the terminal's lexeme string is stored in this array. </p>
 
 </div>
 </div>

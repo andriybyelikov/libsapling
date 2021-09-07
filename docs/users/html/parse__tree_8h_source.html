@@ -23,7 +23,7 @@
   <td id="projectlogo"><img alt="Logo" src="sapling.svg"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">libsapling
-   &#160;<span id="projectnumber">0.7.0</span>
+   &#160;<span id="projectnumber">0.8.0</span>
    </div>
   </td>
  </tr>
@@ -83,10 +83,11 @@ $(function() {
 <div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160; </div>
 <div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;node_t parse_tree__get_child_by_position(node_t *ref, <span class="keywordtype">int</span> pos);</div>
 <div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;node_t parse_tree__get_child_by_string(node_t *ref, <span class="keyword">const</span> <span class="keywordtype">char</span> *str);</div>
-<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160; </div>
-<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;<span class="keywordtype">void</span> parse_tree__dump_dot(FILE *stream, node_t *ref);</div>
-<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160; </div>
-<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;<span class="keywordtype">int</span> parse_tree__num_children(node_t node);</div>
+<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160; </div>
+<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;<span class="keywordtype">void</span> parse_tree__dump_dot(FILE *stream, node_t *ref);</div>
+<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160; </div>
+<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;<span class="preprocessor">#endif</span></div>
 <div class="ttc" id="agraph_8h_html"><div class="ttname"><a href="graph_8h.html">graph.h</a></div><div class="ttdoc">Graph implementation.</div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
