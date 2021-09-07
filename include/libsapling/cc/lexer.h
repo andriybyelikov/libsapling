@@ -137,6 +137,9 @@ void lexer__set_accepting_states_data(node_t *ref, void *data);
  * @var lexer_state::lexeme
  * For each successive call to @ref lexer__next_terminal the terminal's lexeme
  * string is stored in this array.
+ * 
+ * @var lexer_state::end
+ * Boolean that indicates the end of buffer's string.
  */
 struct lexer_state {
     const char *buf;
@@ -145,6 +148,7 @@ struct lexer_state {
     void **ref_to_data;
     char lexeme[4096];
     int lexeme_cursor;
+    int end;
 };
 
 /**

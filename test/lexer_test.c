@@ -410,5 +410,8 @@ int main(int argc, char *argv[])
         res = *(int **)lexer__next_terminal(&a0, &lsta);
         assert(res != NULL && *res == id2); // classify " " as class 2
         assert(!strcmp(lsta.lexeme, " "));
+
+        // assert that we reached the end of the string buffer
+        assert(lsta.end);
     }
 }

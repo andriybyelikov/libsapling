@@ -49,3 +49,8 @@ function when a correct `EQU` function is specified during instantiation
 (e.g. not `dummy_cmp`). This function takes an object of the instance type and
 tells whether there is an equal object in the set according to the specified
 `EQU` function.
+
+## Lexer based implementations
+
+In lexer based implementations: lexer and trie, dereference data with this
+expression `**(TYPE **)`.

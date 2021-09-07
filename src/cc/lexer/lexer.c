@@ -117,6 +117,13 @@ int next_e(node_t **ref, const struct info_stack *info)
         user->overread = 0;
     }
 
+    if (user->buf[user->cursor] == 0) {
+        user->lexeme[user->lexeme_cursor] = 0;
+        user->lexeme_cursor = 0;
+        user->end = 1;
+        return 0;
+    }
+
     attributed_edge *ae = NULL;
     if (node->attributed_edges != NULL)
         ae = ae__get_edge(&node->attributed_edges, user->buf[user->cursor]);
@@ -128,7 +135,8 @@ int next_e(node_t **ref, const struct info_stack *info)
     else
         *ref = &ae->node;
 
-    if (**ref == NULL) { // cannot continue, return to last accepting state
+    // cannot continue, return to last accepting state
+    if (**ref == NULL) {
         user->cursor -= user->overread;
         user->lexeme_cursor -= user->overread;
         user->lexeme[user->lexeme_cursor] = 0;
@@ -249,6 +257,7 @@ void lexer__init(struct lexer_state *ref, const char *buf)
     ref->overread = 0;
     ref->ref_to_data = NULL;
     ref->lexeme_cursor = 0;
+    ref->end = 0;
 }
 
 static

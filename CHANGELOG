@@ -1,8 +1,11 @@
-0.8.0 [Unreleased]
+0.8.0
 -----
 # Added
 - Implemented lexer__print function
 - Implemented lexer lexeme extraction
+- Implemented boolean in struct lexer_state to indicate that the end of the
+  stream has been reached
+- Implemented parse_tree__num_children function
 
 # Changed
 - Dashes "-" are now printed instead of blanks when printing SLR tables, this

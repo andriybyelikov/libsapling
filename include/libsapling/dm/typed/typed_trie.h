@@ -38,9 +38,9 @@ void SYM##__delete(node_t *ref, const char *key)                              \
 }                                                                             \
                                                                               \
 static                                                                        \
-void SYM##__print(FILE *stream, node_t *ref)                             \
+void SYM##__print(FILE *stream, node_t *ref)                                  \
 {                                                                             \
-    trie__print(stream, ref, FPF);                                       \
+    trie__print(stream, ref, FPF);                                            \
 }                                                                             \
                                                                               \
 static                                                                        \

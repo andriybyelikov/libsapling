@@ -4,6 +4,9 @@
 /**
  * @file typed_avl.h
  * @brief Typed AVL interface implementation
+ * 
+ * Use `SYM__cmp_predicate` when inserting and `SYM__equ_predicate` when
+ * searching for a particular item with the existentials quantifier.
  */
 
 #include "libsapling/dm/typed/typed_adapters.h"
@@ -45,9 +48,9 @@ void SYM##__delete(node_t *ref, TYPE val, SYM##__predicate_t predicate)       \
 }                                                                             \
                                                                               \
 static                                                                        \
-void SYM##__print(FILE *stream, node_t *ref)                             \
+void SYM##__print(FILE *stream, node_t *ref)                                  \
 {                                                                             \
-    avl__print(stream, ref, FPF);                                        \
+    avl__print(stream, ref, FPF);                                             \
 }                                                                             \
                                                                               \
 static                                                                        \

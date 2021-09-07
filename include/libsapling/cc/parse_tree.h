@@ -15,6 +15,7 @@ void parse_tree__append_child(node_t *ref, node_t child);
 
 node_t parse_tree__get_child_by_position(node_t *ref, int pos);
 node_t parse_tree__get_child_by_string(node_t *ref, const char *str);
+int parse_tree__num_children(node_t node);
 
 void parse_tree__dump_dot(FILE *stream, node_t *ref);
 

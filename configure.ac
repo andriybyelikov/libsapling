@@ -1,5 +1,5 @@
 AC_PREREQ([2.71])
-AC_INIT([libsapling], [0.7.0], [https://github.com/andriybyelikov/libsapling])
+AC_INIT([libsapling], [0.8.0], [https://github.com/andriybyelikov/libsapling])
 AM_INIT_AUTOMAKE([foreign subdir-objects])
 AC_PROG_CC
 AC_PROG_RANLIB

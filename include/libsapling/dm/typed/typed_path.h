@@ -36,9 +36,9 @@ void SYM##__delete(enum qt qt, node_t *ref, void *info,                       \
 }                                                                             \
                                                                               \
 static                                                                        \
-void SYM##__print(FILE *stream, node_t *ref)                             \
+void SYM##__print(FILE *stream, node_t *ref)                                  \
 {                                                                             \
-    path__print(stream, ref, FPF);                                       \
+    path__print(stream, ref, FPF);                                            \
 }                                                                             \
                                                                               \
 static                                                                        \

@@ -83,6 +83,12 @@ node_t parse_tree__get_child_by_string(node_t *ref, const char *str)
 }
 
 
+int parse_tree__num_children(node_t node)
+{
+    return path__length(&node->children);
+}
+
+
 struct info_impl {
     node_t queue;
 };
