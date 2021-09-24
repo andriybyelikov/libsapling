@@ -13,7 +13,7 @@ struct info_build_set_of_sets_of_lr0_items {
 };
 
 static
-void build_set_of_sets_of_lr0_items_apply(pnode_t *data, void *info)
+void build_set_of_sets_of_lr0_items_apply(node_t **data, void *info)
 {
     CAST_USER_INFO(struct info_build_set_of_sets_of_lr0_items *, user, info);
 

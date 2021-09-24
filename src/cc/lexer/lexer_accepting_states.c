@@ -6,7 +6,7 @@
 
 IMPLEMENT_TYPED_PATH(sp, node_t, NULL, dummy_cmp)
 IMPLEMENT_TYPED_QUEUE(sq, node_t, NULL)
-IMPLEMENT_TYPED_QUEUE(rq, pnode_t, NULL)
+IMPLEMENT_TYPED_QUEUE(rq, node_t *, NULL)
 
 static
 int match_accepting_states(const node_t *ref,

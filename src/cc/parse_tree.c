@@ -93,7 +93,7 @@ struct info_impl {
     node_t queue;
 };
 
-IMPLEMENT_TYPED_QUEUE(trail, pnode_t, NULL)
+IMPLEMENT_TYPED_QUEUE(trail, node_t *, NULL)
 
 static
 void expand_children(node_t *ref, const struct info_stack *info)

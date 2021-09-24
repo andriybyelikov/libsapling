@@ -16,7 +16,7 @@ struct info_fill_goto_0 {
 };
 
 static
-void fill_goto_0_apply(pnode_t *data, void *info)
+void fill_goto_0_apply(node_t **data, void *info)
 {
     CAST_USER_INFO(struct info_fill_goto_0 *, user, info);
 

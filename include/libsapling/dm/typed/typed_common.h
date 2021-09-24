@@ -9,9 +9,6 @@
 #include <stdio.h>
 #include "libsapling/dm/graph.h"
 
-
-typedef node_t *pnode_t;
-
 int int__compare(const void *a, const void *b);
 int int__equals(const void *a, const void *b);
 void int__print(FILE *stream, const void *data);

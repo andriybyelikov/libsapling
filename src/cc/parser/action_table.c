@@ -57,7 +57,7 @@ struct info_fill_shifts_0 {
 };
 
 static
-void fill_shifts_0_apply(pnode_t *data, void *info)
+void fill_shifts_0_apply(node_t **data, void *info)
 {
     CAST_USER_INFO(struct info_fill_shifts_0 *, user, info);
 
@@ -163,7 +163,7 @@ struct info_fill_reduces_0 {
 };
 
 static
-void fill_reduces_0_apply(pnode_t *data, void *info)
+void fill_reduces_0_apply(node_t **data, void *info)
 {
     CAST_USER_INFO(struct info_fill_reduces_0 *, user, info);
 
@@ -182,7 +182,7 @@ struct info_fill_accept_0 {
 };
 
 static
-void fill_accept_0_apply(pnode_t *data, void *info)
+void fill_accept_0_apply(node_t **data, void *info)
 {
     CAST_USER_INFO(struct info_fill_accept_0 *, user, info);
 
@@ -193,7 +193,7 @@ void fill_accept_0_apply(pnode_t *data, void *info)
 }
 
 static
-int fill_accept_0_predicate(const pnode_t *data, void *info)
+int fill_accept_0_predicate(const node_t **data, void *info)
 {
     CAST_USER_INFO(struct info_fill_accept_0 *, user, info);
 

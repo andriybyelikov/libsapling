@@ -4,10 +4,10 @@
 #include "cc/lexer/lexer_minimize.h"
 #include "cc/lexer/lexer_accepting_states.h"
 
-IMPLEMENT_TYPED_PATH(rp, pnode_t, NULL, dummy_cmp)
+IMPLEMENT_TYPED_PATH(rp, node_t *, NULL, dummy_cmp)
 
 static
-void aux_ks_union(pnode_t *data, void *info)
+void aux_ks_union(node_t **data, void *info)
 {
     CAST_USER_INFO(node_t *, src, info);
 

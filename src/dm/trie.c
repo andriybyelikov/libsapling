@@ -29,7 +29,7 @@ void ae_ptr__fpf(FILE *stream, const void *data)
 
 IMPLEMENT_TYPED_QUEUE(trail1, ae_ptr, ae_ptr__fpf)
 
-IMPLEMENT_TYPED_STACK(ps, pnode_t, NULL)
+IMPLEMENT_TYPED_STACK(ps, node_t *, NULL)
 
 
 static
@@ -162,7 +162,7 @@ node_t *search_key(node_t *ref, const struct info_stack *info)
 {
     struct info_impl_e *impl = info->impl;
 
-    pnode_t pnode = ref;
+    node_t *pnode = ref;
     int i = 0;
     while (pnode != NULL && *pnode != NULL && i < strlen(impl->key)) {
         node_t node = *pnode;
@@ -242,7 +242,7 @@ void del_em(node_t *ref, const node_t node, void *impl_ptr)
     int i = strlen(impl->key) - 1;
     while (impl->s != NULL) {
         char c = impl->key[i--];
-        pnode_t pnode = ps__access(&impl->s);
+        node_t *pnode = ps__access(&impl->s);
         node_t node = *pnode;
         ae__delete(&node->attributed_edges, (attributed_edge){ .byte = c },
             ae__equ_predicate);

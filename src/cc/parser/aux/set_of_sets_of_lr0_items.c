@@ -6,7 +6,7 @@ struct info_is_subset_of {
 };
 
 static
-void is_subset_of_apply(UNUSED pnode_t *data, void *info)
+void is_subset_of_apply(UNUSED node_t **data, void *info)
 {
     CAST_USER_INFO(struct info_is_subset_of *, user, info);
 
@@ -14,7 +14,7 @@ void is_subset_of_apply(UNUSED pnode_t *data, void *info)
 }
 
 static
-int is_subset_of_predicate(const pnode_t *data, void *info)
+int is_subset_of_predicate(const node_t **data, void *info)
 {
     CAST_USER_INFO(struct info_is_subset_of *, user, info);
 
@@ -36,8 +36,8 @@ int set_of_sets_of_lr0_items_is_subset_of(node_t *a, node_t *b)
 
 int set_of_sets_of_lr0_items__equals(const void *a, const void *b)
 {
-    pnode_t x = *(pnode_t *)a;
-    pnode_t y = *(pnode_t *)b;
+    node_t *x = *(node_t **)a;
+    node_t *y = *(node_t **)b;
 
     return set_of_sets_of_lr0_items_is_subset_of(x, y)
         && set_of_sets_of_lr0_items_is_subset_of(y, x);
@@ -50,13 +50,13 @@ struct info_get_j {
 };
 
 static
-void get_j_apply(pnode_t *data, void *info)
+void get_j_apply(node_t **data, void *info)
 {
     return;
 }
 
 static
-int get_j_predicate(const pnode_t *data, void *info)
+int get_j_predicate(const node_t **data, void *info)
 {
     CAST_USER_INFO(struct info_get_j *, user, info);
 

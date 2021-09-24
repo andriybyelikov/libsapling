@@ -36,8 +36,8 @@ int set_of_lr0_items_is_subset_of(node_t *a, node_t *b)
 
 int set_of_lr0_items__equals(const void *a, const void *b)
 {
-    pnode_t x = *(pnode_t *)a;
-    pnode_t y = *(pnode_t *)b;
+    node_t *x = *(node_t **)a;
+    node_t *y = *(node_t **)b;
 
     return set_of_lr0_items_is_subset_of(x, y)
         && set_of_lr0_items_is_subset_of(y, x);
@@ -45,6 +45,6 @@ int set_of_lr0_items__equals(const void *a, const void *b)
 
 void set_of_lr0_items__print(FILE *stream, const void *data)
 {
-    pnode_t pnode = *(pnode_t *)data;
+    node_t *pnode = *(node_t **)data;
     set_of_lr0_items_path__print(stream, pnode);
 }

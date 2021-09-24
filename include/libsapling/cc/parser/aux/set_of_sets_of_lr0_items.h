@@ -5,9 +5,9 @@
 #include "libsapling/dm/queue.h"
 #include "libsapling/cc/parser/aux/set_of_lr0_items.h"
 
-IMPLEMENT_TYPED_PATH(set_of_sets_of_lr0_items_path, pnode_t,
+IMPLEMENT_TYPED_PATH(set_of_sets_of_lr0_items_path, node_t *,
     set_of_lr0_items__print, set_of_lr0_items__equals)
-IMPLEMENT_TYPED_QUEUE(set_of_sets_of_lr0_items_queue, pnode_t,
+IMPLEMENT_TYPED_QUEUE(set_of_sets_of_lr0_items_queue, node_t *,
     set_of_lr0_items__print)
 
 int set_of_sets_of_lr0_items__equals(const void *a, const void *b);

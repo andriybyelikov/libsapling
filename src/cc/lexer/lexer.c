@@ -22,35 +22,35 @@ void *lexer__data(const node_t node)
 static
 int pnode_t__cmp(const void *a, const void *b)
 {
-    return **(pnode_t *)a <= **(pnode_t *)b;
+    return **(node_t **)a <= **(node_t **)b;
 }
 
 static
 int pnode_t__equ(const void *a, const void *b)
 {
-    return **(pnode_t *)a == **(pnode_t *)b;
+    return **(node_t **)a == **(node_t **)b;
 }
 
 static
 void pnode_t__fpf(FILE *stream, const void *data)
 {
-    fprintf(stream, "%p->%p", *(pnode_t *)data, **(pnode_t *)data);
+    fprintf(stream, "%p->%p", *(node_t **)data, **(node_t **)data);
 }
 
-IMPLEMENT_TYPED_AVL(nrs, pnode_t, pnode_t__cmp, pnode_t__equ, pnode_t__fpf)
+IMPLEMENT_TYPED_AVL(nrs, node_t *, pnode_t__cmp, pnode_t__equ, pnode_t__fpf)
 
 static
-void nrs__get_node_ref(pnode_t *data, void *info)
+void nrs__get_node_ref(node_t **data, void *info)
 {
-    CAST_USER_INFO(pnode_t *, user, info);
+    CAST_USER_INFO(node_t **, user, info);
 
     *user = *data;
 }
 
 static
-pnode_t nrs__get_any(node_t *ref)
+node_t *nrs__get_any(node_t *ref)
 {
-    pnode_t elem = NULL;
+    node_t *elem = NULL;
     nrs__access(E_QT, ref, &elem, nrs__predicate_1, nrs__get_node_ref);
     return elem;
 }
@@ -86,7 +86,7 @@ int next_u(node_t **ref, const struct info_stack *info)
     node_t node = **ref;
     struct info_impl_u *impl = info->impl;
 
-    pnode_t pnode = *ref;
+    node_t *pnode = *ref;
     // add current node to visited
     nrs__insert(&impl->visited, pnode, nrs__cmp_predicate);
 
