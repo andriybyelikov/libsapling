@@ -1,5 +1,9 @@
 # libsapling
 
+![license](https://img.shields.io/github/license/andriybyelikov/libsapling?style=flat-square)
+![release](https://img.shields.io/github/v/release/andriybyelikov/libsapling?style=flat-square)
+![downloads](https://img.shields.io/github/downloads/andriybyelikov/libsapling/total?style=flat-square)
+
 C library written for the sapling
 [compiler](https://github.com/andriybyelikov/sapling) and
 [editor](https://github.com/andriybyelikov/sapling-gui) suite.
@@ -30,44 +34,18 @@ isn't any support.
 
 ---
 
-
-## Set of implementations by domain
-
-### Data Management (DM)
-
-Path ·
-Stack ·
-Queue ·
-Equivalence class ·
-AVL ·
-Trie
-
-### Compiler Construction (CC)
-
-Text ·
-Terminal ·
-Production ·
-Parse Tree ·
-Lexer ·
-Grammar
-
----
-
-
 ## For users
 
 [Link to documentation](https://andriybyelikov.github.io/libsapling/docs/users/html/index.html)
 
 ### Building from source and installing
 
-Using GNU Autotools.
+Using CMake.
 
 ```
-$ autoreconf --install
 $ mkdir build
 $ cd build
-$ ../configure
-$ make
+$ cmake ..
 $ sudo make install
 ```
 
@@ -90,29 +68,13 @@ implementation of the sapling [compiler](https://github.com/andriybyelikov/sapli
 
 [Link to documentation](https://andriybyelikov.github.io/libsapling/docs/maintainers/html/index.html)
 
-Build without optimization and run the tests like this:
-
-```
-$ autoreconf --install
-$ mkdir build
-$ cd build
-$ ../configure CFLAGS='-O0 -g'
-$ make check
-```
-
-### Development
-
-`tools/Makefile.am.meta` is a shell script that is used to automatically detect
-and add source files to `Makefile.am`. Note that it should be run from the
-sources' root folder and not from the `build` folder.
+To make debuggin easier build without optimization with the `-O0 -g` flags.
 
 ### Tests and graph visualization
 
 This assumes that your are in the build directory.
 
-First build the tests:
-
-`$ make check`
+Make sure you have built the tests.
 
 Almost all tests have two options `-p` or print data and `-g` dump Dot graph.
 The only test that has none of these options is the `equivalence_class` test,

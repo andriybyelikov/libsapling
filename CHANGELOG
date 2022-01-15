@@ -1,5 +1,8 @@
 0.9.0 [Unreleased]
 -----
+# Changed
+- Switched from GNU Autotools to CMake for building, testing and installing
+
 # Removed
 - Removed useless pnode_t definition
 
