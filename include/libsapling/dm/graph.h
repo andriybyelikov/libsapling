@@ -230,6 +230,13 @@ void graph__print(FILE *stream, node_t *ref,
     fpfdata_t fpfdata);
 
 /**
+ * @brief Prints all the data contained in the set plus a newline.
+ */
+void graph__println(FILE *stream, node_t *ref,
+    all_access_adapter_fn access_adapter, fpfnode_t fpfnode,
+    fpfdata_t fpfdata);
+
+/**
  * @brief Dumps the graph in the DOT graph description language.
  */
 void graph__dump_dot(FILE *stream, node_t *ref,

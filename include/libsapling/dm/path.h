@@ -16,6 +16,7 @@ void path__access(enum qt qt, node_t *ref, void *info, predicate_t predicate,
 void path__insert(node_t *ref, void *info, predicate_t predicate);
 void path__delete(enum qt qt, node_t *ref, void *info, predicate_t predicate);
 void path__print(FILE *stream, node_t *ref, fpfdata_t fpfdata);
+void path__println(FILE *stream, node_t *ref, fpfdata_t fpfdata);
 void path__dump_dot(FILE *stream, node_t *ref, fpfdata_t fpfdata);
 int path__length(const node_t *ref);
 

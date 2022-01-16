@@ -1,7 +1,14 @@
 0.9.0 [Unreleased]
 -----
+# Added
+- Implemented "println" functions for all typed interfaces that simply call
+  "print" and then print a newline through the specified stream
+- Implemented "-p" option in the lexer test
+- Updated test_utils.h to use the new "println" implementation
+
 # Changed
 - Switched from GNU Autotools to CMake for building, testing and installing
+- Updated tools/update_docs.sh script for CMake
 
 # Removed
 - Removed useless pnode_t definition

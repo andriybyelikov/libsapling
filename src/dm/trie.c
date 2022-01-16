@@ -328,8 +328,12 @@ void print_aux0(FILE *stream, const node_t node, fpfdata_t fpfdata,
 
 void trie__print(FILE *stream, node_t *ref, fpfdata_t fpfdata)
 {
-    graph__print(stream, ref, all_access_adapter, print_aux0,
-        fpfdata);
+    graph__print(stream, ref, all_access_adapter, print_aux0, fpfdata);
+}
+
+void trie__println(FILE *stream, node_t *ref, fpfdata_t fpfdata)
+{
+    graph__println(stream, ref, all_access_adapter, print_aux0, fpfdata);
 }
 
 int trie__length(const node_t *ref)

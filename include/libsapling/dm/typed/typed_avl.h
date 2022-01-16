@@ -54,6 +54,12 @@ void SYM##__print(FILE *stream, node_t *ref)                                  \
 }                                                                             \
                                                                               \
 static                                                                        \
+void SYM##__println(FILE *stream, node_t *ref)                                \
+{                                                                             \
+    avl__println(stream, ref, FPF);                                           \
+}                                                                             \
+                                                                              \
+static                                                                        \
 void SYM##__dump_dot(FILE *stream, node_t *ref)                               \
 {                                                                             \
     avl__dump_dot(stream, ref, FPF);                                          \

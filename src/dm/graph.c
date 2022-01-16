@@ -124,6 +124,15 @@ void graph__print(FILE *stream, node_t *ref,
 }
 
 
+void graph__println(FILE *stream, node_t *ref,
+    all_access_adapter_fn access_adapter, fpfnode_t fpfnode,
+    fpfdata_t fpfdata)
+{
+    graph__print(stream, ref, access_adapter, fpfnode, fpfdata);
+    fprintf(stream, "\n");
+}
+
+
 static
 void graph__dump_dot_aux0(node_t *ref, const struct info_stack *info)
 {

@@ -6,32 +6,48 @@
 #include "test/test_utils.h"
 
 #define DUMP(SYMBOL, ALIAS) \
-if (flag_dump_dot) { \
+if (flag_print || flag_dump_dot) { \
     printf(#ALIAS "\n"); \
-    lexer__dump_dot(stdout, &SYMBOL, int__print); \
+    if (flag_print) \
+        lexer__println(stdout, &SYMBOL, int__print); \
+    else \
+        lexer__dump_dot(stdout, &SYMBOL, int__print); \
     if (dump_copies) { \
         node_t copy = NULL; \
         lexer__copy(&copy, &SYMBOL); \
         printf(#ALIAS "_copy\n"); \
-        lexer__dump_dot(stdout, &copy, int__print); \
+        if (flag_print) \
+            lexer__println(stdout, &copy, int__print); \
+        else \
+            lexer__dump_dot(stdout, &copy, int__print); \
     } \
     lexer__minimize(&SYMBOL); \
     printf(#ALIAS "_minimized\n"); \
-    lexer__dump_dot(stdout, &SYMBOL, int__print); \
+    if (flag_print) \
+        lexer__println(stdout, &SYMBOL, int__print); \
+    else \
+        lexer__dump_dot(stdout, &SYMBOL, int__print); \
     if (dump_copies) { \
         node_t minimized_copy = NULL; \
         lexer__copy(&minimized_copy, &SYMBOL); \
         printf(#ALIAS "_minimized_copy\n"); \
-        lexer__dump_dot(stdout, &minimized_copy, int__print); \
+        if (flag_print) \
+            lexer__println(stdout, &minimized_copy, int__print); \
+        else \
+            lexer__dump_dot(stdout, &minimized_copy, int__print); \
     } \
 }
 
 int main(int argc, char *argv[])
 {
+    int flag_print = 0;
     int flag_dump_dot = 0;
     for (int i = 1; i < argc; i++)
     if (*argv[i] == '-') {
         switch (*(argv[i] + 1)) {
+        case 'p':
+            flag_print = 1;
+            break;
         case 'g':
             flag_dump_dot = 1;
             break;
@@ -345,7 +361,7 @@ int main(int argc, char *argv[])
         assert(res != NULL && *res == id2); // classify '8' as class 2
 
         // test lexer print
-        /*lexer__print(stdout, &a0, int__print);
+        /*lexer__println(stdout, &a0, int__print);
         fprintf(stdout, "\n");*/
     }
 

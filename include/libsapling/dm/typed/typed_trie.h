@@ -44,6 +44,12 @@ void SYM##__print(FILE *stream, node_t *ref)                                  \
 }                                                                             \
                                                                               \
 static                                                                        \
+void SYM##__println(FILE *stream, node_t *ref)                                \
+{                                                                             \
+    trie__println(stream, ref, FPF);                                          \
+}                                                                             \
+                                                                              \
+static                                                                        \
 void SYM##__dump_dot(FILE *stream, node_t *ref)                               \
 {                                                                             \
     lexer__dump_dot(stream, ref, FPF);                                        \

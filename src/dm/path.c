@@ -102,8 +102,13 @@ void print_aux0(FILE *stream, const node_t node, fpfdata_t fpfdata,
 
 void path__print(FILE *stream, node_t *ref, fpfdata_t fpfdata)
 {
-    graph__print(stream, ref, all_access_adapter, print_aux0,
-        fpfdata);
+    graph__print(stream, ref, all_access_adapter, print_aux0, fpfdata);
+}
+
+
+void path__println(FILE *stream, node_t *ref, fpfdata_t fpfdata)
+{
+    graph__println(stream, ref, all_access_adapter, print_aux0, fpfdata);
 }
 
 

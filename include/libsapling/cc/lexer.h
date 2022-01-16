@@ -12,6 +12,7 @@ void *lexer__data(const node_t node);
 void lexer__access(enum qt qt, node_t *ref, void *info, predicate_t predicate,
     apply_t apply);
 void lexer__print(FILE *stream, node_t *ref, fpfdata_t fpfdata);
+void lexer__println(FILE *stream, node_t *ref, fpfdata_t fpfdata);
 void lexer__dump_dot(FILE *stream, node_t *ref, fpfdata_t fpfdata);
 int lexer__length(const node_t *ref);
 

@@ -324,9 +324,15 @@ void print_aux0(FILE *stream, const node_t node, fpfdata_t fpfdata,
 
 void avl__print(FILE *stream, node_t *ref, fpfdata_t fpfdata)
 {
-    graph__print(stream, ref, all_access_adapter, print_aux0,
-        fpfdata);
+    graph__print(stream, ref, all_access_adapter, print_aux0, fpfdata);
 }
+
+
+void avl__println(FILE *stream, node_t *ref, fpfdata_t fpfdata)
+{
+    graph__println(stream, ref, all_access_adapter, print_aux0, fpfdata);
+}
+
 
 static
 void dump_dot_aux0(FILE *stream, const node_t node, fpfdata_t fpfdata,

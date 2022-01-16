@@ -25,6 +25,7 @@ void avl__insert(node_t *ref, void *info, predicate_t predicate,
 void avl__delete(node_t *ref, void *info, predicate_t predicate,
     cmp_t comparator);
 void avl__print(FILE *stream, node_t *ref, fpfdata_t fpfdata);
+void avl__println(FILE *stream, node_t *ref, fpfdata_t fpfdata);
 void avl__dump_dot(FILE *stream, node_t *ref, fpfdata_t fpfdata);
 int avl__length(const node_t *ref);
 

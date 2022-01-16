@@ -250,6 +250,12 @@ void lexer__print(FILE *stream, node_t *ref, fpfdata_t fpfdata)
 }
 
 
+void lexer__println(FILE *stream, node_t *ref, fpfdata_t fpfdata)
+{
+    graph__println(stream, ref, all_access_adapter, print_aux0, fpfdata);
+}
+
+
 void lexer__init(struct lexer_state *ref, const char *buf)
 {
     ref->buf = buf;
