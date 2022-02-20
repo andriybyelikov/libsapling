@@ -7,6 +7,7 @@
  */
 
 #include "libsapling/dm/graph.h"
+#include "libsapling/cc/parser/defs/symbol_set.h"
 
 typedef struct grammar *grammar_t;
 
@@ -58,5 +59,27 @@ int grammar__num_symbols(grammar_t g);
  * @returns whether the symbol is a terminal in the grammar.
  */
 int grammar__is_terminal(grammar_t g, int symbol);
+
+
+/**
+ * @brief Computes the first set of a grammar symbol.
+ * 
+ * @returns path (symbol set) with all the terminal symbols that are part of
+ * the first set of the specified symbol.
+ * 
+ * @warning This implementation does not yet handle empty strings (ε, λ, Λ).
+ */
+node_t *compute_first_set(grammar_t g, int symbol);
+
+
+/**
+ * @brief Computes the follow set of a nonterminal grammar symbol.
+ * 
+ * @returns path (symbol set) with all the terminal symbols that are part of
+ * the follow set of the specified nonterminal symbol.
+ * 
+ * @warning This implementation does not yet handle empty strings (ε, λ, Λ).
+ */
+node_t *compute_follow_set(grammar_t g, int symbol);
 
 #endif

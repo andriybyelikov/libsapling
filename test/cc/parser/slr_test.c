@@ -1,7 +1,7 @@
 #include <assert.h>
 #include "libsapling/cc/parser/slr.h"
-#include "libsapling/cc/parser/aux/set_of_sets_of_lr0_items.h"
-#include "test/parser/parser_test_utils.h"
+#include "libsapling/cc/parser/defs/set_of_sets_of_lr0_items.h"
+#include "test/cc/parser/parser_test_utils.h"
 
 int main(void)
 {

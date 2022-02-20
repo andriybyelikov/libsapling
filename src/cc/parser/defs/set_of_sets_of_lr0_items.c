@@ -1,4 +1,4 @@
-#include "libsapling/cc/parser/aux/set_of_sets_of_lr0_items.h"
+#include "libsapling/cc/parser/defs/set_of_sets_of_lr0_items.h"
 
 struct info_is_subset_of {
     node_t *b;

@@ -1,6 +1,6 @@
 #include <assert.h>
 #include "libsapling/cc/parser/follow.h"
-#include "test/parser/parser_test_utils.h"
+#include "test/cc/parser/parser_test_utils.h"
 
 int main(void)
 {

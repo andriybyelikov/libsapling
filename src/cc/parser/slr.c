@@ -4,8 +4,8 @@
 #include "libsapling/cc/parser/slr.h"
 #include "libsapling/cc/parser/closure.h"
 #include "libsapling/cc/parser/goto.h"
-#include "libsapling/cc/parser/aux/production_set.h"
-#include "libsapling/cc/parser/aux/set_of_sets_of_lr0_items.h"
+#include "libsapling/cc/parser/defs/production_set.h"
+#include "libsapling/cc/parser/defs/set_of_sets_of_lr0_items.h"
 
 struct info_build_set_of_sets_of_lr0_items {
     node_t *C;

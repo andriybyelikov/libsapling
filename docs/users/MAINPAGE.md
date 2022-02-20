@@ -14,13 +14,14 @@ other.
 
 @author Andriy Byelikov
 
-@date 2022-01-16
+@date 2022-01-17
 
 
 ## Examples
 
 See the tests included with this library and you may also check out the
-implementation of the sapling [compiler](https://github.com/andriybyelikov/sapling).
+implementation of the
+sapling [compiler](https://github.com/andriybyelikov/sapling).
 
 ## Domains
 
@@ -42,16 +43,9 @@ Please see @ref TYPED_INTERFACES.md.
 ### Compiler Construction
 
 - @ref text.h "Text"
+- @ref lexer.h "Lexer"
+- @ref parse_tree.h "Parse Tree"
 - @ref terminal.h "Terminal"
 - @ref production.h "Production"
-- @ref parse_tree.h "Parse Tree"
-- @ref lexer.h "Lexer"
 - @ref grammar.h "Grammar"
-- @ref first.h "First"
-- @ref follow.h "Follow"
-- @ref lr0_item.h "LR(0) item"
-- @ref closure.h "Closure"
-- @ref goto.h "Goto"
-- @ref action_table.h "Action table"
-- @ref goto_table.h "Goto table"
-- @ref slr.h "Simple LR"
+- @ref slr.h "Simple LR Parser"

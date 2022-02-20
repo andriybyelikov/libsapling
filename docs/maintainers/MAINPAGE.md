@@ -9,7 +9,7 @@ develop the library. -- Andriy Byelikov
 
 @author Andriy Byelikov
 
-@date 2022-01-16
+@date 2022-01-17
 
 
 - @ref CODING_STYLE.md "Coding style"

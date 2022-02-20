@@ -1,7 +1,7 @@
 #include <assert.h>
 #include <stdlib.h>
 #include "libsapling/cc/parser/grammar.h"
-#include "test/parser/parser_test_utils.h"
+#include "test/cc/parser/parser_test_utils.h"
 
 int main(void)
 {

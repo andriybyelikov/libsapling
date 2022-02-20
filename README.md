@@ -9,7 +9,8 @@ C library written for the sapling
 [editor](https://github.com/andriybyelikov/sapling-gui) suite.
 
 The library consists of a set of data structures, utilities and building blocks
-written with orthogonality in mind while also aiming to express their implementation with the fewest lines of code possible and in terms of each
+written with orthogonality in mind while also aiming to express their
+implementation with the fewest lines of code possible and in terms of each
 other.
 
 As an example of the latter, we start with the implementation of a graph with

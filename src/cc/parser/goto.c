@@ -1,8 +1,8 @@
 #include <stdlib.h>
 #include "libsapling/cc/parser/grammar.h"
 #include "libsapling/cc/parser/closure.h"
-#include "libsapling/cc/parser/aux/set_of_lr0_items.h"
-#include "libsapling/cc/parser/aux/production_set.h"
+#include "libsapling/cc/parser/defs/set_of_lr0_items.h"
+#include "libsapling/cc/parser/defs/production_set.h"
 
 struct info_compute_goto_0 {
     node_t *goto_set;

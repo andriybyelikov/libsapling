@@ -2,9 +2,9 @@
 #include "libsapling/cc/parser/action_table.h"
 #include "libsapling/cc/parser/goto_table.h"
 #include "libsapling/cc/parser/lr0_item.h"
-#include "libsapling/cc/parser/aux/symbol_set.h"
-#include "libsapling/cc/parser/aux/production_set.h"
-#include "libsapling/cc/parser/aux/set_of_sets_of_lr0_items.h"
+#include "libsapling/cc/parser/defs/symbol_set.h"
+#include "libsapling/cc/parser/defs/production_set.h"
+#include "libsapling/cc/parser/defs/set_of_sets_of_lr0_items.h"
 
 IMPLEMENT_TYPED_QUEUE(body_queue, int, int__print)
 

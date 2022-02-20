@@ -31,7 +31,7 @@ file(
 enable_testing()
 foreach(source ${TEST_SOURCES})
   # skip parser_test_utils.c
-  if(${source} STREQUAL "test/parser/parser_test_utils.c")
+  if(${source} STREQUAL "test/cc/parser/parser_test_utils.c")
     continue()
   endif()
 
@@ -40,8 +40,8 @@ foreach(source ${TEST_SOURCES})
   get_filename_component(directory ${source} DIRECTORY)
 
   # add parser_test_utils.c to parser tests
-  if(${directory} STREQUAL "test/parser")
-    add_executable(${executable} ${source} "test/parser/parser_test_utils.c")
+  if(${directory} STREQUAL "test/cc/parser")
+    add_executable(${executable} ${source} "test/cc/parser/parser_test_utils.c")
   else()
     add_executable(${executable} ${source})
   endif()

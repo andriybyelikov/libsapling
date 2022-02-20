@@ -1,4 +1,4 @@
-#include "libsapling/cc/parser/aux/symbol_set.h"
+#include "libsapling/cc/parser/defs/symbol_set.h"
 
 struct info_symbol_set_union {
     node_t *first_set;

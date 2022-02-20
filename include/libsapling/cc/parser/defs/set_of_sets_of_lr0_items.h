@@ -3,7 +3,7 @@
 
 #include "libsapling/dm/path.h"
 #include "libsapling/dm/queue.h"
-#include "libsapling/cc/parser/aux/set_of_lr0_items.h"
+#include "libsapling/cc/parser/defs/set_of_lr0_items.h"
 
 IMPLEMENT_TYPED_PATH(set_of_sets_of_lr0_items_path, node_t *,
     set_of_lr0_items__print, set_of_lr0_items__equals)

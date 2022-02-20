@@ -9,6 +9,11 @@
 # Changed
 - Switched from GNU Autotools to CMake for building, testing and installing
 - Updated tools/update_docs.sh script for CMake
+- Reorganized directory structure
+  - Renamed "aux" directories to "defs", as "aux" is an illegal filename on
+    Windows
+  - Absorbed first.h and follow.h into grammar.h
+  - Reorganized test directory structure to mirror source structure
 
 # Removed
 - Removed useless pnode_t definition

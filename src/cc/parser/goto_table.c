@@ -1,7 +1,7 @@
 #include <stdlib.h>
 #include "libsapling/cc/parser/goto.h"
 #include "libsapling/cc/parser/goto_table.h"
-#include "libsapling/cc/parser/aux/set_of_sets_of_lr0_items.h"
+#include "libsapling/cc/parser/defs/set_of_sets_of_lr0_items.h"
 
 struct goto_table {
     int state; // state id to go to on having reduced a production
