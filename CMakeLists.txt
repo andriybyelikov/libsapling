@@ -13,7 +13,7 @@ file(
   GLOB_RECURSE LIBRARY_SOURCES
   RELATIVE ${CMAKE_SOURCE_DIR}
   "src/*.c")
-add_library(sapling STATIC ${LIBRARY_SOURCES})
+add_library(sapling SHARED ${LIBRARY_SOURCES})
 target_include_directories(sapling PUBLIC include)
 target_include_directories(sapling PRIVATE src)
 target_link_libraries(sapling m)

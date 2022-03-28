@@ -1,6 +1,5 @@
 #include <stdlib.h>
 #include "libsapling/cc/parser/lr0_item.h"
-#include "libsapling/cc/parser/follow.h"
 #include "libsapling/cc/parser/goto.h"
 #include "libsapling/cc/parser/action_table.h"
 #include "libsapling/cc/parser/defs/production_set.h"

@@ -1,5 +1,5 @@
 #include <assert.h>
-#include "libsapling/cc/parser/first.h"
+#include "libsapling/cc/parser/grammar.h"
 #include "test/cc/parser/parser_test_utils.h"
 
 int main(void)
